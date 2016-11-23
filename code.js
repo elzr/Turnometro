@@ -27,7 +27,7 @@ var TIME = {
 		TIME.interval = setInterval(function() {
 			TIME.decrement();
 			document.title = "Turno " + TIME.get();
-			$('.bar .progress').css('width', Math.ceil((TIME.get() / TIME.start)*100)+'%');
+			$('.bar .progress').css('height', Math.ceil((TIME.get() / TIME.start)*100)+'%');
 			TIME.style();
 		}, 1000);
 	},
@@ -42,14 +42,20 @@ var TIME = {
 			console.log( '2!' );
 		}
 
-		if( (count > 0) && (count <= half) && (count > 10)) {
+		if( count > half ) {
+			$('body').addClass('running');
+		} else if( (count > 0) && (count <= half) && (count > 10)) {
 			$('body').addClass('half');
 		} else if(count <= 10) {
 			$('body').addClass('almost');
-			if(count <= 0) {
-				TIME.resize(3);
+			if((count <= 0) && (count > -10)) {
+				TIME.resize(2);
 				$('body').toggleClass('over');
 			} 
+			if(count <= -10) {
+				TIME.resize(3);
+				$('body').toggleClass('over');
+			}
 			if(count <= -99) {
 				clearInterval(TIME.interval);
 			}
@@ -67,8 +73,10 @@ var TIME = {
 		clearInterval(TIME.interval);
 		TIME.set( TIME.start );
 		T.css('marginTop', 0);
-		$('.bar .progress').css('width', '100%');
+		$('.bar .progress').css('height', '100%');
 		TIME.style();
+
+		TIME.resetClasses();
 		$('body').addClass('paused');
 	},
 	resetClasses:function() {

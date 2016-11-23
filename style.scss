@@ -1,13 +1,60 @@
 body {margin:0; padding:0; text-align:center}
 
-span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; font-weight:bold; font-size:10px; cursor:pointer; vertical-align:middle; display:inline-block; user-select: none; position:relative; z-index:1}
+$buttonSide:10%;
+$azulClaro:#2FB0C1;
+$azulOscuro:#2FB0C1;
+$verdeClaro:#4EEAB3;
+$verdeOscuro:#43D19F;
+$amarilloClaro:#F3E785;
+$amarilloOscuro:#EDDC4F;
+$naranjaClaro:#FCB17B;
+$naranjaOscuro:#EB6F14;
+$rojoClaro:#EF8786;
+$rojoOscuro:#E65E5D;
 
-.paused {color:white; background:green}
-.running {color:black; background:white}
-.half {color:black; background:yellow}
-.almost {color:black; background:red}
-.over {color:red; background:black}
+span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+	font-weight:bold; font-size:10px; cursor:pointer; vertical-align:middle;
+	display:inline-block; user-select: none; position:relative; z-index:2;
+	color:white;
+}
 
-.bar {position:absolute; bottom:0; left:0; height:10%; width:100%; z-index:2; text-align:left; opacity:0.5; background:#aaa;
-	.progress {display:inline-block; width:100%; height:100%; background:#000;}
+.paused {background:$azulClaro;
+	.bar {
+		.progress {display:none}
+		.playStop .play {display:inline-block; border-left-color:$azulOscuro}
+	}
+}
+.running, .half, .almost {
+	.bar {
+		.progress {display:block}
+	}
+}
+.running {background:$verdeClaro;
+	.bar .progress {background:$verdeOscuro}
+}
+.half {background:$amarilloClaro;
+	.bar .progress {background:$amarilloOscuro}
+}
+.almost {background:$naranjaClaro;
+	.bar .progress {background:$naranjaOscuro}
+}
+.over {background:$rojoClaro}
+
+
+.bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
+	.progress {display:inline-block; position:absolute; bottom:0; left:0; width:100%; height:100%; background:#000;}
+	.playStop {position:absolute; bottom:5%; left:0; width:100%; text-align:center;
+		.play {
+			display:none;
+			width:0; height:0;
+			border-top: $buttonSide solid transparent;
+			border-bottom: $buttonSide solid transparent;
+			border-left: $buttonSide solid black;
+		}
+		.refresh {
+			display:none;
+			width:$buttonSide;
+			height:$buttonSide;
+		}
+	}
 }

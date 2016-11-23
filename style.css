@@ -12,42 +12,72 @@ span.digits {
   display: inline-block;
   user-select: none;
   position: relative;
-  z-index: 1; }
+  z-index: 2;
+  color: white; }
 
 .paused {
-  color: white;
-  background: green; }
+  background: #2FB0C1; }
+  .paused .bar .progress {
+    display: none; }
+  .paused .bar .playStop .play {
+    display: inline-block;
+    border-left-color: #2FB0C1; }
+
+.running .bar .progress, .half .bar .progress, .almost .bar .progress {
+  display: block; }
 
 .running {
-  color: black;
-  background: white; }
+  background: #4EEAB3; }
+  .running .bar .progress {
+    background: #43D19F; }
 
 .half {
-  color: black;
-  background: yellow; }
+  background: #F3E785; }
+  .half .bar .progress {
+    background: #EDDC4F; }
 
 .almost {
-  color: black;
-  background: red; }
+  background: #FCB17B; }
+  .almost .bar .progress {
+    background: #EB6F14; }
 
 .over {
-  color: red;
-  background: black; }
+  background: #EF8786; }
 
 .bar {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  height: 10%;
+  height: 100%;
   width: 100%;
-  z-index: 2;
-  text-align: left;
+  z-index: 1;
+  text-align: center;
   opacity: 0.5;
-  background: #aaa; }
+  background: transparent; }
   .bar .progress {
     display: inline-block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: #000; }
+  .bar .playStop {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    width: 100%;
+    text-align: center; }
+    .bar .playStop .play {
+      display: none;
+      width: 0;
+      height: 0;
+      border-top: 10% solid transparent;
+      border-bottom: 10% solid transparent;
+      border-left: 10% solid black; }
+    .bar .playStop .refresh {
+      display: none;
+      width: 10%;
+      height: 10%; }
 
 /*# sourceMappingURL=style.css.map */
