@@ -15,35 +15,6 @@ span.digits {
   z-index: 2;
   color: white; }
 
-.paused {
-  background: #2FB0C1; }
-  .paused .bar .progress {
-    display: none; }
-  .paused .bar .playStop .play {
-    display: inline-block;
-    border-left-color: #2FB0C1; }
-
-.running .bar .progress, .half .bar .progress, .almost .bar .progress {
-  display: block; }
-
-.running {
-  background: #4EEAB3; }
-  .running .bar .progress {
-    background: #43D19F; }
-
-.half {
-  background: #F3E785; }
-  .half .bar .progress {
-    background: #EDDC4F; }
-
-.almost {
-  background: #FCB17B; }
-  .almost .bar .progress {
-    background: #EB6F14; }
-
-.over {
-  background: #EF8786; }
-
 .bar {
   position: absolute;
   top: 0;
@@ -72,12 +43,42 @@ span.digits {
       display: none;
       width: 0;
       height: 0;
-      border-top: 10% solid transparent;
-      border-bottom: 10% solid transparent;
-      border-left: 10% solid black; }
-    .bar .playStop .refresh {
+      border-top: 4em solid transparent;
+      border-bottom: 4em solid transparent;
+      border-left: 6em solid #2FB0C1; }
+    .bar .playStop .refresh img {
       display: none;
-      width: 10%;
-      height: 10%; }
+      width: 8em;
+      height: 8em; }
+
+.paused {
+  background: #39DEE5; }
+  .paused .bar .progress {
+    display: none; }
+  .paused .bar .playStop .play {
+    display: inline-block; }
+
+.running .bar .progress, .half .bar .progress, .almost .bar .progress {
+  display: block; }
+.running .bar .playStop .refresh img, .half .bar .playStop .refresh img, .almost .bar .playStop .refresh img {
+  display: inline-block; }
+
+.running {
+  background: #4EEAB3; }
+  .running .bar .progress {
+    background: #43D19F; }
+
+.half {
+  background: #F3E785; }
+  .half .bar .progress {
+    background: #EDDC4F; }
+
+.almost {
+  background: #FCB17B; }
+  .almost .bar .progress {
+    background: #EB6F14; }
+
+.over {
+  background: #EF8786; }
 
 /*# sourceMappingURL=style.css.map */

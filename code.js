@@ -39,7 +39,7 @@ var TIME = {
 
 		TIME.resize( count > 60 ? 3 : 2 );
 		if ( count <= 60 ) {
-			console.log( '2!' );
+			//console.log( '2!' );
 		}
 
 		if( count > half ) {

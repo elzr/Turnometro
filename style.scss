@@ -1,7 +1,7 @@
 body {margin:0; padding:0; text-align:center}
 
-$buttonSide:10%;
-$azulClaro:#2FB0C1;
+$buttonSide:4em;
+$azulClaro:#39DEE5;
 $azulOscuro:#2FB0C1;
 $verdeClaro:#4EEAB3;
 $verdeOscuro:#43D19F;
@@ -18,15 +18,35 @@ span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Lib
 	color:white;
 }
 
+.bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
+	.progress {display:inline-block; position:absolute; bottom:0; left:0; width:100%; height:100%; background:#000;}
+	.playStop {position:absolute; bottom:5%; left:0; width:100%; text-align:center;
+		.play {
+			display:none;
+			width:0;
+			height:0;
+			border-top: $buttonSide solid transparent;
+			border-bottom: $buttonSide solid transparent;
+			border-left: $buttonSide*1.5 solid $azulOscuro;
+		}
+		.refresh img {
+			display:none;
+			width:$buttonSide*2;
+			height:$buttonSide*2;
+		}
+	}
+}
+
 .paused {background:$azulClaro;
 	.bar {
 		.progress {display:none}
-		.playStop .play {display:inline-block; border-left-color:$azulOscuro}
+		.playStop .play {display:inline-block;}
 	}
 }
 .running, .half, .almost {
 	.bar {
 		.progress {display:block}
+		.playStop .refresh img {display:inline-block;}
 	}
 }
 .running {background:$verdeClaro;
@@ -38,23 +58,5 @@ span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Lib
 .almost {background:$naranjaClaro;
 	.bar .progress {background:$naranjaOscuro}
 }
+
 .over {background:$rojoClaro}
-
-
-.bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
-	.progress {display:inline-block; position:absolute; bottom:0; left:0; width:100%; height:100%; background:#000;}
-	.playStop {position:absolute; bottom:5%; left:0; width:100%; text-align:center;
-		.play {
-			display:none;
-			width:0; height:0;
-			border-top: $buttonSide solid transparent;
-			border-bottom: $buttonSide solid transparent;
-			border-left: $buttonSide solid black;
-		}
-		.refresh {
-			display:none;
-			width:$buttonSide;
-			height:$buttonSide;
-		}
-	}
-}
