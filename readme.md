@@ -11,4 +11,6 @@ Turnometro is an app for the web and for Android phones that allows you to visua
 
 Turnómetro es una página web y una app que te permite visualizar y organizar los tiempos de participación de varias personas durante una dinámica de discusión presencial. Con Turnómetro puedes crear un evento y compartirlo con varios participantes a través de sus celulares o computadoras. Puedes pedir turnos para tomar la palabra, observar el cronometraje de cada participación y mostrar reacciones emotivas ante las participaciones diversas del grupo. El objetivo de Turnómetro es aumentar y agilizar las dinámicas de participación presencial.
 
-Made during the __Collective Intelligence for Democracy__ workshop in MediaLab Prado.
+---
+
+Made during the __Collective Intelligence for Democracy__ workshop in MediaLab Prado from 18nov to 2dic.

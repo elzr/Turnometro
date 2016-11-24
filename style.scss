@@ -1,16 +1,63 @@
 body {margin:0; padding:0; text-align:center}
 
 $buttonSide:4em;
-$azulClaro:#39DEE5;
-$azulOscuro:#2FB0C1;
-$verdeClaro:#4EEAB3;
-$verdeOscuro:#43D19F;
-$amarilloClaro:#F3E785;
-$amarilloOscuro:#EDDC4F;
-$naranjaClaro:#FCB17B;
-$naranjaOscuro:#EB6F14;
-$rojoClaro:#EF8786;
-$rojoOscuro:#E65E5D;
+
+// Eliana 2
+$azulClaro:#5DA7CA;
+$azulOscuro:#0F5C7D;
+$verdeClaro:#1EA145;
+$verdeOscuro:#23BC86;
+$amarilloClaro:#F6B109;
+$amarilloOscuro:#C19406;
+$naranjaClaro:#FFDF57;
+$naranjaOscuro:#F4361C;
+$rojoClaro:#F4000C;
+$rojoOscuro:#D3001A;
+$letraNegativo:#ffffff;
+
+// Juan
+/*$azulClaro:#5DA7CA;*/
+/*$azulOscuro:#0F5C7D;*/
+/*$verdeClaro:#1EA145;*/
+/*$verdeOscuro:#106128;*/
+/*$amarilloClaro:#F6B109;*/
+/*$amarilloOscuro:#C19406;*/
+/*$naranjaClaro:#F0610C;*/
+/*$naranjaOscuro:#B54A09;*/
+/*$rojoClaro:#F4000C;*/
+/*$rojoOscuro:#000;*/
+/*$letraNegativo:#000;*/
+
+/*$azulClaro:#39DEE5;*/
+/*$azulOscuro:#2FB0C1;*/
+/*$verdeClaro:#4EEAB3;*/
+/*$verdeOscuro:#43D19F;*/
+/*$amarilloClaro:#F3E785;*/
+/*$amarilloOscuro:#EDDC4F;*/
+/*$naranjaClaro:#FCB17B;*/
+/*$naranjaOscuro:#EB6F14;*/
+/*$rojoClaro:#EF8786;*/
+/*$rojoOscuro:#E65E5D;*/
+
+// Eliana
+/*$azulClaro:#39DEE5;*/
+/*$azulOscuro:#2FB0C1;*/
+/*$verdeClaro:#4EEAB3;*/
+/*$verdeOscuro:#43D19F;*/
+/*$amarilloClaro:#F3E785;*/
+/*$amarilloOscuro:#EDDC4F;*/
+/*$naranjaClaro:#FCB17B;*/
+/*$naranjaOscuro:#EB6F14;*/
+/*$rojoClaro:#EF8786;*/
+/*$rojoOscuro:#E65E5D;*/
+/*$letraNegativo:#fff*/
+
+.tally {position:absolute; top:0; right:0; width:50%; text-align:right; z-index:1; display:none;
+	.time {}
+	.turns {
+		em {}
+	}
+}
 
 span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
 	font-weight:bold; font-size:10px; cursor:pointer; vertical-align:middle;
@@ -27,7 +74,7 @@ span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Lib
 			height:0;
 			border-top: $buttonSide solid transparent;
 			border-bottom: $buttonSide solid transparent;
-			border-left: $buttonSide*1.5 solid $azulOscuro;
+			border-left: $buttonSide*1.5 solid $azulClaro;
 		}
 		.refresh img {
 			display:none;
@@ -37,7 +84,7 @@ span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Lib
 	}
 }
 
-.paused {background:$azulClaro;
+.paused {background:$azulOscuro;
 	.bar {
 		.progress {display:none}
 		.playStop .play {display:inline-block;}
@@ -59,4 +106,6 @@ span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Lib
 	.bar .progress {background:$naranjaOscuro}
 }
 
-.over {background:$rojoClaro}
+.over {background:$rojoOscuro;
+	span.digits {color:$letraNegativo;}
+}

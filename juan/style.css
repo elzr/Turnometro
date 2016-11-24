@@ -3,17 +3,6 @@ body {
   padding: 0;
   text-align: center; }
 
-/*$azulClaro:#5DA7CA;*/
-/*$azulOscuro:#0F5C7D;*/
-/*$verdeClaro:#1EA145;*/
-/*$verdeOscuro:#106128;*/
-/*$amarilloClaro:#F6B109;*/
-/*$amarilloOscuro:#C19406;*/
-/*$naranjaClaro:#F0610C;*/
-/*$naranjaOscuro:#B54A09;*/
-/*$rojoClaro:#F4000C;*/
-/*$rojoOscuro:#000;*/
-/*$letraNegativo:#000;*/
 /*$azulClaro:#39DEE5;*/
 /*$azulOscuro:#2FB0C1;*/
 /*$verdeClaro:#4EEAB3;*/
@@ -107,7 +96,7 @@ span.digits {
 .running {
   background: #1EA145; }
   .running .bar .progress {
-    background: #23BC86; }
+    background: #106128; }
 
 .half {
   background: #F6B109; }
@@ -115,13 +104,13 @@ span.digits {
     background: #C19406; }
 
 .almost {
-  background: #FFDF57; }
+  background: #F0610C; }
   .almost .bar .progress {
-    background: #F4361C; }
+    background: #B54A09; }
 
 .over {
-  background: #D3001A; }
+  background: #F4000C; }
   .over span.digits {
-    color: #ffffff; }
+    color: #000; }
 
 /*# sourceMappingURL=style.css.map */
