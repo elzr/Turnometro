@@ -11,66 +11,95 @@ var TM = {
 	get:function() {
 		return parseInt( T.data('seconds') );
 	},
-	format:function() {
-		var count = TM.get();
-		T.text( count );
+	format:function(start) {
+		var count = start || TM.get();
+		count = count > 10 ? Math.ceil( count / 10 )*10 : count;
+		out = count;
+
+		T.text( out );
 
 		if( Math.abs(count) > 60 ) {
 			var seconds = (Math.abs(count) % 60);
 			seconds = seconds < 10 ? '0'+seconds : seconds;
-			T.text( (count < 0 ? '-' : '') + Math.floor(Math.abs(count)/60) +':'+ seconds );
+			out = (count < 0 ? '-' : '') + Math.floor(Math.abs(count)/60) +':'+ seconds;
 		} else if((count >= 0) && (count < 10) && (T.text().length == 1)) {
-			T.text( 0+T.text() );
+			out = 0 + T.text();
 		}
-	},
+		T.text( out );
 
+		return out;
+	},
 	tick:function() {
 		TM.interval = setInterval(function() {
 			TM.decrement();
-			document.title = "Turno " + TM.get();
+			TM.setTitle( TM.get() );
 			$('.bar .progress').css('height', Math.ceil((TM.get() / TM.start)*100)+'%');
 			TM.style();
 		}, 1000);
 	},
 	style:function() {
-		var count = TM.get();
-		var half = Math.ceil(TM.start/2);
+		var count = TM.get(), b = $('body');
+		var half = Math.ceil( TM.start/2 );
 
 		TM.resetClasses();
 
-		TM.resize( count > 60 ? 3 : 2 );
 		if ( count <= 60 ) {
-			//console.log( '2!' );
 		}
 
 		if( count > half ) {
-			$('body').addClass('running');
-			$('body').addClass();
+			b.addClass('running');
+			b.addClass();
 		} else if( (count > 0) && (count <= half) && (count > 10)) {
-			$('body').addClass('half');
+			b.addClass('half');
 		} else if(count <= 10) {
-			$('body').addClass('almost');
+			b.addClass('almost');
 			if((count <= 0) && (count > -10)) {
-				TM.resize(2);
-				$('body').toggleClass('over');
-			} 
+				b.toggleClass('over');
+			}
 			if(count == 0) {
 				TM.zero();
 			}
 			if(count <= -10) {
-				TM.resize(3);
-				$('body').toggleClass('over');
+				b.toggleClass('over');
 			}
 			if(count <= -599) {
 				//clearInterval(TM.interval);
 			}
 		}
+
+		TM.resize( TM.countToFit( count ));
+	},
+	countToFit:function(count) {
+		var fit = 0;
+		if(Math.abs(count) > 60) {
+			fit = 3;
+		} else {
+			fit = 1.2;
+		}
+		if((count <= 0) && (count > -10)) {
+			fit = 1.2
+		}
+		if(count <= -10) {
+			fit = 1.9
+		}
+		if(count < -60) {
+			fit = 2.3
+		}
+		return fit;
 	},
 	zero:function() {
 		TM.sound.play();
 	},
-	play:function() {
-		if($('body').hasClass('paused')) {
+	turnUp:function() { //for what?
+		var turns = $('.clock .tally .turns');
+		turnsInt = (turns.data('count')||0)+1;
+		turns.data( 'count', turnsInt );
+		turns.find('em').text( turnsInt );
+	},
+	play:function(event) {
+		// (this.nodeName.toLowerCase() == 'body') && // attempt to fix event bubbling
+		if( $('body').hasClass('paused') ) {
+			TM.turnUp();
 			TM.style();
 			TM.tick();
 		} else {
@@ -86,29 +115,40 @@ var TM = {
 
 		TM.resetClasses();
 		$('body').addClass('paused');
+		TM.setTitle( TM.start );
 	},
 	resetClasses:function() {
 		$('body').removeClass('paused running half almost over');
 	},
 	resize:function(fit) {
-		var fitted = Math.min($(window).height()*0.8, (TM.heightWidthProportion*$(window).width())/fit);
-		if(fit > 2) {
-			fitted *= 0.7
-		}
-		T.css({
-			fontSize: fitted,
-			marginTop: ($(window).height() - fitted)/( fit == 3 ? 3 : 5) //hack to get a better margin
+		var h = $(window).height(), w = $(window).width();
+		var fitted = Math.min(h*0.8, (TM.heightWidthProportion*w)/fit);
+
+		//if(fit > 2) {
+			//fitted *= 0.7
+		//}
+
+		T.css( {
+			height:h+'px',
+			width:w+'px',
+			fontSize:fitted+'px',
+		  	lineHeight:h+'px'
 		});
 		return fitted;
 	},
+	setTitle:function(count) {
+		document.title = (count ? (TM.format(count)+' | ') : '') + "Turnometro"
+	},
 	boot:function() {
 		TM.start = parseInt(window.location.hash.substr(1)) || 60;
-		document.title = "Turno " + TM.start;
-		$('span').text(TM.start);
+
+		TM.setTitle( TM.start );
+		T.text(TM.start);
 		TM.set( TM.start );
+
 		$('body, .playStop').click( TM.play ).dblclick( TM.reset );
 		TM.heightWidthProportion = 10/($('span').width()/(TM.start > 60 ? 4 : 2));
-		TM.resize( TM.start > 60 ? 3 : 2 );
+		TM.resize( TM.countToFit(TM.start) );
 	}
 };
 

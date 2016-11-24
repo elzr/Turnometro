@@ -1,59 +1,36 @@
 body {
   margin: 0;
   padding: 0;
-  text-align: center; }
+  text-align: center;
+  overflow: hidden; }
 
-/*$azulClaro:#5DA7CA;*/
-/*$azulOscuro:#0F5C7D;*/
-/*$verdeClaro:#1EA145;*/
-/*$verdeOscuro:#106128;*/
-/*$amarilloClaro:#F6B109;*/
-/*$amarilloOscuro:#C19406;*/
-/*$naranjaClaro:#F0610C;*/
-/*$naranjaOscuro:#B54A09;*/
-/*$rojoClaro:#F4000C;*/
-/*$rojoOscuro:#000;*/
-/*$letraNegativo:#000;*/
-/*$azulClaro:#39DEE5;*/
-/*$azulOscuro:#2FB0C1;*/
-/*$verdeClaro:#4EEAB3;*/
-/*$verdeOscuro:#43D19F;*/
-/*$amarilloClaro:#F3E785;*/
-/*$amarilloOscuro:#EDDC4F;*/
-/*$naranjaClaro:#FCB17B;*/
-/*$naranjaOscuro:#EB6F14;*/
-/*$rojoClaro:#EF8786;*/
-/*$rojoOscuro:#E65E5D;*/
-/*$azulClaro:#39DEE5;*/
-/*$azulOscuro:#2FB0C1;*/
-/*$verdeClaro:#4EEAB3;*/
-/*$verdeOscuro:#43D19F;*/
-/*$amarilloClaro:#F3E785;*/
-/*$amarilloOscuro:#EDDC4F;*/
-/*$naranjaClaro:#FCB17B;*/
-/*$naranjaOscuro:#EB6F14;*/
-/*$rojoClaro:#EF8786;*/
-/*$rojoOscuro:#E65E5D;*/
-/*$letraNegativo:#fff*/
+.tally, span.digits {
+  font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; }
+
 .tally {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 1%;
+  right: 1%;
   width: 50%;
   text-align: right;
-  z-index: 1;
-  display: none; }
+  z-index: 2;
+  font-size: 5em;
+  color: white;
+  opacity: 0.5; }
+  .tally .turns {
+    font-size: 50%; }
+    .tally .turns em {
+      font-size: 200%; }
 
 span.digits {
-  font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
   font-weight: bold;
-  font-size: 10px;
   cursor: pointer;
   vertical-align: middle;
+  text-align: center;
   display: inline-block;
   user-select: none;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   color: white; }
 
 .bar {
@@ -88,10 +65,16 @@ span.digits {
       border-top: 4em solid transparent;
       border-bottom: 4em solid transparent;
       border-left: 6em solid #5DA7CA; }
-    .bar .playStop .refresh img {
-      display: none;
-      width: 8em;
-      height: 8em; }
+    .bar .playStop .refresh {
+      position: relative; }
+      .bar .playStop .refresh .maxDuration {
+        position: absolute;
+        top: 0;
+        left: 0; }
+      .bar .playStop .refresh img {
+        display: none;
+        width: 8em;
+        height: 8em; }
 
 .paused {
   background: #0F5C7D; }
