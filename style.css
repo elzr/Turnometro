@@ -4,23 +4,29 @@ body {
   text-align: center;
   overflow: hidden; }
 
-.tally, span.digits {
+.tally, .digits, .maxDuration {
   font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; }
 
 .tally {
   position: absolute;
   top: 1%;
-  right: 1%;
+  right: 2%;
   width: 50%;
   text-align: right;
   z-index: 2;
   font-size: 5em;
   color: white;
   opacity: 0.5; }
-  .tally .turns {
-    font-size: 50%; }
-    .tally .turns em {
-      font-size: 200%; }
+  .tally .eventTime, .tally .turns {
+    font-size: 50%;
+    display: inline-block; }
+    .tally .eventTime em, .tally .turns em {
+      font-size: 200%;
+      font-style: normal;
+      display: inline-block;
+      vertical-align: middle; }
+  .tally .eventTime {
+    margin-right: 0.5em; }
 
 span.digits {
   font-weight: bold;
@@ -51,41 +57,53 @@ span.digits {
     width: 100%;
     height: 100%;
     background: #000; }
-  .bar .playStop {
+  .bar .playReset {
     position: absolute;
-    bottom: 5%;
+    bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
     cursor: pointer; }
-    .bar .playStop .play {
+    .bar .playReset .play {
+      margin: 2% 3%;
       display: none;
       width: 0;
       height: 0;
       border-top: 4em solid transparent;
       border-bottom: 4em solid transparent;
-      border-left: 6em solid #5DA7CA; }
-    .bar .playStop .refresh {
-      position: relative; }
-      .bar .playStop .refresh .maxDuration {
+      border-left: 6em solid #0F5C7D; }
+    .bar .playReset .reset {
+      position: relative;
+      margin: 2%;
+      display: none; }
+      .bar .playReset .reset .maxDuration {
         position: absolute;
         top: 0;
-        left: 0; }
-      .bar .playStop .refresh img {
-        display: none;
+        color: white;
+        font-size: 2em;
+        display: inline-block;
+        width: 4em;
+        height: 4em;
+        line-height: 4.3em;
+        vertical-align: middle;
+        text-align: center; }
+      .bar .playReset .reset img {
         width: 8em;
         height: 8em; }
 
+.landscape .bar .playReset {
+  text-align: right; }
+
 .paused {
-  background: #0F5C7D; }
+  background: #5DA7CA; }
   .paused .bar .progress {
     display: none; }
-  .paused .bar .playStop .play {
+  .paused .bar .playReset .play {
     display: inline-block; }
 
 .running .bar .progress, .half .bar .progress, .almost .bar .progress {
   display: block; }
-.running .bar .playStop .refresh img, .half .bar .playStop .refresh img, .almost .bar .playStop .refresh img {
+.running .bar .playReset .reset, .half .bar .playReset .reset, .almost .bar .playReset .reset {
   display: inline-block; }
 
 .running {
@@ -99,7 +117,7 @@ span.digits {
     background: #FFCE00; }
 
 .almost {
-  background: #FD5841; }
+  background: #FC8A51; }
   .almost .bar .progress {
     background: #F4361C; }
 

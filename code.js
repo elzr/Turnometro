@@ -1,12 +1,16 @@
 var TM = {
 	start:60,
-	sound: new Audio('http://www.w3schools.com/html/horse.mp3'),
+	sound: new Audio('http://soundbible.com/grab.php?id=1815&type=mp3'),
+		//sound: new Audio('http://www.w3schools.com/html/horse.mp3'),
 	set:function(t) {
 		T.data('seconds', t);
 		TM.format();
 	},
 	decrement:function(t) {
 		TM.set( TM.get() - 1 );
+	},
+	increment:function(t) {
+		TM.eventTime.data('seconds', TM.eventTime.data('seconds')+1);
 	},
 	get:function() {
 		return parseInt( T.data('seconds') );
@@ -29,9 +33,16 @@ var TM = {
 
 		return out;
 	},
+	heartbeat:function() {
+		TM.heartbeatInterval = setInterval(function() {
+			TM.increment();
+			TM.eventTime.find('em').text( Math.floor(TM.eventTime.data('seconds')/60) );
+		}, 1000);
+	},
 	tick:function() {
 		TM.interval = setInterval(function() {
 			TM.decrement();
+
 			TM.setTitle( TM.get() );
 			$('.bar .progress').css('height', Math.ceil((TM.get() / TM.start)*100)+'%');
 			TM.style();
@@ -63,7 +74,7 @@ var TM = {
 				b.toggleClass('over');
 			}
 			if(count <= -599) {
-				//clearInterval(TM.interval);
+				clearInterval(TM.interval);
 			}
 		}
 
@@ -72,18 +83,18 @@ var TM = {
 	countToFit:function(count) {
 		var fit = 0;
 		if(Math.abs(count) > 60) {
-			fit = 3;
+			fit = 2.6;
 		} else {
-			fit = 1.2;
+			fit = 1.25;
 		}
 		if((count <= 0) && (count > -10)) {
-			fit = 1.2
+			fit = 1.25
 		}
 		if(count <= -10) {
 			fit = 1.9
 		}
 		if(count < -60) {
-			fit = 2.3
+			fit = 3.1
 		}
 		return fit;
 	},
@@ -121,12 +132,10 @@ var TM = {
 		$('body').removeClass('paused running half almost over');
 	},
 	resize:function(fit) {
-		var h = $(window).height(), w = $(window).width();
-		var fitted = Math.min(h*0.8, (TM.heightWidthProportion*w)/fit);
+		var h = $(window).height(), w = $(window).width(),
+			fitted = Math.min(h*0.8, w/fit);
 
-		//if(fit > 2) {
-			//fitted *= 0.7
-		//}
+		$('body').removeClass('landscape portrait').addClass( h < w ? 'landscape' : 'portrait');
 
 		T.css( {
 			height:h+'px',
@@ -142,13 +151,18 @@ var TM = {
 	boot:function() {
 		TM.start = parseInt(window.location.hash.substr(1)) || 60;
 
+		TM.eventTime = $('.eventTime').data('seconds', 0);
+		TM.heartbeat();
+
 		TM.setTitle( TM.start );
 		T.text(TM.start);
 		TM.set( TM.start );
+		$('.maxDuration').text( TM.format(TM.start) );
 
-		$('body, .playStop').click( TM.play ).dblclick( TM.reset );
-		TM.heightWidthProportion = 10/($('span').width()/(TM.start > 60 ? 4 : 2));
-		TM.resize( TM.countToFit(TM.start) );
+		$('body').click( TM.play ).dblclick( TM.reset );
+		var customResize = function() {TM.resize( TM.countToFit(TM.start) )};
+		customResize();
+		$(window).resize( customResize );
 	}
 };
 
