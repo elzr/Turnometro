@@ -25,11 +25,11 @@ var TM = {
 		if( Math.abs(count) > 60 ) {
 			var seconds = (Math.abs(count) % 60);
 			seconds = seconds < 10 ? '0'+seconds : seconds;
-			out = (count < 0 ? '-' : '') + Math.floor(Math.abs(count)/60) +':'+ seconds;
+			out = (count < 0 ? '-' : '') + Math.floor(Math.abs(count)/60) +':<b></b>'+ seconds;
 		} else if((count >= 0) && (count < 10) && (T.text().length == 1)) {
 			out = 0 + T.text();
 		}
-		T.text( out );
+		T.html( out );
 
 		return out;
 	},
@@ -146,7 +146,7 @@ var TM = {
 		return fitted;
 	},
 	setTitle:function(count) {
-		document.title = (count ? (TM.format(count)+' | ') : '') + "Turnometro"
+		document.title = (count ? (TM.format(count).replace(/<[^>]+>/g,'') +' | ') : '') + "Turnometro"
 	},
 	boot:function() {
 		TM.start = parseInt(window.location.hash.substr(1)) || 60;
