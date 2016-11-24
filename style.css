@@ -79,7 +79,8 @@ span.digits {
     bottom: 5%;
     left: 0;
     width: 100%;
-    text-align: center; }
+    text-align: center;
+    cursor: pointer; }
     .bar .playStop .play {
       display: none;
       width: 0;
@@ -105,17 +106,17 @@ span.digits {
   display: inline-block; }
 
 .running {
-  background: #1EA145; }
+  background: #1CE8A0; }
   .running .bar .progress {
     background: #23BC86; }
 
 .half {
-  background: #F6B109; }
+  background: #FFDF57; }
   .half .bar .progress {
-    background: #C19406; }
+    background: #FFCE00; }
 
 .almost {
-  background: #FFDF57; }
+  background: #FD5841; }
   .almost .bar .progress {
     background: #F4361C; }
 

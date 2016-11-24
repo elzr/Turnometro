@@ -4,15 +4,15 @@ $buttonSide:4em;
 
 // Eliana 2
 $azulClaro:#5DA7CA;
-$azulOscuro:#0F5C7D;
-$verdeClaro:#1EA145;
-$verdeOscuro:#23BC86;
-$amarilloClaro:#F6B109;
-$amarilloOscuro:#C19406;
-$naranjaClaro:#FFDF57;
-$naranjaOscuro:#F4361C;
+	$azulOscuro:#0F5C7D;
+$verdeClaro:#1CE8A0;
+	$verdeOscuro:#23BC86;
+$amarilloClaro:#FFDF57;
+	$amarilloOscuro:#FFCE00;
+$naranjaClaro:#FD5841;
+	$naranjaOscuro:#F4361C;
 $rojoClaro:#F4000C;
-$rojoOscuro:#D3001A;
+	$rojoOscuro:#D3001A;
 $letraNegativo:#ffffff;
 
 // Juan
@@ -67,7 +67,7 @@ span.digits { font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Lib
 
 .bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
 	.progress {display:inline-block; position:absolute; bottom:0; left:0; width:100%; height:100%; background:#000;}
-	.playStop {position:absolute; bottom:5%; left:0; width:100%; text-align:center;
+	.playStop {position:absolute; bottom:5%; left:0; width:100%; text-align:center; cursor:pointer;
 		.play {
 			display:none;
 			width:0;
