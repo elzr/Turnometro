@@ -7,7 +7,7 @@ $azulClaro:#5DA7CA;
 $verdeClaro:#1CE8A0;
 	$verdeOscuro:#23BC86;
 $amarilloClaro:#FFDF57;
-	$amarilloOscuro:#FFCE00;
+	$amarilloOscuro:#F0C309;
 $naranjaClaro:#FC8A51;
 //#FD5841;
 	$naranjaOscuro:#F4361C;
@@ -17,8 +17,8 @@ $letraNegativo:#ffffff;
 
 .tally, .digits, .maxDuration {font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;}
 
-.tally {position:absolute; top:1%; right:2%; width:50%; text-align:right; z-index:2; font-size:5em; color:white; opacity:0.5;
-	.eventTime, .turns {font-size:50%; display:inline-block;
+.tally {position:absolute; top:2%; right:2%; width:50%; text-align:right; z-index:2; font-size:5em; color:white; opacity:0.5;
+	.eventTime, .turns {font-size:50%; display:inline-block; vertical-align:top;
 		em {font-size:200%; font-style:normal; display:inline-block; vertical-align:middle;}
 	}
 	.eventTime {margin-right:0.5em}
@@ -29,6 +29,7 @@ span.digits {
 	vertical-align:middle; text-align:center;
 	display:inline-block; user-select: none; position:relative; z-index:3;
 	color:white;
+	b {width:1px; height:1px; display:inline-block; overflow:hidden; color:transparent}
 }
 
 .bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
@@ -53,6 +54,10 @@ span.digits {
 }
 
 .landscape .bar .playReset {text-align:right}
+.narrowLandscape {
+	.bar .playReset {font-size:50%}
+	.eventTime, .turns {font-size:25%}
+}
 
 .paused {background:$azulClaro;
 	.bar {

@@ -4,7 +4,7 @@ var TM = {
 		//sound: new Audio('http://www.w3schools.com/html/horse.mp3'),
 	set:function(t) {
 		T.data('seconds', t);
-		TM.format();
+		T.html(TM.format());
 	},
 	decrement:function(t) {
 		TM.set( TM.get() - 1 );
@@ -17,19 +17,20 @@ var TM = {
 	},
 	format:function(start) {
 		var count = start || TM.get();
-		count = count > 10 ? Math.ceil( count / 10 )*10 : count;
+		//count = count > 10 ? Math.ceil( count / 10 )*10 : count;
 		out = count;
-
-		T.text( out );
+		//console.log( 'count', count );
 
 		if( Math.abs(count) > 60 ) {
 			var seconds = (Math.abs(count) % 60);
-			seconds = seconds < 10 ? '0'+seconds : seconds;
-			out = (count < 0 ? '-' : '') + Math.floor(Math.abs(count)/60) +':<b></b>'+ seconds;
-		} else if((count >= 0) && (count < 10) && (T.text().length == 1)) {
-			out = 0 + T.text();
+			seconds = seconds < 10 ? seconds : seconds;
+			out = (count < 0 ? '-' : '') +
+			  	Math.floor(Math.abs(count)/60) +
+				//':<b>_</b>' +
+				seconds;
+		} else if((count >= 0) && (count < 10)) {
+			out = '0' + count;
 		}
-		T.html( out );
 
 		return out;
 	},
@@ -135,7 +136,9 @@ var TM = {
 		var h = $(window).height(), w = $(window).width(),
 			fitted = Math.min(h*0.8, w/fit);
 
-		$('body').removeClass('landscape portrait').addClass( h < w ? 'landscape' : 'portrait');
+		$('body').removeClass('landscape portrait narrowLandscape').
+			addClass( h < w ? 'landscape' : 'portrait').
+			addClass( w/h > 1.5 ? 'narrowLandscape' : '' );
 
 		T.css( {
 			height:h+'px',
@@ -146,7 +149,7 @@ var TM = {
 		return fitted;
 	},
 	setTitle:function(count) {
-		document.title = (count ? (TM.format(count).replace(/<[^>]+>/g,'') +' | ') : '') + "Turnometro"
+		document.title = ((count ? (TM.format(count) +' | ') : '') + "Turnometro").replace(/<[^>]+>/g,'').replace(/_/g,'')
 	},
 	boot:function() {
 		TM.start = parseInt(window.location.hash.substr(1)) || 60;
@@ -157,7 +160,7 @@ var TM = {
 		TM.setTitle( TM.start );
 		T.text(TM.start);
 		TM.set( TM.start );
-		$('.maxDuration').text( TM.format(TM.start) );
+		$('.maxDuration').text( (TM.format(TM.start)+'').replace(/<[^>]+>/g,'').replace(/_/g,'') );
 
 		$('body').click( TM.play ).dblclick( TM.reset );
 		var customResize = function() {TM.resize( TM.countToFit(TM.start) )};

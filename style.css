@@ -9,7 +9,7 @@ body {
 
 .tally {
   position: absolute;
-  top: 1%;
+  top: 2%;
   right: 2%;
   width: 50%;
   text-align: right;
@@ -19,7 +19,8 @@ body {
   opacity: 0.5; }
   .tally .eventTime, .tally .turns {
     font-size: 50%;
-    display: inline-block; }
+    display: inline-block;
+    vertical-align: top; }
     .tally .eventTime em, .tally .turns em {
       font-size: 200%;
       font-style: normal;
@@ -38,6 +39,12 @@ span.digits {
   position: relative;
   z-index: 3;
   color: white; }
+  span.digits b {
+    width: 1px;
+    height: 1px;
+    display: inline-block;
+    overflow: hidden;
+    color: transparent; }
 
 .bar {
   position: absolute;
@@ -94,6 +101,11 @@ span.digits {
 .landscape .bar .playReset {
   text-align: right; }
 
+.narrowLandscape .bar .playReset {
+  font-size: 50%; }
+.narrowLandscape .eventTime, .narrowLandscape .turns {
+  font-size: 25%; }
+
 .paused {
   background: #5DA7CA; }
   .paused .bar .progress {
@@ -114,7 +126,7 @@ span.digits {
 .half {
   background: #FFDF57; }
   .half .bar .progress {
-    background: #FFCE00; }
+    background: #F0C309; }
 
 .almost {
   background: #FC8A51; }
