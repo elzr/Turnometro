@@ -15,43 +15,56 @@ $rojoClaro:#F4000C;
 	$rojoOscuro:#D3001A;
 $letraNegativo:#ffffff;
 
-.tally, .digits, .maxDuration {font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;}
+.tally, .digits, .maxDuration, .version, .settings {font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;}
 
-.tally {position:absolute; top:2%; right:2%; width:50%; text-align:right; z-index:2; font-size:5em; color:white; opacity:0.5;
-	.eventTime, .turns {font-size:50%; display:inline-block; vertical-align:top;
-		em {font-size:200%; font-style:normal; display:inline-block; vertical-align:middle;}
-	}
-	.eventTime {margin-right:0.5em}
-}
-
-span.digits {
-	font-weight:bold; cursor:pointer; 
-	vertical-align:middle; text-align:center;
-	display:inline-block; user-select: none; position:relative; z-index:3;
-	color:white;
-	b {width:1px; height:1px; display:inline-block; overflow:hidden; color:transparent}
-}
-
-.bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
-	.progress {display:inline-block; position:absolute; bottom:0; left:0; width:100%; height:100%; background:#000;}
-	.playReset {position:absolute; bottom:0; left:0; width:100%; text-align:center; cursor:pointer;
-		.play { margin:2% 3%;
-			display:none;
-			width:0;
-			height:0;
-			border-top: $buttonSide solid transparent;
-			border-bottom: $buttonSide solid transparent;
-			border-left: $buttonSide*1.5 solid $azulOscuro;
+.clock {
+	.tally {position:absolute; top:2%; right:2%; width:50%; text-align:right; z-index:2; font-size:5em; color:white; opacity:0.5;
+		.eventTime, .turns {font-size:50%; display:inline-block; vertical-align:top;
+			em {font-size:200%; font-style:normal; display:inline-block; vertical-align:middle;}
 		}
-		.reset {position:relative; margin:2%; display:none;
-			.maxDuration {position:absolute; top:0; color:white; font-size:2em; display:inline-block; width:$buttonSide; height:$buttonSide; line-height:$buttonSide+0.3; vertical-align:middle; text-align:center}
-			img {
-				width:$buttonSide*2;
-				height:$buttonSide*2;
+		.eventTime {margin-right:0.5em}
+	}
+
+	span.digits {
+		font-weight:bold; cursor:pointer; 
+		vertical-align:middle; text-align:center;
+		display:inline-block; user-select: none; position:relative; z-index:3;
+		color:white;
+		b {width:1px; height:1px; display:inline-block; overflow:hidden; color:transparent}
+	}
+
+	.bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
+		.progress {display:inline-block; position:absolute; bottom:0; left:0; width:100%; height:100%; background:#000;}
+		.playReset {position:absolute; bottom:0; left:0; width:100%; text-align:center; cursor:pointer;
+			.play { margin:2% 3%;
+				display:none;
+				width:0;
+				height:0;
+				border-top: $buttonSide solid transparent;
+				border-bottom: $buttonSide solid transparent;
+				border-left: $buttonSide*1.5 solid $azulOscuro;
+			}
+			.reset {position:relative; margin:2%; display:none;
+				.maxDuration {position:absolute; top:0; color:white; font-size:2em; display:inline-block; width:$buttonSide; height:$buttonSide; line-height:$buttonSide+0.3; vertical-align:middle; text-align:center}
+				img {
+					width:$buttonSide*2;
+					height:$buttonSide*2;
+				}
 			}
 		}
 	}
+
+	.goToSettings {position:absolute; top:0; left:0; z-index:4; cursor:pointer;
+		img {
+			margin: $buttonSide*0.5;
+			width:$buttonSide*1.5;
+			height:$buttonSide*1.5;
+		}
+	}
+	.version {position:absolute; bottom:2%; left:2%;}
 }
+
+/* APP STATE */
 
 .landscape .bar .playReset {text-align:right}
 .narrowLandscape {
@@ -78,9 +91,29 @@ span.digits {
 	.bar .progress {background:$amarilloOscuro}
 }
 .almost {background:$naranjaClaro;
-	.bar .progress {background:$naranjaOscuro}
+	.bar .progress {background:$naranjaOscuro} 
 }
 
 .over {background:$rojoOscuro;
 	span.digits {color:$letraNegativo;}
+}
+
+.clock {position:relative; z-index:1; top:0; left:0; width:100%; height:100%}
+.settings {visibility:hidden; position:absolute; top:0; left:0; width:100%; height:100%; z-index:2; background:white; 
+	padding:5%; font-size:120%;
+	a {text-decoration:none; display:inline-block}
+
+	a.exit {font-weight:bold; background:$azulClaro; font-size:150%; color:white; padding:1em}
+	.durations {margin:2em 1em; margin-top:0.5em;
+		a, input[type=text] {font-size:300%; padding:0.2em 0.5em; margin:0.4em 0.2em; }
+		a.custom {display:none}
+		form {display:inline-block; margin:0; padding:0;
+			input[type=text] {width:2em; color:#aaa}
+			input[type=submit] {width:1em; height:1.5em; display:none}
+		}
+	}
+	a.selected, a.soundToggle {font-weight:bold; background:black; color:white; padding:0.2em 0.5em}
+	div.sound {margin:2em 1em; font-size:140%}
+	div.steps {margin:2em 1em; font-size:140%}
+	
 }

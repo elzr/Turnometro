@@ -4,10 +4,10 @@ body {
   text-align: center;
   overflow: hidden; }
 
-.tally, .digits, .maxDuration {
+.tally, .digits, .maxDuration, .version, .settings {
   font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; }
 
-.tally {
+.clock .tally {
   position: absolute;
   top: 2%;
   right: 2%;
@@ -17,19 +17,18 @@ body {
   font-size: 5em;
   color: white;
   opacity: 0.5; }
-  .tally .eventTime, .tally .turns {
+  .clock .tally .eventTime, .clock .tally .turns {
     font-size: 50%;
     display: inline-block;
     vertical-align: top; }
-    .tally .eventTime em, .tally .turns em {
+    .clock .tally .eventTime em, .clock .tally .turns em {
       font-size: 200%;
       font-style: normal;
       display: inline-block;
       vertical-align: middle; }
-  .tally .eventTime {
+  .clock .tally .eventTime {
     margin-right: 0.5em; }
-
-span.digits {
+.clock span.digits {
   font-weight: bold;
   cursor: pointer;
   vertical-align: middle;
@@ -39,14 +38,13 @@ span.digits {
   position: relative;
   z-index: 3;
   color: white; }
-  span.digits b {
+  .clock span.digits b {
     width: 1px;
     height: 1px;
     display: inline-block;
     overflow: hidden;
     color: transparent; }
-
-.bar {
+.clock .bar {
   position: absolute;
   top: 0;
   left: 0;
@@ -56,7 +54,7 @@ span.digits {
   text-align: center;
   opacity: 0.5;
   background: transparent; }
-  .bar .progress {
+  .clock .bar .progress {
     display: inline-block;
     position: absolute;
     bottom: 0;
@@ -64,14 +62,14 @@ span.digits {
     width: 100%;
     height: 100%;
     background: #000; }
-  .bar .playReset {
+  .clock .bar .playReset {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
     cursor: pointer; }
-    .bar .playReset .play {
+    .clock .bar .playReset .play {
       margin: 2% 3%;
       display: none;
       width: 0;
@@ -79,11 +77,11 @@ span.digits {
       border-top: 4em solid transparent;
       border-bottom: 4em solid transparent;
       border-left: 6em solid #0F5C7D; }
-    .bar .playReset .reset {
+    .clock .bar .playReset .reset {
       position: relative;
       margin: 2%;
       display: none; }
-      .bar .playReset .reset .maxDuration {
+      .clock .bar .playReset .reset .maxDuration {
         position: absolute;
         top: 0;
         color: white;
@@ -94,10 +92,25 @@ span.digits {
         line-height: 4.3em;
         vertical-align: middle;
         text-align: center; }
-      .bar .playReset .reset img {
+      .clock .bar .playReset .reset img {
         width: 8em;
         height: 8em; }
+.clock .goToSettings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  cursor: pointer; }
+  .clock .goToSettings img {
+    margin: 2em;
+    width: 6em;
+    height: 6em; }
+.clock .version {
+  position: absolute;
+  bottom: 2%;
+  left: 2%; }
 
+/* APP STATE */
 .landscape .bar .playReset {
   text-align: right; }
 
@@ -137,5 +150,65 @@ span.digits {
   background: #D3001A; }
   .over span.digits {
     color: #ffffff; }
+
+.clock {
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.settings {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: white;
+  padding: 5%;
+  font-size: 120%; }
+  .settings a {
+    text-decoration: none;
+    display: inline-block; }
+  .settings a.exit {
+    font-weight: bold;
+    background: #5DA7CA;
+    font-size: 150%;
+    color: white;
+    padding: 1em; }
+  .settings .durations {
+    margin: 2em 1em;
+    margin-top: 0.5em; }
+    .settings .durations a, .settings .durations input[type=text] {
+      font-size: 300%;
+      padding: 0.2em 0.5em;
+      margin: 0.4em 0.2em; }
+    .settings .durations a.custom {
+      display: none; }
+    .settings .durations form {
+      display: inline-block;
+      margin: 0;
+      padding: 0; }
+      .settings .durations form input[type=text] {
+        width: 2em;
+        color: #aaa; }
+      .settings .durations form input[type=submit] {
+        width: 1em;
+        height: 1.5em;
+        display: none; }
+  .settings a.selected, .settings a.soundToggle {
+    font-weight: bold;
+    background: black;
+    color: white;
+    padding: 0.2em 0.5em; }
+  .settings div.sound {
+    margin: 2em 1em;
+    font-size: 140%; }
+  .settings div.steps {
+    margin: 2em 1em;
+    font-size: 140%; }
 
 /*# sourceMappingURL=style.css.map */

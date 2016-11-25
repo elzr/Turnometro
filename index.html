@@ -16,7 +16,12 @@
 		<div class="clock">
 			<span class="digits" ></span>
 
-			<div class="settings"></div>
+			<div class="goToSettings">
+				<img src="img/settings.png" />
+			</div>
+			<div class="version">
+				0.3
+			</div>
 
 			<div class="tally">
 				<span class="eventTime"><em>0</em>m</span><span class="turns">#<em>0</em></span>
@@ -31,6 +36,29 @@
 						<img src="img/reset.png" />
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="settings">
+			<a class="exit">Back to event &rarr;</a><br /><br />
+
+			<div class="durations">
+				<a data-duration="30">30</a><a data-duration="60">60</a><a data-duration="120">2:00</a> <br />
+				<a data-duration="300">5:00</a><a data-duration="600">10:00</a>
+					<form>
+						<input type="text" class="edit" value="Edit" /><input type="submit" class="submit" value="&rarr;" />
+					</form>
+				<div class="custom">
+					<a class="custom" data-duration=""></a>
+				</div>
+			</div>
+
+			<div class="sound">
+				End beep: <a class="soundToggle">YES</a>
+			</div>
+			<div class="steps">
+				Steps: 
+					<a data-duration="1" class="selected">1</a>
+					<a data-duration="10">10</a>
 			</div>
 		</div>
 	</body>
