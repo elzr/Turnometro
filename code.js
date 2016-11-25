@@ -170,7 +170,6 @@ var TM = {
 			S.find('.durations a').click( d.set ).end().
 				find('.steps a').click( s.setStep ).end().
 				find('.soundToggle').click( s.toggleSound ).end().
-				find('.durations form').submit( d.edit ).end().
 				find('.durations .edit').
 					focus( d.focus ).
 					blur( d.blur );
@@ -201,18 +200,15 @@ var TM = {
 				TM.initialize();
 			},
 			edit:function() { var d = parseInt( S.find('.durations .edit').val() );
-				//console.log( 'editing!', d );
-				//console.log( 'huzza!', 44 );
+				if( (d > 0) && (d < 6000)) {
+					var newDuration = $('.durations div.custom').append(
+						'<a href="javascript:void(0) data-duration="'+d+'">'+TM.format(d)+'</a>'
+					);
+					TM.settings.duration.set.apply(newDuration);
+				}
 
-				//if( (d > 0) && (d < 6000)) {
-					//var newDuration = $('.durations div.custom').append(
-						//'<a href="javascript:void(0) data-duration="'+d+'" />'
-					//);
-					//newDuration.call( TM.set() );
-				//}
-
-				//event.preventDefault();
-				//return false;
+				event.preventDefault();
+				return false;
 			},
 			focus:function() {
 				$(this).val('');

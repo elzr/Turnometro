@@ -44,7 +44,7 @@
 			<div class="durations">
 				<a data-duration="30">30</a><a data-duration="60">60</a><a data-duration="120">2:00</a> <br />
 				<a data-duration="300">5:00</a><a data-duration="600">10:00</a>
-					<form>
+					<form onsubmit="event.preventDefault(); TM.settings.duration.edit();">
 						<input type="text" class="edit" value="Edit" /><input type="submit" class="submit" value="&rarr;" />
 					</form>
 				<div class="custom">
