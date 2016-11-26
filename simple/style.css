@@ -1,0 +1,239 @@
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  overflow: hidden; }
+
+.tally, .digits, .maxDuration, .version, .settings {
+  font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; }
+
+.clock .tally {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 50%;
+  text-align: right;
+  z-index: 2;
+  font-size: 5em;
+  color: white;
+  opacity: 0.5; }
+  .clock .tally .eventTime, .clock .tally .turns {
+    font-size: 50%;
+    display: inline-block;
+    vertical-align: top; }
+    .clock .tally .eventTime em, .clock .tally .turns em {
+      font-size: 200%;
+      font-style: normal;
+      display: inline-block;
+      vertical-align: middle; }
+  .clock .tally .eventTime {
+    margin-right: 0.5em; }
+.clock span.digits {
+  font-weight: bold;
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  user-select: none;
+  position: relative;
+  z-index: 3;
+  color: white; }
+  .clock span.digits b {
+    width: 1px;
+    height: 1px;
+    display: inline-block;
+    overflow: hidden;
+    color: transparent; }
+.clock .bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+  opacity: 0.5;
+  background: transparent; }
+  .clock .bar .progress {
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000; }
+  .clock .bar .playReset {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    cursor: pointer; }
+    .clock .bar .playReset .play {
+      margin: 2% 3%;
+      display: none;
+      width: 0;
+      height: 0;
+      border-top: 4em solid transparent;
+      border-bottom: 4em solid transparent;
+      border-left: 6em solid #0F5C7D; }
+    .clock .bar .playReset .reset {
+      position: relative;
+      margin: 2%;
+      display: none; }
+      .clock .bar .playReset .reset .maxDuration {
+        position: absolute;
+        top: 0;
+        color: white;
+        font-size: 2em;
+        display: inline-block;
+        width: 4em;
+        height: 4em;
+        line-height: 4.3em;
+        vertical-align: middle;
+        text-align: center; }
+      .clock .bar .playReset .reset img {
+        width: 8em;
+        height: 8em; }
+.clock .goToSettings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  cursor: pointer; }
+  .clock .goToSettings img {
+    margin: 2em;
+    width: 4.8em;
+    height: 4.8em; }
+.clock .version {
+  position: absolute;
+  bottom: 2%;
+  left: 2%; }
+
+/* APP STATE */
+.landscape .bar .playReset {
+  text-align: right; }
+
+.narrowLandscape .bar .playReset {
+  font-size: 50%; }
+.narrowLandscape .eventTime, .narrowLandscape .turns {
+  font-size: 25%; }
+
+.paused {
+  background: #5DA7CA; }
+  .paused .bar .progress {
+    display: none; }
+  .paused .bar .playReset .play {
+    display: inline-block; }
+
+.running .bar .progress, .half .bar .progress, .almost .bar .progress {
+  display: block; }
+.running .bar .playReset .reset, .half .bar .playReset .reset, .almost .bar .playReset .reset {
+  display: inline-block; }
+
+.running {
+  background: #1CE8A0; }
+  .running .bar .progress {
+    background: #23BC86; }
+
+.half {
+  background: #FFDF57; }
+  .half .bar .progress {
+    background: #F0C309; }
+
+.almost {
+  background: #FC8A51; }
+  .almost .bar .progress {
+    background: #F4361C; }
+
+.over {
+  background: #D3001A; }
+  .over span.digits {
+    color: #ffffff; }
+
+.clock {
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.settings {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: white;
+  padding: 5%;
+  font-size: 120%; }
+  .settings a {
+    text-decoration: none;
+    display: inline-block; }
+  .settings a.exit {
+    font-weight: bold;
+    background: #5DA7CA;
+    font-size: 150%;
+    color: white;
+    padding: 1em; }
+  .settings .durations {
+    margin: 2em 1em;
+    margin-top: 0.5em; }
+    .settings .durations a, .settings .durations input[type=text] {
+      font-size: 300%;
+      padding: 0.2em 0.5em;
+      margin: 0.4em 0.2em; }
+    .settings .durations a.custom {
+      display: none; }
+    .settings .durations form {
+      display: inline-block;
+      margin: 0;
+      padding: 0; }
+      .settings .durations form input[type=text] {
+        width: 2em;
+        color: #aaa; }
+      .settings .durations form input[type=submit] {
+        width: 1em;
+        height: 1.5em;
+        display: none; }
+  .settings a.selected, .settings a.soundToggle, .settings a.colorToggle {
+    font-weight: bold;
+    background: black;
+    color: white;
+    padding: 0.2em 0.5em; }
+  .settings div.sound {
+    margin: 2em 1em;
+    font-size: 140%; }
+  .settings div.steps {
+    margin: 2em 1em;
+    font-size: 140%; }
+
+body.colorMuted {
+  background: white !important; }
+  body.colorMuted .settings a.exit {
+    background: #aaa; }
+  body.colorMuted .clock span.digits, body.colorMuted .clock .tally {
+    color: black; }
+  body.colorMuted .clock .playReset .play {
+    border-left: 6em solid black; }
+  body.colorMuted .clock .playReset .reset .maxDuration {
+    color: black; }
+  body.colorMuted .clock img {
+    filter: invert(100%); }
+  body.colorMuted.running .bar .progress, body.colorMuted.half .bar .progress, body.colorMuted.almost .bar .progress {
+    background: #ccc; }
+  body.colorMuted.over {
+    background: black !important; }
+    body.colorMuted.over .clock span.digits, body.colorMuted.over .clock .tally {
+      color: white; }
+    body.colorMuted.over .clock .playReset .play {
+      border-left: 6em solid white; }
+    body.colorMuted.over .clock .playReset .reset .maxDuration {
+      color: white; }
+    body.colorMuted.over .clock img {
+      filter: invert(0%); }
+
+/*# sourceMappingURL=style.css.map */
