@@ -57,8 +57,8 @@ $letraNegativo:#ffffff;
 	.goToSettings {position:absolute; top:0; left:0; z-index:4; cursor:pointer;
 		img {
 			margin: $buttonSide*0.5;
-			width:$buttonSide*1.5;
-			height:$buttonSide*1.5;
+			width:$buttonSide*1.2;
+			height:$buttonSide*1.2;
 		}
 	}
 	.version {position:absolute; bottom:2%; left:2%;}
@@ -84,6 +84,7 @@ $letraNegativo:#ffffff;
 		.playReset .reset {display:inline-block;}
 	}
 }
+
 .running {background:$verdeClaro;
 	.bar .progress {background:$verdeOscuro}
 }
@@ -112,8 +113,41 @@ $letraNegativo:#ffffff;
 			input[type=submit] {width:1em; height:1.5em; display:none}
 		}
 	}
-	a.selected, a.soundToggle {font-weight:bold; background:black; color:white; padding:0.2em 0.5em}
+	a.selected, a.soundToggle, a.colorToggle {font-weight:bold; background:black; color:white; padding:0.2em 0.5em}
 	div.sound {margin:2em 1em; font-size:140%}
 	div.steps {margin:2em 1em; font-size:140%}
 	
+}
+
+body.colorMuted {background:white !important;
+	.settings {
+		a.exit {background:#aaa}
+	}
+	.clock {
+		span.digits, .tally {color:black}
+		.playReset {
+			.play { border-left: $buttonSide*1.5 solid black; }
+			.reset {
+				.maxDuration {color:black}
+			}
+		}
+		img {filter:invert(100%);}
+	}
+
+	&.running, &.half, &.almost {
+		.bar .progress {background:#ccc}
+	}
+	
+	&.over {background:black !important;
+		.clock {
+			span.digits, .tally {color:white}
+			.playReset {
+				.play { border-left: $buttonSide*1.5 solid white; }
+				.reset {
+					.maxDuration {color:white}
+				}
+			}
+			img {filter:invert(0%);}
+		}
+	}
 }

@@ -6,6 +6,9 @@ var TM = {
 		//sound: new Audio('http://www.w3schools.com/html/horse.mp3'),
 		muted:false,
 	},
+	color:{
+		muted:false,
+	},
 	set:function(t) {
 		T.data('seconds', t);
 		T.html( (TM.format()+'').replace(':', ':<b>_</b>') );
@@ -170,6 +173,7 @@ var TM = {
 			S.find('.durations a').click( d.set ).end().
 				find('.steps a').click( s.setStep ).end().
 				find('.soundToggle').click( s.toggleSound ).end().
+				find('.colorToggle').click( s.toggleColor ).end().
 				find('.durations .edit').
 					focus( d.focus ).
 					blur( d.blur );
@@ -199,12 +203,12 @@ var TM = {
 				$(this).addClass('selected');
 				TM.initialize();
 			},
-			edit:function() { var d = parseInt( S.find('.durations .edit').val() );
+			edit:function() { var d = parseInt( (S.find('.durations .edit').val()||'').replace(/\s/g,'') );
 				if( (d > 0) && (d < 6000)) {
-					var newDuration = $('.durations div.custom').append(
-						'<a href="javascript:void(0) data-duration="'+d+'">'+TM.format(d)+'</a>'
+					$('.durations div.custom').prepend(
+						'<a href="javascript:void(0)">'+TM.format(d)+'</a>'
 					);
-					TM.settings.duration.set.apply(newDuration);
+					$('.durations div.custom a:first').data('duration', d).click( TM.settings.duration.set ).click();
 				}
 
 				event.preventDefault();
@@ -226,6 +230,16 @@ var TM = {
 				$('.soundToggle').text('NO');
 			}
 			TM.sound.muted = !TM.sound.muted;
+		},
+		toggleColor:function() {
+			if(TM.sound.muted) {
+				$('.colorToggle').text('YES');
+				$('body').removeClass('colorMuted');
+			} else {
+				$('.colorToggle').text('NO');
+				$('body').addClass('colorMuted');
+			}
+			TM.color.muted = !TM.color.muted;
 		},
 		setStep:function() {
 			TM.step = $(this).data('duration');

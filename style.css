@@ -103,8 +103,8 @@ body {
   cursor: pointer; }
   .clock .goToSettings img {
     margin: 2em;
-    width: 6em;
-    height: 6em; }
+    width: 4.8em;
+    height: 4.8em; }
 .clock .version {
   position: absolute;
   bottom: 2%;
@@ -199,7 +199,7 @@ body {
         width: 1em;
         height: 1.5em;
         display: none; }
-  .settings a.selected, .settings a.soundToggle {
+  .settings a.selected, .settings a.soundToggle, .settings a.colorToggle {
     font-weight: bold;
     background: black;
     color: white;
@@ -210,5 +210,30 @@ body {
   .settings div.steps {
     margin: 2em 1em;
     font-size: 140%; }
+
+body.colorMuted {
+  background: white !important; }
+  body.colorMuted .settings a.exit {
+    background: #aaa; }
+  body.colorMuted .clock span.digits, body.colorMuted .clock .tally {
+    color: black; }
+  body.colorMuted .clock .playReset .play {
+    border-left: 6em solid black; }
+  body.colorMuted .clock .playReset .reset .maxDuration {
+    color: black; }
+  body.colorMuted .clock img {
+    filter: invert(100%); }
+  body.colorMuted.running .bar .progress, body.colorMuted.half .bar .progress, body.colorMuted.almost .bar .progress {
+    background: #ccc; }
+  body.colorMuted.over {
+    background: black !important; }
+    body.colorMuted.over .clock span.digits, body.colorMuted.over .clock .tally {
+      color: white; }
+    body.colorMuted.over .clock .playReset .play {
+      border-left: 6em solid white; }
+    body.colorMuted.over .clock .playReset .reset .maxDuration {
+      color: white; }
+    body.colorMuted.over .clock img {
+      filter: invert(0%); }
 
 /*# sourceMappingURL=style.css.map */
