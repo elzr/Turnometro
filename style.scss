@@ -17,6 +17,9 @@ $letraNegativo:#ffffff;
 
 .tally, .digits, .maxDuration, .version, .settings {font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;}
 
+.welcome {
+}
+
 .clock {
 	.tally {position:absolute; top:2%; right:2%; width:50%; text-align:right; z-index:2; font-size:5em; color:white; opacity:0.5;
 		.eventTime, .turns {font-size:50%; display:inline-block; vertical-align:top;

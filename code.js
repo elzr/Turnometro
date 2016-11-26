@@ -165,10 +165,20 @@ var TM = {
 	setTitle:function(count) {
 		document.title = (count ? (TM.format(count) +' | ') : '') + "Turnometro";
 	},
+	pin: {
+		create:function() {
+			TM.pin.code = Math.floor(Math.random()*9999);
+			return TM.pin.code;
+		},
+		code:0
+	},
 	settings:{
 		boot:function() { var s = TM.settings, d = s.duration;
 			$('.goToSettings').click( s.enter );
 			$('.exit').click( s.exit );
+
+			$('.settings .pin .strong').text( TM.pin.create() );
+
 			S.find('a').attr('href', 'javascript:void(0)');
 			S.find('.durations a').click( d.set ).end().
 				find('.steps a').click( s.setStep ).end().
@@ -232,7 +242,7 @@ var TM = {
 			TM.sound.muted = !TM.sound.muted;
 		},
 		toggleColor:function() {
-			if(TM.sound.muted) {
+			if(TM.color.muted) {
 				$('.colorToggle').text('YES');
 				$('body').removeClass('colorMuted');
 			} else {

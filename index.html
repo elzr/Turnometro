@@ -13,6 +13,17 @@
 		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 	<body class="paused">
+		<div class="welcome">
+			<h1>Turnometro</h1>
+			<form onsubmit="event.preventDefault(); TM.settings.duration.edit();">
+				<input type="text" class="eventPIN" value="Event PIN" />
+				<input type="submit" class="submit" value="ENTER &rarr;" />
+			</form>
+
+			or
+
+			<input type="button" class="" value="START an EVENT" />
+		</div>
 		<div class="clock">
 			<span class="digits" ></span>
 
@@ -20,7 +31,7 @@
 				<img src="img/settings.png" />
 			</div>
 			<div class="version">
-				0.5.1
+				0.5.2
 			</div>
 
 			<div class="tally">
@@ -40,6 +51,11 @@
 		</div>
 		<div class="settings">
 			<a class="exit">Back to event &rarr;</a><br /><br />
+
+			<div class="pin"> 
+				<strong></strong>
+				<em>Share this PIN to share your event.</em>
+			</div>
 
 			<div class="durations">
 				<a data-duration="30">30</a><a data-duration="60">60</a><a data-duration="120">2:00</a> <br />

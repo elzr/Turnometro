@@ -232,7 +232,7 @@ var TM = {
 			TM.sound.muted = !TM.sound.muted;
 		},
 		toggleColor:function() {
-			if(TM.sound.muted) {
+			if(TM.color.muted) {
 				$('.colorToggle').text('YES');
 				$('body').removeClass('colorMuted');
 			} else {
