@@ -183,7 +183,7 @@ body {
     margin: 2em 1em;
     margin-top: 0.5em; }
     .settings .durations a, .settings .durations input[type=text] {
-      font-size: 300%;
+      font-size: 150%;
       padding: 0.2em 0.5em;
       margin: 0.4em 0.2em; }
     .settings .durations a.custom {
@@ -204,12 +204,9 @@ body {
     background: black;
     color: white;
     padding: 0.2em 0.5em; }
-  .settings div.sound {
+  .settings div.sound, .settings div.steps, .settings div.color {
     margin: 2em 1em;
-    font-size: 140%; }
-  .settings div.steps {
-    margin: 2em 1em;
-    font-size: 140%; }
+    font-size: 120%; }
 
 body.colorMuted {
   background: white !important; }

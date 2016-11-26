@@ -106,7 +106,7 @@ $letraNegativo:#ffffff;
 
 	a.exit {font-weight:bold; background:$azulClaro; font-size:150%; color:white; padding:1em}
 	.durations {margin:2em 1em; margin-top:0.5em;
-		a, input[type=text] {font-size:300%; padding:0.2em 0.5em; margin:0.4em 0.2em; }
+		a, input[type=text] {font-size:150%; padding:0.2em 0.5em; margin:0.4em 0.2em; }
 		a.custom {display:none}
 		form {display:inline-block; margin:0; padding:0;
 			input[type=text] {width:2em; color:#aaa}
@@ -114,8 +114,7 @@ $letraNegativo:#ffffff;
 		}
 	}
 	a.selected, a.soundToggle, a.colorToggle {font-weight:bold; background:black; color:white; padding:0.2em 0.5em}
-	div.sound {margin:2em 1em; font-size:140%}
-	div.steps {margin:2em 1em; font-size:140%}
+	div.sound, div.steps, div.color {margin:2em 1em; font-size:120%}
 	
 }
 
