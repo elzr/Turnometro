@@ -4,111 +4,204 @@ body {
   text-align: center;
   overflow: hidden; }
 
-.tally, .digits, .maxDuration, .version, .settings {
-  font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; }
+body {
+  font-family: "Roboto", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+  font-weight: 100; }
 
-.clock .tally {
-  position: absolute;
-  top: 2%;
-  right: 2%;
-  width: 50%;
-  text-align: right;
-  z-index: 2;
-  font-size: 5em;
-  color: white;
-  opacity: 0.5; }
-  .clock .tally .eventTime, .clock .tally .turns {
-    font-size: 50%;
-    display: inline-block;
-    vertical-align: top; }
-    .clock .tally .eventTime em, .clock .tally .turns em {
-      font-size: 200%;
-      font-style: normal;
-      display: inline-block;
-      vertical-align: middle; }
-  .clock .tally .eventTime {
-    margin-right: 0.5em; }
-.clock span.digits {
-  font-weight: bold;
-  cursor: pointer;
-  vertical-align: middle;
-  text-align: center;
-  display: inline-block;
-  user-select: none;
-  position: relative;
-  z-index: 3;
-  color: white; }
-  .clock span.digits b {
-    width: 1px;
-    height: 1px;
-    display: inline-block;
-    overflow: hidden;
-    color: transparent; }
-.clock .bar {
+.welcome {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
-  z-index: 1;
-  text-align: center;
-  opacity: 0.5;
-  background: transparent; }
-  .clock .bar .progress {
-    display: inline-block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000; }
-  .clock .bar .playReset {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    cursor: pointer; }
-    .clock .bar .playReset .play {
-      margin: 2% 3%;
-      display: none;
-      width: 0;
-      height: 0;
-      border-top: 4em solid transparent;
-      border-bottom: 4em solid transparent;
-      border-left: 6em solid #0F5C7D; }
-    .clock .bar .playReset .reset {
-      position: relative;
-      margin: 2%;
-      display: none; }
-      .clock .bar .playReset .reset .maxDuration {
-        position: absolute;
-        top: 0;
-        color: white;
-        font-size: 2em;
-        display: inline-block;
-        width: 4em;
-        height: 4em;
-        line-height: 4.3em;
-        vertical-align: middle;
-        text-align: center; }
-      .clock .bar .playReset .reset img {
-        width: 8em;
-        height: 8em; }
-.clock .goToSettings {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 4;
-  cursor: pointer; }
-  .clock .goToSettings img {
+  height: 100%;
+  background: #5DA7CA;
+  font-size: 150%;
+  overflow: scroll; }
+  .welcome .fork h1 {
+    font-weight: 100;
+    font-size: 3em;
+    line-height: 0.9em;
+    text-transform: uppercase; }
+    .welcome .fork h1 b {
+      font-weight: 400; }
+  .welcome .fork b {
+    font-weight: 900; }
+  .welcome .fork .startEvent {
     margin: 2em;
-    width: 4.8em;
-    height: 4.8em; }
-.clock .version {
-  position: absolute;
-  bottom: 2%;
-  left: 2%; }
+    margin-top: 3em;
+    text-decoration: none;
+    padding: 0.4em 0.6em; }
+    .welcome .fork .startEvent a {
+      background: black;
+      color: white;
+      font-size: 130%;
+      text-decoration: none;
+      margin-top: 3em;
+      padding: 0.4em 0.6em; }
+  .welcome .fork em {
+    display: block;
+    margin: 3em 0; }
+  .welcome .fork .enterEvent {
+    margin: 0 auto;
+    position: relative;
+    width: 16em;
+    height: 3em; }
+    .welcome .fork .enterEvent b {
+      font-weight: 900; }
+    .welcome .fork .enterEvent input[type=text] {
+      font-size: 200%;
+      font-weight: 900;
+      color: black;
+      border-width: 0;
+      border-bottom: 3px solid black;
+      background-color: transparent;
+      text-align: center;
+      width: 8em;
+      padding: 0.2em 0;
+      margin-top: 0.5em;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 3; }
+    .welcome .fork .enterEvent img {
+      position: absolute;
+      bottom: 0;
+      left: 0.4em;
+      width: 2em;
+      z-index: 2; }
+    .welcome .fork .enterEvent .label {
+      position: absolute;
+      top: 0.5em;
+      left: 2.1em;
+      font-size: 130%;
+      z-index: 2; }
+  .welcome .fork .version {
+    position: absolute;
+    bottom: 2%;
+    left: 2%; }
+  .welcome .fork .findMore {
+    text-align: center;
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+    font-size: 80%; }
+    .welcome .fork .findMore img {
+      width: 1.5em;
+      filter: invert(100%); }
+  .welcome .about {
+    margin: 2em 0; }
+    .welcome .about p {
+      width: 30em;
+      margin: 2em auto;
+      text-align: left; }
+
+.clock {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0; }
+  .clock .tally {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    width: 50%;
+    text-align: right;
+    z-index: 2;
+    font-size: 5em;
+    color: white;
+    opacity: 0.5; }
+    .clock .tally .eventTime, .clock .tally .turns {
+      font-size: 50%;
+      display: inline-block;
+      vertical-align: top; }
+      .clock .tally .eventTime em, .clock .tally .turns em {
+        font-size: 200%;
+        font-style: normal;
+        display: inline-block;
+        vertical-align: middle; }
+    .clock .tally .eventTime {
+      margin-right: 0.5em; }
+  .clock span.digits {
+    font-weight: 900;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+    user-select: none;
+    position: relative;
+    z-index: 3;
+    color: white; }
+    .clock span.digits b {
+      width: 1px;
+      height: 1px;
+      display: inline-block;
+      overflow: hidden;
+      color: transparent; }
+  .clock .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    text-align: center;
+    opacity: 0.5;
+    background: transparent; }
+    .clock .bar .progress {
+      display: inline-block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000; }
+    .clock .bar .playReset {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      cursor: pointer; }
+      .clock .bar .playReset .play {
+        margin: 2% 3%;
+        display: none;
+        width: 0;
+        height: 0;
+        border-top: 4em solid transparent;
+        border-bottom: 4em solid transparent;
+        border-left: 6em solid #0F5C7D; }
+      .clock .bar .playReset .reset {
+        position: relative;
+        margin: 2%;
+        display: none; }
+        .clock .bar .playReset .reset .maxDuration {
+          position: absolute;
+          top: 0;
+          color: white;
+          font-size: 2em;
+          display: inline-block;
+          width: 4em;
+          height: 4em;
+          line-height: 4.3em;
+          vertical-align: middle;
+          text-align: center; }
+        .clock .bar .playReset .reset img {
+          width: 8em;
+          height: 8em; }
+  .clock .goToSettings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    cursor: pointer; }
+    .clock .goToSettings img {
+      margin: 2em;
+      width: 4.8em;
+      height: 4.8em; }
+  .clock .version {
+    position: absolute;
+    bottom: 2%;
+    left: 2%; }
 
 /* APP STATE */
 .landscape .bar .playReset {
@@ -149,7 +242,7 @@ body {
 .over {
   background: #D3001A; }
   .over span.digits {
-    color: #ffffff; }
+    color: white; }
 
 .clock {
   position: relative;
@@ -161,27 +254,36 @@ body {
 
 .settings {
   visibility: hidden;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 2;
   background: white;
-  padding: 5%;
+  padding: 5% 0;
   font-size: 120%; }
   .settings a {
     text-decoration: none;
     display: inline-block; }
   .settings a.exit {
     font-weight: bold;
-    background: #5DA7CA;
+    background: black;
     font-size: 150%;
     color: white;
-    padding: 1em; }
+    padding: 0.5em 1em; }
+  .settings .pin strong {
+    display: block;
+    font-size: 10em;
+    padding: 0;
+    line-height: 0.9em; }
   .settings .durations {
     margin: 2em 1em;
-    margin-top: 0.5em; }
+    margin-top: 0.5em;
+    border: 1px solid black;
+    padding: 1em 0;
+    width: 90%;
+    margin: 5%; }
     .settings .durations a, .settings .durations input[type=text] {
       font-size: 150%;
       padding: 0.2em 0.5em;
@@ -195,10 +297,11 @@ body {
       .settings .durations form input[type=text] {
         width: 2em;
         color: #aaa; }
-      .settings .durations form input[type=submit] {
-        width: 1em;
-        height: 1.5em;
-        display: none; }
+      .settings .durations form img.edit {
+        width: 3em;
+        height: 3em;
+        display: none;
+        vertical-align: middle; }
   .settings a.selected, .settings a.soundToggle, .settings a.colorToggle {
     font-weight: bold;
     background: black;
@@ -207,11 +310,15 @@ body {
   .settings div.sound, .settings div.steps, .settings div.color {
     margin: 2em 1em;
     font-size: 120%; }
+  .settings div.steps a {
+    display: inline-block;
+    margin-right: 1em; }
 
 body.colorMuted {
-  background: white !important; }
-  body.colorMuted .settings a.exit {
-    background: #aaa; }
+  background: white !important;
+  /*.settings {*/
+  /*a.exit {background:#aaa}*/
+  /*}*/ }
   body.colorMuted .clock span.digits, body.colorMuted .clock .tally {
     color: black; }
   body.colorMuted .clock .playReset .play {

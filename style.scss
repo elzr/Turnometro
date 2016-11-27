@@ -1,26 +1,46 @@
 body {margin:0; padding:0; text-align:center; overflow:hidden}
 $buttonSide:4em;
 
-// Eliana 2
-$azulClaro:#5DA7CA;
-	$azulOscuro:#0F5C7D;
-$verdeClaro:#1CE8A0;
-	$verdeOscuro:#23BC86;
-$amarilloClaro:#FFDF57;
-	$amarilloOscuro:#F0C309;
-$naranjaClaro:#FC8A51;
-//#FD5841;
-	$naranjaOscuro:#F4361C;
-$rojoClaro:#F4000C;
-	$rojoOscuro:#D3001A;
-$letraNegativo:#ffffff;
+// color palette:
+$azulClaro:#5DA7CA; 		$azulOscuro:#0F5C7D;
+$verdeClaro:#1CE8A0; 	$verdeOscuro:#23BC86;
+$amarilloClaro:#FFDF57;	$amarilloOscuro:#F0C309;
+$naranjaClaro:#FC8A51; 	$naranjaOscuro:#F4361C;
+$rojoClaro:#F4000C; 		$rojoOscuro:#D3001A;
 
-.tally, .digits, .maxDuration, .version, .settings {font-family:"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;}
+body {font-family:"Roboto", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; font-weight:100}
 
-.welcome {
+.welcome {position:absolute; top:0; left:0; width:100%; height:100%; background:$azulClaro; font-size:150%; overflow:scroll;
+	.fork {
+		h1 {font-weight:100; font-size:3em; line-height:0.9em; text-transform:uppercase;
+			b {font-weight:400}
+		}
+
+		b {font-weight:900;}
+
+		.startEvent { margin:2em; margin-top:3em; text-decoration:none; padding:0.4em 0.6em; 
+			a {background:black; color:white; font-size:130%; text-decoration:none; margin-top:3em; padding:0.4em 0.6em;}
+		}
+		em {display:block; margin:3em 0}
+
+		.enterEvent {margin:0 auto; position:relative; width:16em; height:3em;
+			b {font-weight:900;}
+			input[type=text] {font-size:200%; font-weight:900; color:black; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
+			img {position:absolute; bottom:0; left:0.4em; width:2em; z-index:2}
+			.label {position:absolute; top:0.5em; left:2.1em; font-size:130%; z-index:2}
+		}
+
+		.version {position:absolute; bottom:2%; left:2%;}
+		.findMore {text-align:center; position:absolute; bottom:2%; width:100%; font-size:80%;
+			img {width:1.5em; filter:invert(100%);}
+		}
+	}
+	.about { margin:2em 0;
+		p {width:30em; margin:2em auto; text-align:left}
+	}
 }
 
-.clock {
+.clock {visibility:hidden; position:fixed; top:0; left:0;
 	.tally {position:absolute; top:2%; right:2%; width:50%; text-align:right; z-index:2; font-size:5em; color:white; opacity:0.5;
 		.eventTime, .turns {font-size:50%; display:inline-block; vertical-align:top;
 			em {font-size:200%; font-style:normal; display:inline-block; vertical-align:middle;}
@@ -29,7 +49,7 @@ $letraNegativo:#ffffff;
 	}
 
 	span.digits {
-		font-weight:bold; cursor:pointer; 
+		font-weight:900; cursor:pointer; 
 		vertical-align:middle; text-align:center;
 		display:inline-block; user-select: none; position:relative; z-index:3;
 		color:white;
@@ -70,6 +90,7 @@ $letraNegativo:#ffffff;
 /* APP STATE */
 
 .landscape .bar .playReset {text-align:right}
+
 .narrowLandscape {
 	.bar .playReset {font-size:50%}
 	.eventTime, .turns {font-size:25%}
@@ -99,32 +120,37 @@ $letraNegativo:#ffffff;
 }
 
 .over {background:$rojoOscuro;
-	span.digits {color:$letraNegativo;}
+	span.digits {color:white;}
 }
 
 .clock {position:relative; z-index:1; top:0; left:0; width:100%; height:100%}
-.settings {visibility:hidden; position:absolute; top:0; left:0; width:100%; height:100%; z-index:2; background:white; 
-	padding:5%; font-size:120%;
+
+.settings {visibility:hidden; position:fixed; top:0; left:0; width:100%; height:100%; z-index:2; background:white; 
+	padding:5% 0; font-size:120%;
 	a {text-decoration:none; display:inline-block}
 
-	a.exit {font-weight:bold; background:$azulClaro; font-size:150%; color:white; padding:1em}
-	.durations {margin:2em 1em; margin-top:0.5em;
+	a.exit {font-weight:bold; background:black; font-size:150%; color:white; padding:0.5em 1em}
+	.pin {
+		strong {display:block; font-size:10em; padding:0; line-height:0.9em}
+	}
+
+	.durations {margin:2em 1em; margin-top:0.5em; border:1px solid black; padding:1em 0; width:90%; margin:5%;
 		a, input[type=text] {font-size:150%; padding:0.2em 0.5em; margin:0.4em 0.2em; }
 		a.custom {display:none}
 		form {display:inline-block; margin:0; padding:0;
 			input[type=text] {width:2em; color:#aaa}
-			input[type=submit] {width:1em; height:1.5em; display:none}
+			img.edit {width:3em; height:3em; display:none; vertical-align:middle}
 		}
 	}
 	a.selected, a.soundToggle, a.colorToggle {font-weight:bold; background:black; color:white; padding:0.2em 0.5em}
 	div.sound, div.steps, div.color {margin:2em 1em; font-size:120%}
-	
+	div.steps a {display:inline-block; margin-right:1em}
 }
 
 body.colorMuted {background:white !important;
-	.settings {
-		a.exit {background:#aaa}
-	}
+	/*.settings {*/
+		/*a.exit {background:#aaa}*/
+	/*}*/
 	.clock {
 		span.digits, .tally {color:black}
 		.playReset {

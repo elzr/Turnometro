@@ -57,8 +57,10 @@ var TM = {
 		}, 1000);
 	},
 	style:function() {
-		var count = TM.get(), b = $('body');
-		var half = Math.ceil( TM.start/2 );
+		var count = TM.get(), 
+			b = $('body'),
+			half = Math.ceil( TM.start/2 ),
+			almost = TM.start <= 20 ? TM.start*0.25 : 10;
 
 		TM.resetClasses();
 
@@ -68,17 +70,14 @@ var TM = {
 		if( count > half ) {
 			b.addClass('running');
 			b.addClass();
-		} else if( (count > 0) && (count <= half) && (count > 10)) {
+		} else if( (count > 0) && (count <= half) && (count > almost)) {
 			b.addClass('half');
-		} else if(count <= 10) {
+		} else if(count <= almost) {
 			b.addClass('almost');
-			if((count <= 0) && (count > -10)) {
-				b.toggleClass('over');
-			}
 			if(count == 0) {
 				TM.zero();
 			}
-			if(count <= -10) {
+			if(count <= 0) {
 				b.toggleClass('over');
 			}
 			if(count <= -599) {
@@ -123,7 +122,6 @@ var TM = {
 	play:function(event) {
 		// (this.nodeName.toLowerCase() == 'body') && // attempt to fix event bubbling
 		
-		console.log('play!');
 		if( $('body').hasClass('paused') ) {
 			TM.turnUp();
 			TM.style();
@@ -159,6 +157,10 @@ var TM = {
 			width:w+'px',
 			fontSize:fitted+'px',
 		  	lineHeight:h+'px'
+		} );
+		$('.welcome .fork').css({
+			height:h+'px',
+			width:w+'px'
 		});
 		return fitted;
 	},
@@ -172,12 +174,15 @@ var TM = {
 		},
 		code:0
 	},
+
+	// SETTINGS --------------------------------------------
 	settings:{
 		boot:function() { var s = TM.settings, d = s.duration;
 			$('.goToSettings').click( s.enter );
 			$('.exit').click( s.exit );
 
-			$('.settings .pin .strong').text( TM.pin.create() );
+			var pin = TM.pin.create()+"", pad ="0000";
+			$('.settings .pin strong').text( pad.substring(0, pad.length - pin.length) + pin );
 
 			S.find('a').attr('href', 'javascript:void(0)');
 			S.find('.durations a').click( d.set ).end().
@@ -196,7 +201,6 @@ var TM = {
 			}
 		},
 		enter:function() {
-			console.log('entering!');
 			S.css('visibility', 'visible');
 			C.css('visibility', 'hidden');
 			TM.reset();
@@ -213,7 +217,30 @@ var TM = {
 				$(this).addClass('selected');
 				TM.initialize();
 			},
-			edit:function() { var d = parseInt( (S.find('.durations .edit').val()||'').replace(/\s/g,'') );
+			parse:function(input) { input = (input||'').replace(/^\s*/,'').replace(/\s*$/,'');
+				var out = '', match = function(regex) { return input.match(regex);},
+					intMatch = function(regex) { return parseInt(match(regex)); };
+
+				if( match(/^\d+$/) && parseInt( input ) ) {
+					out = parseInt( input );
+				} else if( match(/\d+:\d+/) ) {
+					var m = intMatch(/^(\d+):/) * 60,
+						s = intMatch(/:(\d+)$/);
+					out = m + s;
+				} else if( match(/^(\d+)m(in(ute)?)?$/) ) {
+					var m = intMatch(/^(\d+)m(in(ute)?)?$/) * 60;
+					out = m;
+				} else if( match(/^(\d+)s(ec(onds)?)?$/) ) {
+					var s = intMatch(/^(\d+)s(ec(onds)?)?$/);
+					out = s;
+				} else if( match(/^(\d+)m(in(ute)?)?(\d+)s(ec(onds)?)?$/) ) {
+					var m = intMatch(/^(\d+)m(in(utes)?)?/) * 60,
+						s = intMatch(/(\d+)s(ec(onds)?)?$/);
+					out = m + s;
+				}
+				return out;
+			},
+			edit:function() { var d = TM.settings.duration.parse( S.find('.durations input.edit').val() );
 				if( (d > 0) && (d < 6000)) {
 					$('.durations div.custom').prepend(
 						'<a href="javascript:void(0)">'+TM.format(d)+'</a>'
@@ -221,24 +248,22 @@ var TM = {
 					$('.durations div.custom a:first').data('duration', d).click( TM.settings.duration.set ).click();
 				}
 
+				S.find('.durations input.edit').val('');
+
 				event.preventDefault();
 				return false;
 			},
 			focus:function() {
 				$(this).val('');
-				S.find('.durations .submit').css('display', 'inline-block');
+				S.find('.durations img.edit').css('display', 'inline-block');
 			},
 			blur:function() {
 				$(this).val('Edit');
-				S.find('.durations .submit').css('display', 'none');
+				S.find('.durations img.edit').css('display', 'none');
 			}
 		},
 		toggleSound:function() {
-			if(TM.sound.muted) {
-				$('.soundToggle').text('YES');
-			} else {
-				$('.soundToggle').text('NO');
-			}
+			$('.soundToggle').text( TM.sound.muted ? 'YES' : 'NO' );
 			TM.sound.muted = !TM.sound.muted;
 		},
 		toggleColor:function() {
@@ -254,7 +279,29 @@ var TM = {
 		setStep:function() {
 			TM.step = $(this).data('duration');
 			S.find('.steps a').removeClass('selected');
-			$(this).addClass('selected');
+			$(this).addClass( 'selected' );
+		}
+	},
+
+	// WELCOME --------------------------------------------
+	welcome:{
+		boot:function() {
+			$('.welcome').find('.startEvent a').click( TM.welcome.exit ).end().
+				find('.enterEvent input').focus( TM.welcome.focus ).blur( TM.welcome.blur );
+		},
+		exit:function() {
+			//console.log( 'exit welcome' );
+			$('.welcome').css('visibility', 'hidden');
+			C.css('visibility', 'visible');
+			TM.settings.boot();
+		},
+		focus:function() {
+			$('.welcome .enterEvent .label').css('visibility', 'hidden');
+		},
+		blur:function() {
+			if( $(this).val() == '' ) {
+				$('.welcome .enterEvent .label').css('visibility', 'visible');
+			}
 		}
 	},
 	initialize:function() {
@@ -273,7 +320,7 @@ var TM = {
 		TM.eventTime = $('.eventTime').data('seconds', 0);
 		TM.heartbeat();
 
-		TM.settings.boot();
+		TM.welcome.boot();
 		TM.initialize();
 
 		$('.digits').click( TM.play ).dblclick( TM.reset );
