@@ -137,8 +137,9 @@ body {font-family:"Roboto", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "L
 
 .clock {position:relative; z-index:1; top:0; left:0; width:100%; height:100%}
 
+
 form.edit {display:inline-block; margin:0; padding:0; position:relative; width:3em; margin-top:0.3em;
-	input[type=text] {width:10em; height:2em; color:#aaa; border:0; border-bottom:2px solid black; background:transparent;}
+	input[type=text] {width:8em; height:2em; color:#aaa; border:0; padding-left:1.5em; font-size:100%; background:transparent; border-bottom:2px solid black;}
 	img.edit {height:1.5em; position:absolute; bottom:0.1em; left:0; vertical-align:middle}
 }
 
@@ -160,13 +161,15 @@ form.edit {display:inline-block; margin:0; padding:0; position:relative; width:3
 		a, input[type=text] {font-size:150%; padding:0.2em 0.5em; margin:0.4em 0.2em; }
 		a.custom {display:none}
 		form {display:inline-block; margin:0; padding:0; position:relative; width:3em; height:2.7em; //background:red;
-			input[type=text] {width:1.5em; height:1em; color:#aaa; border:0; border-bottom:2px solid black;}
+			input[type=text] {width:2em; height:1em; color:#aaa; border:0; border-bottom:2px solid black;}
 			img.edit {height:1.5em; position:absolute; bottom:0; left:0; vertical-align:middle}
 		}
 	}
 
 	ul {max-width:20em; margin:0.5em auto;
-		li {text-align:left; background:#eee; margin:0.2em; padding:0.3em}
+		li {text-align:left; background:#eee; margin:0.2em; padding:0.3em;
+			&.edit {background:transparent}
+		}
 	}
 
 	a.selected, a.soundToggle, a.colorToggle {font-weight:bold; background:black; color:white; padding:0.2em 0.5em}

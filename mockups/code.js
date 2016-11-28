@@ -289,7 +289,7 @@ var TM = {
 	welcome:{
 		boot:function() {
 			$('.welcome').find('.startEvent a').click( TM.welcome.startEvent ).end().
-				find('.enterEvent input').focus( TM.welcome.focus ).blur( TM.welcome.blur ).change( TM.welcome.change );
+				find('.enterEvent input').focus( TM.welcome.focus ).blur( TM.welcome.blur );
 		},
 		startEvent:function() {
 			$('.welcome').css('visibility', 'hidden');
@@ -298,13 +298,6 @@ var TM = {
 		},
 		focus:function() {
 			$('.welcome .enterEvent').addClass('editing');
-		},
-		change:function() {
-			var count = parseInt( $(this).text().length );
-			console.log( 'length: ', count );
-			if( count == 4 ) {
-				TM.welcome.enterEvent();
-			}
 		},
 		blur:function() {
 			if( $(this).val() == '' ) {

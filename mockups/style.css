@@ -284,14 +284,12 @@ form.edit {
   width: 3em;
   margin-top: 0.3em; }
   form.edit input[type=text] {
-    width: 8em;
+    width: 10em;
     height: 2em;
     color: #aaa;
     border: 0;
-    padding-left: 1.5em;
-    font-size: 100%;
-    background: transparent;
-    border-bottom: 2px solid black; }
+    border-bottom: 2px solid black;
+    background: transparent; }
   form.edit img.edit {
     height: 1.5em;
     position: absolute;
@@ -354,7 +352,7 @@ form.edit {
       width: 3em;
       height: 2.7em; }
       .settings .durations form input[type=text] {
-        width: 2em;
+        width: 1.5em;
         height: 1em;
         color: #aaa;
         border: 0;
@@ -373,8 +371,6 @@ form.edit {
       background: #eee;
       margin: 0.2em;
       padding: 0.3em; }
-      .settings ul li.edit {
-        background: transparent; }
   .settings a.selected, .settings a.soundToggle, .settings a.colorToggle {
     font-weight: bold;
     background: black;
