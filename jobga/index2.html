@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <title>Gestión de Productos con Firebase</title>
+
+  
+<script>
+  function gotData(data) {
+    console.log(data);
+  }
+</script>
+<script src="https://turnometro-a2faf.firebaseio.com/rest/saving-data/fireblog/posts.json?callback=gotData"></script> 
+
+
+ 
+<script>
+  //var flickerAPI = "https://turnometro-a2faf.firebaseio.com/rest/saving-data/fireblog/posts.json?callback=gotData";
+// Fijarse que la ruta de partida ahora es la colección eventos:
+var firebase=new Firebase('https://turnometro-a2faf.firebaseio.com/eventos');
+
+var eventos={};
+
+// Eventos de lectura sobre Firebase
+// https://www.firebase.com/docs/web/guide/retrieving-data.html
+
+/*
+Evento: value
+
+The value event is used to read a static snapshot of the contents at a given database path,
+as they existed at the time of the read event. It is triggered once with the initial data and again every time the data changes.
+The event callback is passed a snapshot containing all data at that location, including child data. In our code example above,
+value returned all of the blog posts in our app. Everytime a new blog post is added, the callback function will return all of the posts.
+*/
+
+firebase.on('value',function(datos)
+{
+  eventos=datos.val();
+
+  // Recorremos los eventos y los mostramos
+  $.each(eventos, function(indice,valor)
+  {
+    var datoData='<div class="row"><div class="col-md-3 cabeceraProducto">';
+
+    datoData+='<h2>'+valor.milisegundosRestantes+'</h2></div>';
+
+    datoData+='<div class="row"><div class="col-md-3 cabeceraProducto">';
+      datoData+='<h2>'+valor.milisegundosRestantes+'€. </h2></div>';
+    datoData+='</div>';
+
+    datoData+='<div class="row">';  
+
+    datoData+='<div class="col-md-3">';
+    datoData+='<p>'+valor.milisegundosRestantes+'</p>';
+    datoData+='</div>';
+    datoData+='</div>';
+
+
+    $(datoData).appendTo('#tiempo');
+  }); 
+
+  },function(objetoError){
+  console.log('Error de lectura:'+objetoError.code);
+});
+</script>
+
+<style>
+
+	.bartiempo{ background:#46B2FF; height: 100vh; text-align: center;  }
+	.tiempo{ font-size: 70vh; color:#fff; }
+  .glyphicon-play{ position: relative; width: 20vh;  }
+
+</style>		 
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+
+<div class="container-fluid bartiempo">
+	<div id="tiempo"><span>01:60</span></div>
+  <div class="iconplay glypglyphicon glyphicon-play"></div>
+</div>
+<!--div class="paused">
+	<span class="digits" ></span>
+	<div class="bar">
+		<div class="progress" ></div>
+	</div>
+</div-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
+

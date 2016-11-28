@@ -1,0 +1,119 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <title>Turnometro</title>
+  <!--link rel="stylesheet" type="text/css" href="http://turnometro.org/style.css" />
+  <script src="http://turnometro.org/code.js"></script-->
+
+		 
+</head>
+<!--body >
+
+
+
+<div class="container-fluid" id="listado">
+    <h1>Listado de Productos</h1>
+</div>
+
+
+</body-->
+<body class="paused">
+    <div class="digits" style="font-size:20px;" ></div>
+    <div class="bar">
+      <div class="progress"></div>
+</div> 
+<label for="milisegundosNegativos">IDE</label>
+  <input type="text" class="form-control" id="milisegundosNegativos">     
+  <label for="milisegundosRestantes">milisegundosRestantes</label>
+  <input type="text" class="form-control" id="milisegundosRestantes">  
+  <button type="button" class="btn btn-primary" id="btnActualizar">Actualizar eventos</button>eee
+  </body> 
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+
+ 
+<script>
+  //var flickerAPI = "https://turnometro-a2faf.firebaseio.com/rest/saving-data/fireblog/posts.json?callback=gotData";
+// Fijarse que la ruta de partida ahora es la colección eventos:
+var firebase=new Firebase('https://turnometro-a2faf.firebaseio.com/eventos');
+
+var eventos={};
+
+// Eventos de lectura sobre Firebase
+// https://www.firebase.com/docs/web/guide/retrieving-data.html
+
+/*
+Evento: value
+
+The value event is used to read a static snapshot of the contents at a given database path,
+as they existed at the time of the read event. It is triggered once with the initial data and again every time the data changes.
+The event callback is passed a snapshot containing all data at that location, including child data. In our code example above,
+value returned all of the blog posts in our app. Everytime a new blog post is added, the callback function will return all of the posts.
+*/
+var milisegundosRestantes, milisegundosNegativos;
+$(".digits span").remove();
+
+
+firebase.on('value',function(datos)
+{
+  eventos=datos.val();
+
+  // Recorremos los eventos y los mostramos
+  $.each(eventos, function(indice,valor)
+  {
+    var datoData='<span>['+valor.milisegundosRestantes+'</span>';
+    datoData+=' | <span>'+indice+']</span>';   
+    //$(".digits span").remove();
+    $('#milisegundosNegativos').val(indice);
+    $('#milisegundosRestantes').val(valor.milisegundosRestantes);
+
+    $(datoData).appendTo('.paused .digits');
+
+    $(".digits").remove();
+    //$().appendTo('#listado');
+  }); 
+
+  },function(objetoError){
+  console.log('Error de lectura:'+objetoError.code);
+});
+
+function alFinalizar(error)
+{
+  if (error)
+  {
+    alert('Ha habido problemas al realizar la operación: '+error.code);
+  }
+  else{
+    alert('Operación realizada con éxito !');
+    location.assign('administracion.html');
+  }
+}
+
+
+$("#btnActualizar").click(function()
+{  
+  var milisegundosRestantes=$("#milisegundosRestantes").val();
+ alert(milisegundosRestantes);
+  firebase.child(eventosId).update(
+  {
+    milisegundosRestantes: milisegundosRestantes,
+    
+  }, alFinalizar); 
+});
+
+
+
+</script>
+  
+</html>
+
+
+
+

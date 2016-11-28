@@ -1,4 +1,5 @@
 var TM = {
+	version:'0.6',
 	start:60,
 	step:1,
 	sound: {
@@ -203,6 +204,7 @@ var TM = {
 		enter:function() {
 			S.css('visibility', 'visible');
 			C.css('visibility', 'hidden');
+			S.find('.exit').html('Back to event &rarr;');
 			TM.reset();
 		},
 		exit:function() {
@@ -286,23 +288,29 @@ var TM = {
 	// WELCOME --------------------------------------------
 	welcome:{
 		boot:function() {
-			$('.welcome').find('.startEvent a').click( TM.welcome.exit ).end().
+			$('.welcome').find('.startEvent a').click( TM.welcome.startEvent ).end().
 				find('.enterEvent input').focus( TM.welcome.focus ).blur( TM.welcome.blur );
 		},
-		exit:function() {
-			//console.log( 'exit welcome' );
+		startEvent:function() {
 			$('.welcome').css('visibility', 'hidden');
-			C.css('visibility', 'visible');
+			S.css('visibility', 'visible');
 			TM.settings.boot();
 		},
 		focus:function() {
-			$('.welcome .enterEvent .label').css('visibility', 'hidden');
+			$('.welcome .enterEvent').addClass('editing');
 		},
 		blur:function() {
 			if( $(this).val() == '' ) {
-				$('.welcome .enterEvent .label').css('visibility', 'visible');
+				$('.welcome .enterEvent').removeClass('editing');
 			}
+		},
+		enterEvent:function() {
+			$('.welcome').css('visibility', 'hidden');
+			$('.name').css('visibility', 'visible');
 		}
+	},
+	name:{
+		//$('.name').find('.name a').click( TM.welcome.startEvent ).end();
 	},
 	initialize:function() {
 		TM.setTitle( TM.start );
@@ -314,8 +322,32 @@ var TM = {
 		customResize();
 		$(window).resize( customResize );
 	},
+	firebase: {
+		boot:function() {
+			TM.firebase.db = new Firebase('https://turnometro-a2faf.firebaseio.com/eventos');
+		},
+		test:function() {
+			TM.firebase.db.on('value',function(datos) {
+				console.log('firebase!');
+				// Eliminamos el contenido del listado para actualizarlo.
+				$("#listado div.row").remove();
+
+				eventos=datos.val();
+
+				// Recorremos los eventos y los mostramos
+				$.each(eventos, function(indice,valor) {
+				console.log('events!');
+					var datodata='<div class="row" id="'+indice+'"><div class="col-md-3 cabeceraProducto">';
+					datodata+='<h2>'+valor.milisegundosRestantes+'</h2></div>';
+
+					$(datodata).appendTo('#listado');
+				});
+			});
+		}
+	},
 	boot:function() {
 		TM.start = parseInt(window.location.hash.substr(1)) || 60;
+		$('.version').text( TM.version );
 
 		TM.eventTime = $('.eventTime').data('seconds', 0);
 		TM.heartbeat();

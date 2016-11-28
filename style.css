@@ -8,6 +8,7 @@ body {
   font-family: "Roboto", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
   font-weight: 100; }
 
+/* WELCOME */
 .welcome {
   position: absolute;
   top: 0;
@@ -27,7 +28,7 @@ body {
   .welcome .fork b {
     font-weight: 900; }
   .welcome .fork .startEvent {
-    margin: 2em;
+    margin: 2em 0;
     margin-top: 3em;
     text-decoration: none;
     padding: 0.4em 0.6em; }
@@ -36,11 +37,11 @@ body {
       color: white;
       font-size: 130%;
       text-decoration: none;
-      margin-top: 3em;
+      margin-top: 1em;
       padding: 0.4em 0.6em; }
   .welcome .fork em {
     display: block;
-    margin: 3em 0; }
+    margin: 2em 0; }
   .welcome .fork .enterEvent {
     margin: 0 auto;
     position: relative;
@@ -75,6 +76,11 @@ body {
       left: 2.1em;
       font-size: 130%;
       z-index: 2; }
+    .welcome .fork .enterEvent.editing .label {
+      visibility: hidden; }
+    .welcome .fork .enterEvent.editing img {
+      left: auto;
+      right: 0.4em; }
   .welcome .fork .version {
     position: absolute;
     bottom: 2%;
@@ -89,12 +95,29 @@ body {
       width: 1.5em;
       filter: invert(100%); }
   .welcome .about {
-    margin: 2em 0; }
+    padding: 2em 0;
+    background: #eee; }
     .welcome .about p {
-      width: 30em;
-      margin: 2em auto;
+      max-width: 30em;
+      padding: 1em;
+      margin: 1em auto;
       text-align: left; }
+    .welcome .about .logos img {
+      width: 6em;
+      vertical-align: middle; }
 
+.name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #5DA7CA;
+  font-size: 150%;
+  overflow: scroll;
+  visibility: hidden; }
+
+/* CLOCK */
 .clock {
   visibility: hidden;
   position: fixed;
@@ -169,7 +192,7 @@ body {
         height: 0;
         border-top: 4em solid transparent;
         border-bottom: 4em solid transparent;
-        border-left: 6em solid #0F5C7D; }
+        border-left: 6em solid white; }
       .clock .bar .playReset .reset {
         position: relative;
         margin: 2%;
@@ -193,7 +216,8 @@ body {
     top: 0;
     left: 0;
     z-index: 4;
-    cursor: pointer; }
+    cursor: pointer;
+    opacity: 0.5; }
     .clock .goToSettings img {
       margin: 2em;
       width: 4.8em;
@@ -252,17 +276,45 @@ body {
   width: 100%;
   height: 100%; }
 
+form.edit {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 3em;
+  margin-top: 0.3em; }
+  form.edit input[type=text] {
+    width: 10em;
+    height: 2em;
+    color: #aaa;
+    border: 0;
+    border-bottom: 2px solid black;
+    background: transparent; }
+  form.edit img.edit {
+    height: 1.5em;
+    position: absolute;
+    bottom: 0.1em;
+    left: 0;
+    vertical-align: middle; }
+
+/* SETTINGS */
 .settings {
   visibility: hidden;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   z-index: 2;
   background: white;
   padding: 5% 0;
-  font-size: 120%; }
+  font-size: 120%;
+  overflow: scroll; }
+  .settings h2 {
+    margin: 0;
+    margin-top: 1em;
+    font-weight: 100;
+    text-transform: uppercase; }
   .settings a {
     text-decoration: none;
     display: inline-block; }
@@ -274,7 +326,7 @@ body {
     padding: 0.5em 1em; }
   .settings .pin strong {
     display: block;
-    font-size: 10em;
+    font-size: 7em;
     padding: 0;
     line-height: 0.9em; }
   .settings .durations {
@@ -284,6 +336,8 @@ body {
     padding: 1em 0;
     width: 90%;
     margin: 5%; }
+    .settings .durations h2 {
+      margin: 0; }
     .settings .durations a, .settings .durations input[type=text] {
       font-size: 150%;
       padding: 0.2em 0.5em;
@@ -293,15 +347,30 @@ body {
     .settings .durations form {
       display: inline-block;
       margin: 0;
-      padding: 0; }
+      padding: 0;
+      position: relative;
+      width: 3em;
+      height: 2.7em; }
       .settings .durations form input[type=text] {
-        width: 2em;
-        color: #aaa; }
+        width: 1.5em;
+        height: 1em;
+        color: #aaa;
+        border: 0;
+        border-bottom: 2px solid black; }
       .settings .durations form img.edit {
-        width: 3em;
-        height: 3em;
-        display: none;
+        height: 1.5em;
+        position: absolute;
+        bottom: 0;
+        left: 0;
         vertical-align: middle; }
+  .settings ul {
+    max-width: 20em;
+    margin: 0.5em auto; }
+    .settings ul li {
+      text-align: left;
+      background: #eee;
+      margin: 0.2em;
+      padding: 0.3em; }
   .settings a.selected, .settings a.soundToggle, .settings a.colorToggle {
     font-weight: bold;
     background: black;

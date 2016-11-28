@@ -6,8 +6,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<script language="javascript"> var T; </script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+		<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+		
+		<script language="javascript">
+			var T;
+
+		</script>
 		<script src="code.js"></script>
 
 		<link href="https://fonts.googleapis.com/css?family=Roboto:100,400,900" rel="stylesheet">
@@ -37,12 +42,14 @@
 					</form>
 				</div>
 
+				<div id="listado"></div>
+
 				<div class="findMore">
 					What's this?<br/>
 					<img class="down" src="img/down.png" />
 				</div>
 				<div class="version">
-					0.5.4
+					0.6
 				</div>
 			</div>
 			<div class="about">
@@ -59,7 +66,20 @@
 				<p>
 				This project was prototyped during the <a href="http://inteligenciacolectiva.cc/"><em>Collective Intelligence for Democracy</em></a> workshop at <a href="http://medialab-prado.es/">MediaLab Prado</a>. It comes out of 3 years of experimentation at <a href="https://www.facebook.com/WikipoliticaJalisco/">Wikipolitica</a>.
 				</p>
+				<div class="logos">
+					<img src="img/medialab-prado.jpg" />
+					<img src="img/wikipolitica.png" />
+				</div>
 			</div>
+		</div>
+
+		<div class="name">
+			<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
+				<input type="text" class="edit" value="Enter name" />
+				<img class="edit" src="img/edit.png" />
+			</form>
+
+			<span class="label">Just watch</span>
 		</div>
 
 		<!-- CLOCK -->
@@ -70,7 +90,7 @@
 				<img src="img/settings.png" />
 			</div>
 			<div class="version">
-				0.5.4
+				0.6
 			</div>
 
 			<div class="tally">
@@ -91,7 +111,7 @@
 
 		<!-- SETTINGS -->
 		<div class="settings">
-			<a class="exit">Back to event &rarr;</a><br /><br />
+			<a class="exit">Looks good, start! &rarr;</a><br /><br />
 
 			<div class="pin"> 
 				<strong></strong>
@@ -99,10 +119,11 @@
 			</div>
 
 			<div class="durations">
+				<h2>Turn duration:</h2>
 				<a data-duration="30">30</a><a data-duration="60">60</a><a data-duration="120">2:00</a> <br />
 				<a data-duration="180">3:00</a><a data-duration="300">5:00</a>
-					<form onsubmit="event.preventDefault(); TM.settings.duration.edit();">
-						<input type="text" class="edit" value="Edit" />
+					<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
+						<input type="text" class="edit" value="" />
 
 						<img class="edit" src="img/edit.png" />
 					</form>
@@ -111,17 +132,50 @@
 				</div>
 			</div>
 
-			<div class="sound">
-				End beep: <a class="soundToggle">YES</a>
+			<div class="participants">
+				<h2>Participants:</h2>
+				<ul>
+					<li>First Name</li>
+					<li>Second Name</li>
+					<li>
+						<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
+							<input type="text" class="edit" value="Add participant" />
+
+							<img class="edit" src="img/edit.png" />
+						</form>
+					</li>
+				</ul>
 			</div>
-			<div class="steps">
-				Steps: 
-					<a data-duration="1" class="selected">1</a>
-					<a data-duration="5">5</a>
-					<a data-duration="10">10</a>
+
+			<div class="topics">
+				<h2>Topics:</h2>
+				<ul>
+					<li>First Topic</li>
+					<li>Second Topic</li>
+					<li>
+						<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
+							<input type="text" class="edit" value="Add topic" />
+
+							<img class="edit" src="img/edit.png" />
+						</form>
+					</li>
+				</ul>
 			</div>
-			<div class="color">
-				Colors: <a class="colorToggle">YES</a>
+
+			<div class="advanced">
+				<h2>Advanced:</h2>
+				<div class="sound">
+					End beep: <a class="soundToggle">YES</a>
+				</div>
+				<div class="steps">
+					Steps: 
+						<a data-duration="1" class="selected">1</a>
+						<a data-duration="5">5</a>
+						<a data-duration="10">10</a>
+				</div>
+				<div class="color">
+					Colors: <a class="colorToggle">YES</a>
+				</div>
 			</div>
 		</div>
 
