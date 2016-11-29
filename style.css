@@ -2,56 +2,55 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
-  overflow: hidden; }
+  font-family: "Libre Franklin", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+  font-weight: 400; }
 
-body {
-  font-family: "Roboto", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
-  font-weight: 100; }
+.button {
+  background: black;
+  color: white;
+  text-decoration: none;
+  margin-top: 1em;
+  padding: 0.4em 0.6em; }
+  .button:hover {
+    background: white;
+    color: black; }
 
-/* WELCOME */
-.welcome {
-  position: absolute;
-  top: 0;
-  left: 0;
+img {
+  filter: grayscale(100%); }
+
+.screen {
   width: 100%;
   height: 100%;
+  display: none; }
+
+/* WELCOME */
+#welcome {
   background: #5DA7CA;
-  font-size: 150%;
-  overflow: scroll; }
-  .welcome .fork h1 {
-    font-weight: 100;
+  font-size: 150%; }
+  #welcome .fork h1 {
+    font-weight: 400;
     font-size: 3em;
     line-height: 0.9em;
     text-transform: uppercase; }
-    .welcome .fork h1 b {
-      font-weight: 400; }
-  .welcome .fork b {
-    font-weight: 900; }
-  .welcome .fork .startEvent {
+  #welcome .fork .startEvent {
     margin: 2em 0;
-    margin-top: 3em;
+    margin-top: 2em;
     text-decoration: none;
     padding: 0.4em 0.6em; }
-    .welcome .fork .startEvent a {
-      background: black;
-      color: white;
-      font-size: 130%;
-      text-decoration: none;
-      margin-top: 1em;
-      padding: 0.4em 0.6em; }
-  .welcome .fork em {
+    #welcome .fork .startEvent a {
+      font-size: 130%; }
+  #welcome .fork em {
     display: block;
-    margin: 2em 0; }
-  .welcome .fork .enterEvent {
+    margin-top: 0.5em;
+    margin-bottom: 1.5em; }
+  #welcome .fork .enterEvent {
     margin: 0 auto;
     position: relative;
     width: 16em;
     height: 3em; }
-    .welcome .fork .enterEvent b {
-      font-weight: 900; }
-    .welcome .fork .enterEvent input[type=text] {
+    #welcome .fork .enterEvent input[type=text] {
       font-size: 200%;
-      font-weight: 900;
+      font-weight: 800;
       color: black;
       border-width: 0;
       border-bottom: 3px solid black;
@@ -64,211 +63,305 @@ body {
       bottom: 0;
       left: 0;
       z-index: 3; }
-    .welcome .fork .enterEvent img {
+    #welcome .fork .enterEvent img {
       position: absolute;
       bottom: 0;
       left: 0.4em;
       width: 2em;
       z-index: 2; }
-    .welcome .fork .enterEvent .label {
+    #welcome .fork .enterEvent .label {
       position: absolute;
       top: 0.5em;
       left: 2.1em;
       font-size: 130%;
       z-index: 2; }
-    .welcome .fork .enterEvent.editing .label {
+    #welcome .fork .enterEvent.editing .label {
       visibility: hidden; }
-    .welcome .fork .enterEvent.editing img {
+    #welcome .fork .enterEvent.editing img {
       left: auto;
       right: 0.4em; }
-  .welcome .fork .version {
+    #welcome .fork .enterEvent .warning {
+      color: red;
+      margin-top: 2em; }
+  #welcome .fork .version {
     position: absolute;
     bottom: 2%;
     left: 2%; }
-  .welcome .fork .findMore {
+  #welcome .fork .findMore {
     text-align: center;
     position: absolute;
     bottom: 2%;
     width: 100%;
     font-size: 80%; }
-    .welcome .fork .findMore img {
+    #welcome .fork .findMore img {
       width: 1.5em;
       filter: invert(100%); }
-  .welcome .about {
+  #welcome .about {
     padding: 2em 0;
     background: #eee; }
-    .welcome .about p {
+    #welcome .about p {
       max-width: 30em;
       padding: 1em;
       margin: 1em auto;
       text-align: left; }
-    .welcome .about .logos img {
+    #welcome .about .logos img {
       width: 6em;
       vertical-align: middle; }
 
-.name {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+/* NAME */
+#name {
+  text-align: center;
   background: #5DA7CA;
   font-size: 150%;
   overflow: scroll;
   visibility: hidden; }
-
-/* CLOCK */
-.clock {
-  visibility: hidden;
-  position: fixed;
-  top: 0;
-  left: 0; }
-  .clock .tally {
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    width: 50%;
-    text-align: right;
-    z-index: 2;
-    font-size: 5em;
-    color: white;
-    opacity: 0.5; }
-    .clock .tally .eventTime, .clock .tally .turns {
-      font-size: 50%;
-      display: inline-block;
-      vertical-align: top; }
-      .clock .tally .eventTime em, .clock .tally .turns em {
-        font-size: 200%;
-        font-style: normal;
-        display: inline-block;
-        vertical-align: middle; }
-    .clock .tally .eventTime {
-      margin-right: 0.5em; }
-  .clock span.digits {
-    font-weight: 900;
-    cursor: pointer;
-    vertical-align: middle;
-    text-align: center;
-    display: inline-block;
-    user-select: none;
-    position: relative;
-    z-index: 3;
-    color: white; }
-    .clock span.digits b {
-      width: 1px;
-      height: 1px;
-      display: inline-block;
-      overflow: hidden;
-      color: transparent; }
-  .clock .bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-    text-align: center;
-    opacity: 0.5;
-    background: transparent; }
-    .clock .bar .progress {
-      display: inline-block;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000; }
-    .clock .bar .playReset {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      cursor: pointer; }
-      .clock .bar .playReset .play {
-        margin: 2% 3%;
-        display: none;
-        width: 0;
-        height: 0;
-        border-top: 4em solid transparent;
-        border-bottom: 4em solid transparent;
-        border-left: 6em solid white; }
-      .clock .bar .playReset .reset {
-        position: relative;
-        margin: 2%;
-        display: none; }
-        .clock .bar .playReset .reset .maxDuration {
-          position: absolute;
-          top: 0;
-          color: white;
-          font-size: 2em;
-          display: inline-block;
-          width: 4em;
-          height: 4em;
-          line-height: 4.3em;
-          vertical-align: middle;
-          text-align: center; }
-        .clock .bar .playReset .reset img {
-          width: 8em;
-          height: 8em; }
-  .clock .goToSettings {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 4;
-    cursor: pointer;
-    opacity: 0.5; }
-    .clock .goToSettings img {
-      margin: 2em;
-      width: 4.8em;
-      height: 4.8em; }
-  .clock .version {
+  #name .justWatch {
     position: absolute;
     bottom: 2%;
-    left: 2%; }
+    width: 100%;
+    text-align: center; }
+  #name form.edit {
+    margin-top: 20%;
+    height: 3.2em;
+    width: 15em;
+    text-align: center; }
+    #name form.edit input[type=text] {
+      height: 2em;
+      color: black;
+      font-size: 150%;
+      padding-left: 2em; }
+    #name form.edit img.edit {
+      position: absolute;
+      bottom: 0;
+      left: 0.4em;
+      width: auto;
+      height: 2.5em;
+      z-index: 2; }
+  #name span.label {
+    margin-top: 0.5em;
+    display: inline-block;
+    font-size: 150%;
+    background: black;
+    color: white; }
+
+/* CLOCK */
+#clock .tally {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 50%;
+  text-align: right;
+  z-index: 2;
+  font-size: 5em;
+  color: white;
+  opacity: 0.5; }
+  #clock .tally .eventTime, #clock .tally .turns {
+    font-size: 20%;
+    display: inline-block;
+    vertical-align: top; }
+    #clock .tally .eventTime em, #clock .tally .turns em {
+      font-size: 200%;
+      font-style: normal;
+      display: inline-block;
+      vertical-align: middle; }
+  #clock .tally .eventTime {
+    margin-right: 0.5em; }
+#clock span#digits {
+  font-family: "Open Sans";
+  font-weight: 800;
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  user-select: none;
+  position: relative;
+  z-index: 3;
+  color: white; }
+  #clock span#digits b {
+    width: 1px;
+    height: 1px;
+    display: inline-block;
+    overflow: hidden;
+    color: transparent; }
+#clock #bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+  opacity: 0.5;
+  background: transparent; }
+  #clock #bar .progress {
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000; }
+  #clock #bar .playReset {
+    position: absolute;
+    bottom: 2%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    cursor: pointer; }
+    #clock #bar .playReset .play {
+      margin: 2% 3%;
+      display: none;
+      width: 0;
+      height: 0;
+      border-top: 4em solid transparent;
+      border-bottom: 4em solid transparent;
+      border-left: 6em solid white; }
+    #clock #bar .playReset .reset {
+      position: relative;
+      margin: 2%;
+      display: none; }
+      #clock #bar .playReset .reset .maxDuration {
+        position: absolute;
+        top: 0;
+        color: white;
+        font-size: 2em;
+        display: inline-block;
+        width: 4em;
+        height: 4em;
+        line-height: 4.3em;
+        vertical-align: middle;
+        text-align: center; }
+      #clock #bar .playReset .reset img {
+        width: 8em;
+        height: 8em; }
+#clock .goToSettings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  cursor: pointer;
+  opacity: 0.5; }
+  #clock .goToSettings img {
+    margin: 0.8em;
+    width: 2.8em;
+    height: 2.8em; }
+#clock #interactions {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  text-align: center; }
+  #clock #interactions img {
+    filter: invert(100%); }
+  #clock #interactions div.turn {
+    width: 70%;
+    background: black;
+    padding: 00;
+    margin-bottom: 1.5em;
+    margin-top: 15%;
+    display: inline-block; }
+    #clock #interactions div.turn img {
+      height: 7em;
+      filter: invert(100%); }
+    #clock #interactions div.turn:hover {
+      background: white; }
+      #clock #interactions div.turn:hover img {
+        height: 7em;
+        filter: invert(0%); }
+  #clock #interactions .agree, #clock #interactions .heart {
+    height: 6em;
+    margin: 0; }
+  #clock #interactions .agree {
+    margin-right: 2.5em; }
+  #clock #interactions .doubt, #clock #interactions .sadness, #clock #interactions .anger {
+    height: 6em;
+    padding: 0.5em 1em; }
+  #clock #interactions img:hover {
+    filter: invert(0%); }
+#clock .version {
+  position: absolute;
+  bottom: 2%;
+  left: 2%; }
+#clock .toggleParticipation {
+  z-index: 5;
+  position: absolute;
+  bottom: 0;
+  right: 0; }
+  #clock .toggleParticipation .justWatch {
+    display: none;
+    font-size: 1.5em; }
 
 /* APP STATE */
-.landscape .bar .playReset {
+.landscape #clock #bar .playReset {
   text-align: right; }
 
-.narrowLandscape .bar .playReset {
+.narrowLandscape #clock #bar .playReset {
   font-size: 50%; }
 .narrowLandscape .eventTime, .narrowLandscape .turns {
   font-size: 25%; }
 
 .paused {
   background: #5DA7CA; }
-  .paused .bar .progress {
+  .paused #clock #bar .progress {
     display: none; }
-  .paused .bar .playReset .play {
+  .paused #clock #bar .playReset .play {
     display: inline-block; }
 
-.running .bar .progress, .half .bar .progress, .almost .bar .progress {
+.running #clock #bar .progress, .half #clock #bar .progress, .almost #clock #bar .progress {
   display: block; }
-.running .bar .playReset .reset, .half .bar .playReset .reset, .almost .bar .playReset .reset {
+.running #clock #bar .playReset .reset, .half #clock #bar .playReset .reset, .almost #clock #bar .playReset .reset {
   display: inline-block; }
 
 .running {
   background: #1CE8A0; }
-  .running .bar .progress {
+  .running #clock #bar .progress {
     background: #23BC86; }
 
 .half {
   background: #FFDF57; }
-  .half .bar .progress {
+  .half #clock #bar .progress {
     background: #F0C309; }
 
 .almost {
   background: #FC8A51; }
-  .almost .bar .progress {
+  .almost #clock #bar .progress {
     background: #F4361C; }
 
 .over {
   background: #D3001A; }
-  .over span.digits {
+  .over span#digits {
     color: white; }
 
-.clock {
+/* MAIN MODES */
+#moderator .toggleParticipation .justWatch {
+  display: none; }
+
+#participant .goToSettings {
+  display: none; }
+#participant #interactions {
+  display: block; }
+#participant #bar .playReset {
+  display: none; }
+#participant span#digits {
+  color: transparent;
+  cursor: default; }
+#participant #clock .toggleParticipation .justWatch {
+  display: inline-block; }
+
+#presenter span#digits {
+  color: transparent;
+  cursor: default; }
+#presenter #clock span#digits {
+  cursor: auto; }
+#presenter #clock .playReset {
+  display: none; }
+#presenter #clock .goToSettings {
+  display: none; }
+
+#clock {
   position: relative;
   z-index: 1;
   top: 0;
@@ -300,90 +393,88 @@ form.edit {
     vertical-align: middle; }
 
 /* SETTINGS */
-.settings {
-  visibility: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100%;
-  z-index: 2;
+#settings {
   background: white;
   padding: 5% 0;
-  font-size: 120%;
-  overflow: scroll; }
-  .settings h2 {
+  font-size: 120%; }
+  #settings h2 {
     margin: 0;
     margin-top: 1em;
-    font-weight: 100;
+    font-weight: 400;
     text-transform: uppercase; }
-  .settings a {
+  #settings a {
     text-decoration: none;
     display: inline-block; }
-  .settings a.exit {
+  #settings a.exit {
     font-weight: bold;
     background: black;
     font-size: 150%;
     color: white;
     padding: 0.5em 1em; }
-  .settings .pin strong {
+  #settings .pin strong {
     display: block;
     font-size: 7em;
     padding: 0;
-    line-height: 0.9em; }
-  .settings .durations {
+    line-height: 0.9em;
+    font-family: "Open Sans";
+    font-weight: 800; }
+  #settings .durations {
     margin: 2em 1em;
     margin-top: 0.5em;
     border: 1px solid black;
     padding: 1em 0;
     width: 90%;
-    margin: 5%; }
-    .settings .durations h2 {
+    margin: 5%;
+    font-family: "Open Sans";
+    font-weight: 600; }
+    #settings .durations h2 {
       margin: 0; }
-    .settings .durations a, .settings .durations input[type=text] {
+    #settings .durations a, #settings .durations input[type=text] {
       font-size: 150%;
       padding: 0.2em 0.5em;
       margin: 0.4em 0.2em; }
-    .settings .durations a.custom {
+    #settings .durations a.custom {
       display: none; }
-    .settings .durations form {
+    #settings .durations form {
       display: inline-block;
       margin: 0;
       padding: 0;
       position: relative;
       width: 3em;
       height: 2.7em; }
-      .settings .durations form input[type=text] {
+      #settings .durations form input[type=text] {
         width: 2em;
         height: 1em;
         color: #aaa;
         border: 0;
         border-bottom: 2px solid black; }
-      .settings .durations form img.edit {
+      #settings .durations form img.edit {
         height: 1.5em;
         position: absolute;
         bottom: 0;
         left: 0;
         vertical-align: middle; }
-  .settings ul {
+  #settings ul {
     max-width: 20em;
     margin: 0.5em auto; }
-    .settings ul li {
+    #settings ul li {
       text-align: left;
       background: #eee;
       margin: 0.2em;
       padding: 0.3em; }
-      .settings ul li.edit {
+      #settings ul li.edit {
         background: transparent; }
-  .settings a.selected, .settings a.soundToggle, .settings a.colorToggle {
-    font-weight: bold;
+  #settings div.participants img, #settings div.topics img {
+    width: 1em; }
+  #settings a.selected, #settings a.soundToggle, #settings a.colorToggle {
+    font-weight: 800;
     background: black;
     color: white;
     padding: 0.2em 0.5em; }
-  .settings div.sound, .settings div.steps, .settings div.color {
+  #settings div.sound, #settings div.steps, #settings div.color {
     margin: 2em 1em;
     font-size: 120%; }
-  .settings div.steps a {
+  #settings div.steps a {
     display: inline-block;
     margin-right: 1em; }
 
@@ -392,25 +483,25 @@ body.colorMuted {
   /*.settings {*/
   /*a.exit {background:#aaa}*/
   /*}*/ }
-  body.colorMuted .clock span.digits, body.colorMuted .clock .tally {
+  body.colorMuted #clock span#digits, body.colorMuted #clock .tally {
     color: black; }
-  body.colorMuted .clock .playReset .play {
+  body.colorMuted #clock #bar .playReset .play {
     border-left: 6em solid black; }
-  body.colorMuted .clock .playReset .reset .maxDuration {
+  body.colorMuted #clock #bar .playReset .reset .maxDuration {
     color: black; }
-  body.colorMuted .clock img {
+  body.colorMuted #clock img {
     filter: invert(100%); }
-  body.colorMuted.running .bar .progress, body.colorMuted.half .bar .progress, body.colorMuted.almost .bar .progress {
+  body.colorMuted.running #bar .progress, body.colorMuted.half #bar .progress, body.colorMuted.almost #bar .progress {
     background: #ccc; }
   body.colorMuted.over {
     background: black !important; }
-    body.colorMuted.over .clock span.digits, body.colorMuted.over .clock .tally {
+    body.colorMuted.over #clock span#digits, body.colorMuted.over #clock .tally {
       color: white; }
-    body.colorMuted.over .clock .playReset .play {
+    body.colorMuted.over #clock #bar .playReset .play {
       border-left: 6em solid white; }
-    body.colorMuted.over .clock .playReset .reset .maxDuration {
+    body.colorMuted.over #clock #bar .playReset .reset .maxDuration {
       color: white; }
-    body.colorMuted.over .clock img {
+    body.colorMuted.over #clock img {
       filter: invert(0%); }
 
 /*# sourceMappingURL=style.css.map */

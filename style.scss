@@ -1,38 +1,45 @@
-body {margin:0; padding:0; text-align:center; overflow:hidden}
-$buttonSide:4em;
+//font weights
+$medium:400; $semiBold:600; $bold:800;
 
-// color palette:
+//color palette:
 $azulClaro:#5DA7CA; 		$azulOscuro:#0F5C7D;
 $verdeClaro:#1CE8A0; 	$verdeOscuro:#23BC86;
 $amarilloClaro:#FFDF57;	$amarilloOscuro:#F0C309;
 $naranjaClaro:#FC8A51; 	$naranjaOscuro:#F4361C;
 $rojoClaro:#F4000C; 		$rojoOscuro:#D3001A;
 
-body {font-family:"Roboto", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; font-weight:100}
+$buttonSide:4em;
+
+body {margin:0; padding:0; text-align:center; 
+	font-family:"Libre Franklin", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; font-weight:$medium}
+
+.button {background:black; color:white; text-decoration:none; margin-top:1em; padding:0.4em 0.6em;
+	&:hover {background:white; color:black}
+}
+
+img { filter:grayscale(100%); }
+
+.screen { width:100%; height:100%; display:none; }
 
 /* WELCOME */
-.welcome {position:absolute; top:0; left:0; width:100%; height:100%; background:$azulClaro; font-size:150%; overflow:scroll;
+#welcome {background:$azulClaro; font-size:150%;
 	.fork {
-		h1 {font-weight:100; font-size:3em; line-height:0.9em; text-transform:uppercase;
-			b {font-weight:400}
-		}
+		h1 {font-weight:400; font-size:3em; line-height:0.9em; text-transform:uppercase; }
 
-		b {font-weight:900;}
-
-		.startEvent { margin:2em 0; margin-top:3em; text-decoration:none; padding:0.4em 0.6em; 
-			a {background:black; color:white; font-size:130%; text-decoration:none; margin-top:1em; padding:0.4em 0.6em;}
+		.startEvent { margin:2em 0; margin-top:2em; text-decoration:none; padding:0.4em 0.6em; 
+			a {font-size:130%;}
 		}
-		em {display:block; margin:2em 0}
+		em {display:block; margin-top:0.5em; margin-bottom:1.5em;}
 
 		.enterEvent {margin:0 auto; position:relative; width:16em; height:3em;
-			b {font-weight:900;}
-			input[type=text] {font-size:200%; font-weight:900; color:black; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
+			input[type=text] {font-size:200%; font-weight:800; color:black; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
 			img {position:absolute; bottom:0; left:0.4em; width:2em; z-index:2}
 			.label {position:absolute; top:0.5em; left:2.1em; font-size:130%; z-index:2}
 			&.editing {
 				.label {visibility:hidden}
 				img {left:auto; right:0.4em}
 			}
+			.warning {color:red; margin-top:2em}
 		}
 
 		.version {position:absolute; bottom:2%; left:2%;}
@@ -48,30 +55,36 @@ body {font-family:"Roboto", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "L
 	}
 }
 
-.name {position:absolute; top:0; left:0; width:100%; height:100%; 
+/* NAME */
+#name {text-align:center;
 	background:$azulClaro; font-size:150%; overflow:scroll; visibility:hidden;
+	.justWatch { position:absolute; bottom:2%; width:100%; text-align:center}
+	form.edit {margin-top:20%; height:3.2em; width:15em; text-align:center;
+		input[type=text] {height:2em; color:black; font-size:150%; padding-left:2em}
+		img.edit {position:absolute; bottom:0; left:0.4em; width:auto; height:2.5em; z-index:2}
+	}
+	span.label {margin-top:0.5em; display:inline-block; font-size:150%; background:black; color:white}
 }
 
 /* CLOCK */
-.clock {visibility:hidden; position:fixed; top:0; left:0;
+#clock {
 	.tally {position:absolute; top:2%; right:2%; width:50%; text-align:right; z-index:2; font-size:5em; color:white; opacity:0.5;
-		.eventTime, .turns {font-size:50%; display:inline-block; vertical-align:top;
+		.eventTime, .turns {font-size:20%; display:inline-block; vertical-align:top;
 			em {font-size:200%; font-style:normal; display:inline-block; vertical-align:middle;}
 		}
 		.eventTime {margin-right:0.5em}
 	}
 
-	span.digits {
-		font-weight:900; cursor:pointer; 
+	span#digits {font-family:"Open Sans"; font-weight:800; cursor:pointer; 
 		vertical-align:middle; text-align:center;
 		display:inline-block; user-select: none; position:relative; z-index:3;
 		color:white;
 		b {width:1px; height:1px; display:inline-block; overflow:hidden; color:transparent}
 	}
 
-	.bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
+	#bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
 		.progress {display:inline-block; position:absolute; bottom:0; left:0; width:100%; height:100%; background:#000;}
-		.playReset {position:absolute; bottom:0; left:0; width:100%; text-align:center; cursor:pointer;
+		.playReset {position:absolute; bottom:2%; left:0; width:100%; text-align:center; cursor:pointer;
 			.play { margin:2% 3%;
 				display:none;
 				width:0;
@@ -92,51 +105,97 @@ body {font-family:"Roboto", "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "L
 
 	.goToSettings {position:absolute; top:0; left:0; z-index:4; cursor:pointer; opacity:0.5;
 		img {
-			margin: $buttonSide*0.5;
-			width:$buttonSide*1.2;
-			height:$buttonSide*1.2;
+			margin: $buttonSide*0.2;
+			width:$buttonSide*0.7;
+			height:$buttonSide*0.7;
 		}
 	}
+
+	#interactions {display:none; width:100%; height:100%; position:absolute; z-index:4; top:0; left:0; text-align:center;
+		img {filter:invert(100%);}
+		div.turn { width:70%; background:black; padding:00; margin-bottom:1.5em; margin-top:15%; display:inline-block;
+			img {height:7em; filter:invert(100%);}
+			&:hover {background:white;
+				img {height:7em; filter:invert(0%);}
+			}
+		}
+
+		.agree, .heart {height:6em; margin:0;}
+		.agree {margin-right:2.5em}
+		.doubt, .sadness, .anger {height:6em; padding:0.5em 1em}
+
+		img:hover {filter:invert(0%);}
+	}
+
 	.version {position:absolute; bottom:2%; left:2%;}
+	.toggleParticipation { z-index:5; position:absolute; bottom:0; right:0;
+		.justWatch {display:none; font-size:1.5em}
+	}
 }
 
 /* APP STATE */
-.landscape .bar .playReset {text-align:right}
+.landscape #clock #bar .playReset {text-align:right}
 
 .narrowLandscape {
-	.bar .playReset {font-size:50%}
+	#clock #bar .playReset {font-size:50%}
 	.eventTime, .turns {font-size:25%}
 }
 
 .paused {background:$azulClaro;
-	.bar {
+	#clock #bar {
 		.progress {display:none}
 		.playReset .play {display:inline-block;}
 	}
 }
 .running, .half, .almost {
-	.bar {
+	#clock #bar {
 		.progress {display:block}
 		.playReset .reset {display:inline-block;}
 	}
 }
 
 .running {background:$verdeClaro;
-	.bar .progress {background:$verdeOscuro}
+	#clock #bar .progress {background:$verdeOscuro}
 }
 .half {background:$amarilloClaro;
-	.bar .progress {background:$amarilloOscuro}
+	#clock #bar .progress {background:$amarilloOscuro}
 }
 .almost {background:$naranjaClaro;
-	.bar .progress {background:$naranjaOscuro} 
+	#clock #bar .progress {background:$naranjaOscuro} 
 }
 
 .over {background:$rojoOscuro;
-	span.digits {color:white;}
+	span#digits {color:white;}
 }
 
-.clock {position:relative; z-index:1; top:0; left:0; width:100%; height:100%}
 
+/* MAIN MODES */
+#moderator {
+	.toggleParticipation {
+		.justWatch {display:none}
+	}
+}
+
+#participant {
+	.goToSettings {display:none}
+	#interactions {display:block}
+	#bar .playReset {display:none}
+	span#digits {color:transparent; cursor:default}
+	#clock .toggleParticipation {
+		.justWatch {display:inline-block}
+	}
+}
+
+#presenter {
+	span#digits {color:transparent; cursor:default}
+	#clock {
+		span#digits {cursor:auto}
+		.playReset {display:none}
+		.goToSettings {display:none}
+	}
+}
+
+#clock {position:relative; z-index:1; top:0; left:0; width:100%; height:100%}
 
 form.edit {display:inline-block; margin:0; padding:0; position:relative; width:3em; margin-top:0.3em;
 	input[type=text] {width:8em; height:2em; color:#aaa; border:0; padding-left:1.5em; font-size:100%; background:transparent; border-bottom:2px solid black;}
@@ -144,19 +203,18 @@ form.edit {display:inline-block; margin:0; padding:0; position:relative; width:3
 }
 
 /* SETTINGS */
-.settings {visibility:hidden; position:fixed; top:0; left:0; width:100%; min-height:100%; z-index:2; background:white; 
-	padding:5% 0; font-size:120%; overflow:scroll;
+#settings {background:white; padding:5% 0; font-size:120%; 
 
-	h2 {margin:0; margin-top:1em; font-weight:100; text-transform:uppercase;}
+	h2 {margin:0; margin-top:1em; font-weight:$medium; text-transform:uppercase;}
 
 	a {text-decoration:none; display:inline-block}
 
 	a.exit {font-weight:bold; background:black; font-size:150%; color:white; padding:0.5em 1em}
 	.pin {
-		strong {display:block; font-size:7em; padding:0; line-height:0.9em}
+		strong {display:block; font-size:7em; padding:0; line-height:0.9em; font-family:"Open Sans"; font-weight:$bold}
 	}
 
-	.durations {margin:2em 1em; margin-top:0.5em; border:1px solid black; padding:1em 0; width:90%; margin:5%;
+	.durations {margin:2em 1em; margin-top:0.5em; border:1px solid black; padding:1em 0; width:90%; margin:5%; font-family:"Open Sans"; font-weight:$semiBold;
 		h2 {margin:0}
 		a, input[type=text] {font-size:150%; padding:0.2em 0.5em; margin:0.4em 0.2em; }
 		a.custom {display:none}
@@ -171,8 +229,11 @@ form.edit {display:inline-block; margin:0; padding:0; position:relative; width:3
 			&.edit {background:transparent}
 		}
 	}
+	div.participants, div.topics {
+		img {width:1em}
+	}
 
-	a.selected, a.soundToggle, a.colorToggle {font-weight:bold; background:black; color:white; padding:0.2em 0.5em}
+	a.selected, a.soundToggle, a.colorToggle {font-weight:$bold; background:black; color:white; padding:0.2em 0.5em}
 	div.sound, div.steps, div.color {margin:2em 1em; font-size:120%}
 	div.steps a {display:inline-block; margin-right:1em}
 }
@@ -181,9 +242,9 @@ body.colorMuted {background:white !important;
 	/*.settings {*/
 		/*a.exit {background:#aaa}*/
 	/*}*/
-	.clock {
-		span.digits, .tally {color:black}
-		.playReset {
+	#clock {
+		span#digits, .tally {color:black}
+		#bar .playReset {
 			.play { border-left: $buttonSide*1.5 solid black; }
 			.reset {
 				.maxDuration {color:black}
@@ -193,13 +254,13 @@ body.colorMuted {background:white !important;
 	}
 
 	&.running, &.half, &.almost {
-		.bar .progress {background:#ccc}
+		#bar .progress {background:#ccc}
 	}
 	
 	&.over {background:black !important;
-		.clock {
-			span.digits, .tally {color:white}
-			.playReset {
+		#clock {
+			span#digits, .tally {color:white}
+			#bar .playReset {
 				.play { border-left: $buttonSide*1.5 solid white; }
 				.reset {
 					.maxDuration {color:white}

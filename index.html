@@ -7,21 +7,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-		<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+		<!--<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>-->
 		
 		<script language="javascript">
 			var T;
-
 		</script>
 		<script src="code.js"></script>
 
-		<link href="https://fonts.googleapis.com/css?family=Roboto:100,400,900" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400|Open+Sans:600,800" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 	<body class="paused">
 
 		<!-- WELCOME -->
-		<div class="welcome">
+		<div id="welcome" class="screen">
 			<div class="fork">
 				<h1>
 					Turno<br />
@@ -29,7 +28,7 @@
 				</h1>
 
 				<div class="startEvent">
-					<a href="javascript:void(0)"><b>START</b> a new event</a>
+					<a class="button"><b>START</b> a new event</a>
 				</div>
 
 				<em>or</em>
@@ -40,6 +39,8 @@
 						<input type="text" class="eventPin" value="" /><br /><br />
 						<span class="label"><b>ENTER</b> an event PIN</span>
 					</form>
+
+					<div class="warning"></div>
 				</div>
 
 				<div id="listado"></div>
@@ -73,18 +74,21 @@
 			</div>
 		</div>
 
-		<div class="name">
-			<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
-				<input type="text" class="edit" value="Enter name" />
+		<!-- NAME -->
+		<div id="name" class="screen">
+			<form class="edit" onsubmit="event.preventDefault(); TM.name.enterEventWithName();">
+				<input type="text" class="edit" value="Name" />
 				<img class="edit" src="img/edit.png" />
-			</form>
+			</form><br />
+			<span class="label button"><b>ENTER</b> event</span>
+			<div class="warning"></div>
 
-			<span class="label">Just watch</span>
+			<div class="justWatch"><a class="button">(Just watch.)</a></div>
 		</div>
 
 		<!-- CLOCK -->
-		<div class="clock">
-			<span class="digits" ></span>
+		<div id="clock" class="screen">
+			<span id="digits" ></span>
 
 			<div class="goToSettings">
 				<img src="img/settings.png" />
@@ -97,7 +101,21 @@
 				<span class="eventTime"><em>0</em>m</span><span class="turns">#<em>0</em></span>
 			</div>
 
-			<div class="bar">
+			<div id="interactions">
+				<div class="turn"/>
+					<img src="img/turn.png" />
+				</div><br />
+
+				<img class="agree" src="img/agree.png" />
+				<img class="heart" src="img/heart.png" /><br />
+
+				<img class="doubt" src="img/doubt.png" /><br />
+
+				<img class="sadness" src="img/sadness.png" />
+				<img class="anger" src="img/anger.png" />
+			</div>
+
+			<div id="bar">
 				<div class="progress"></div>
 				<div class="playReset">
 					<div class="play"></div>
@@ -107,10 +125,16 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="toggleParticipation">
+				<a class="button justWatch">
+					Just watch.
+				</a>
+			</div>
 		</div>
 
 		<!-- SETTINGS -->
-		<div class="settings">
+		<div id="settings" class="screen">
 			<a class="exit">Looks good, start! &rarr;</a><br /><br />
 
 			<div class="pin"> 
@@ -133,10 +157,13 @@
 			</div>
 
 			<div class="participants">
-				<h2>Participants:</h2>
+				<h2>
+					<img src="img/participant.png" />
+					Participants:
+				</h2>
 				<ul>
-					<li>First Name</li>
-					<li>Second Name</li>
+					<li>First Participant</li>
+					<li>Second Participant</li>
 					<li class="edit">
 						<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
 							<input type="text" class="edit" value="Add participant" />
@@ -148,7 +175,10 @@
 			</div>
 
 			<div class="topics">
-				<h2>Topics:</h2>
+				<h2>
+					<img src="img/topic.png" />
+					Topics:
+				</h2>
 				<ul>
 					<li>First Topic</li>
 					<li>Second Topic</li>

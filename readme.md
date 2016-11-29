@@ -13,4 +13,4 @@ Turnómetro es una página web y una app que te permite visualizar y organizar l
 
 ---
 
-Made during the __Collective Intelligence for Democracy__ workshop in MediaLab Prado from 18nov to 2dic.
+Made during the __Collective Intelligence for Democracy__ workshop in [**MediaLab Prado**](http://medialab-prado.es/) from 18nov to 2dic, 2016. [Project presentation](http://inteligenciacolectiva.cc/post/153339455592/turn%C3%B3metro-eliazar-parra-m%C3%A9xico-es-uno-de-los). [Group photo](http://inteligenciacolectiva.cc/post/153603856797/turn%C3%B3metro-pretende-aumentar-los-procesos-de)
