@@ -108,36 +108,35 @@ img {
       width: 6em;
       vertical-align: middle; }
 
-/* enterName */
-#enterName {
+/* NAME */
+#name {
   text-align: center;
   background: #5DA7CA;
   font-size: 150%;
-  overflow: scroll;
-  visibility: hidden; }
-  #enterName .justWatch {
+  overflow: scroll; }
+  #name .justWatch {
     position: absolute;
     bottom: 2%;
     width: 100%;
     text-align: center; }
-  #enterName form.edit {
+  #name form.edit {
     margin-top: 20%;
     height: 3.2em;
     width: 15em;
     text-align: center; }
-    #enterName form.edit input[type=text] {
+    #name form.edit input[type=text] {
       height: 2em;
       color: black;
       font-size: 150%;
       padding-left: 2em; }
-    #enterName form.edit img.edit {
+    #name form.edit img.edit {
       position: absolute;
       bottom: 0;
       left: 0.4em;
       width: auto;
       height: 2.5em;
       z-index: 2; }
-  #enterName span.label {
+  #name span.label {
     margin-top: 0.5em;
     display: inline-block;
     font-size: 150%;
@@ -339,26 +338,21 @@ img {
 #moderator .toggleParticipation .justWatch {
   display: none; }
 
-#participant .goToSettings {
-  display: none; }
-#participant #interactions {
-  display: block; }
-#participant #bar .playReset {
-  display: none; }
-#participant span#digits {
-  color: transparent;
-  cursor: default; }
-#participant #clock .toggleParticipation .justWatch {
-  display: inline-block; }
-
-#presenter span#digits {
-  color: transparent;
-  cursor: default; }
 #presenter #clock span#digits {
-  cursor: auto; }
+  cursor: default; }
 #presenter #clock .playReset {
   display: none; }
 #presenter #clock .goToSettings {
+  display: none; }
+
+#participant #clock span#digits {
+  color: transparent;
+  cursor: default; }
+#participant #clock #interactions {
+  display: block; }
+#participant #clock .playReset {
+  display: none; }
+#participant #clock .goToSettings {
   display: none; }
 
 #clock {

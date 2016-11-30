@@ -55,9 +55,8 @@ img { filter:grayscale(100%); }
 	}
 }
 
-/* enterName */
-#enterName {text-align:center;
-	background:$azulClaro; font-size:150%; overflow:scroll; visibility:hidden;
+/* NAME */
+#name {text-align:center; background:$azulClaro; font-size:150%; overflow:scroll;
 	.justWatch { position:absolute; bottom:2%; width:100%; text-align:center}
 	form.edit {margin-top:20%; height:3.2em; width:15em; text-align:center;
 		input[type=text] {height:2em; color:black; font-size:150%; padding-left:2em}
@@ -168,7 +167,6 @@ img { filter:grayscale(100%); }
 	span#digits {color:white;}
 }
 
-
 /* MAIN MODES */
 #moderator {
 	.toggleParticipation {
@@ -176,20 +174,18 @@ img { filter:grayscale(100%); }
 	}
 }
 
-#participant {
-	.goToSettings {display:none}
-	#interactions {display:block}
-	#bar .playReset {display:none}
-	span#digits {color:transparent; cursor:default}
-	#clock .toggleParticipation {
-		.justWatch {display:inline-block}
+#presenter {
+	#clock {
+		span#digits {cursor:default}
+		.playReset {display:none}
+		.goToSettings {display:none}
 	}
 }
 
-#presenter {
-	span#digits {color:transparent; cursor:default}
+#participant {
 	#clock {
-		span#digits {cursor:auto}
+		span#digits {color:transparent; cursor:default}
+		#interactions {display:block}
 		.playReset {display:none}
 		.goToSettings {display:none}
 	}

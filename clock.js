@@ -52,6 +52,8 @@ var TM_CLOCK = {
 		turnsInt = (turns.data('count')||0)+1;
 		turns.data( 'count', turnsInt );
 		turns.find('em').text( turnsInt );
+
+		TM.F.turn.add();
 	},
 
 
@@ -159,31 +161,34 @@ var TM_CLOCK = {
 			return fitted;
 		},
 		reset:function() {
-			if( $('body').attr('id') == 'moderator' ) {
-				clearInterval( TM.turnTime.interval );
-				TM.turnTime.set( TM.start );
-				$('#digits').css('marginTop', 0);
-				$('#bar .progress').css('height', '100%');
-				TM.clock.style();
+			clearInterval( TM.turnTime.interval );
+			TM.turnTime.set( TM.start );
+			$('#digits').css('marginTop', 0);
+			$('#bar .progress').css('height', '100%');
+			TM.clock.style();
 
-				TM.clock.resetClasses();
-				$('body').addClass('paused');
-				TM.clock.setTitle( TM.start );
-			}
+			TM.clock.resetClasses();
+			$('body').addClass('paused');
+			TM.clock.setTitle( TM.start );
+			TM.F.turn.end();
 		},
 		resetClasses:function() {
 			$('body').removeClass('paused running half almost over');
 		},
-		playReset:function(event) {
-			// (this.nodeName.toLowerCase() == 'body') && // attempt to fix event bubbling
-			if( $('body').attr('id') == 'moderator' ) {
-				if( $('body').hasClass('paused') ) {
-					TM.turnUp();
-					TM.clock.style();
-					TM.turnTime.tick();
-				} else {
-					TM.clock.reset();
+		moderatorClickGuard:function(fun) {
+			return function() {
+				if( $('body').attr('id') == 'moderator' ) {
+					fun();
 				}
+			};
+		},
+		playReset:function(event) {
+			if( $('body').hasClass('paused') ) {
+				TM.turnUp();
+				TM.clock.style();
+				TM.turnTime.tick();
+			} else {
+				TM.clock.reset();
 			}
 		},
 		setTitle:function(count) {

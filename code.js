@@ -1,21 +1,11 @@
 var TM = {
-	version:'0.7',
-	pin: {
-		create:function() {
-			TM.pin.code = Math.floor(Math.random()*9999);
-			return TM.pin.code;
-		},
-		code:0
-	},
+	version:'0.71',
 
 	// SETTINGS --------------------------------------------
 	settings:{ //TM.S
 		boot:function() { var D = TM.S.duration;
 			$('.goToSettings').click( TM.S.enter );
 			$('.exit').click( TM.S.exit );
-
-			var pin = TM.pin.create()+"", pad ="0000";
-			TM.s.find('.pin strong').text( pad.substring(0, pad.length - pin.length) + pin );
 
 			TM.s.find('a').attr('href', 'javascript:void(0)').end().
 				find('.durations a').click( D.set ).end().
@@ -37,7 +27,7 @@ var TM = {
 			TM.s.show();
 			$('#welcome, #clock').hide();
 
-			S.find('.exit').html('Back to event &rarr;');
+			TM.s.find('.exit').html('Back to event &rarr;');
 			TM.clock.reset();
 		},
 		exit:function() {
@@ -129,6 +119,7 @@ var TM = {
 			$('body').attr('id', 'moderator');
 			TM.s.show();
 			TM.S.boot();
+			TM.F._event.create();
 		},
 		focus:function() {
 			$('#welcome .enterEvent').addClass('editing');
@@ -137,7 +128,7 @@ var TM = {
 			var pin = $(this).val()||'', count = pin.length;
 			if( pin.match(/^\s*\d+\s*$/) ) {
 				if(count == 4) {
-					TM.welcome.enterEvent();
+					TM.F._event.find( pin );
 				}
 				$('.warning').text('');
 			} else {
@@ -193,7 +184,8 @@ var TM = {
 
 	// PARTICIPANT --------------------------------------------
 	participant: {
-		boot:function() {
+		boot:function(name) {
+			TM.F.participant.add( name );
 			TM.c.find('.justWatch').click( TM.name.justWatch );
 		},
 		justWatch:function() {
@@ -206,7 +198,84 @@ var TM = {
 
 	// FIREBASE --------------------------------------------
 	firebase: { //TM.F
-		test:function() {
+		boot:function() {
+			//TM.F.eventListRef = TM.F.db.ref('/events');
+		},
+		_event:{
+			current:{},
+			create:function() { var cEvent = TM.F._event.current;
+				var newEventRef = TM.F.db.ref('events').push(),
+					pad ="0000";
+					pin = TM.F.pin.create()+'',
+					paddedPin = pad.substring(0, pad.length - pin.length) + pin;
+
+				cEvent.pin = paddedPin;
+				cEvent.key = newEventRef.key;
+
+				newEventRef.set({
+					pin: paddedPin,
+					created_at:firebase.database.ServerValue.TIMESTAMP
+				});
+
+				//ref('events/'+newEventRef.key+'/participants').on('child_added', TM.F.participant.added);
+
+				TM.s.find('.pin strong').text( paddedPin );
+			},
+			find:function( pin ) {
+				TM.F.db.ref('events').orderByChild('pin').equalTo( pin ).once('value').then(function(snapshot) {
+					var cEvent = TM.F._event.current;
+					cEvent.key = _.keys(snapshot.val())[0]
+					cEvent.pin = pin;
+
+					var turnListRef = TM.F.db.ref('events/'+cEvent.key+'/turns');
+					turnListRef.on('child_added', TM.F.turn.added);
+					turnListRef.on('child_changed', TM.F.turn.ended);
+
+					TM.welcome.enterEvent();
+				});
+			}
+		},
+		turn:{
+			current:undefined,
+			add:function() { var cEvent = TM.F._event.current;
+				if( $('body').attr('id') == 'moderator' ) {
+					var newTurnRef = TM.F.db.ref('events/'+cEvent.key+'/turns').push();
+					newTurnRef.set({
+						started_at:firebase.database.ServerValue.TIMESTAMP
+					});
+					TM.F.turn.current = newTurnRef;
+				}
+			},
+			end:function() {
+				if( $('body').attr('id') == 'moderator' ) {
+					TM.F.turn.current.update({ended_at:firebase.database.ServerValue.TIMESTAMP});
+				}
+			},
+			added:function(data) {
+				console.log('testing turn added', data.val());
+				if( !data.val().ended_at ) {
+					TM.clock.playReset();
+					console.log('turn added', data.key, data.val());
+				}
+			},
+			ended:function(data) {
+				TM.clock.reset();
+				console.log('turn ended', data.key, data.val());
+			}
+		},
+		participant:{
+			add:function() {
+			},
+			added:function(data) {
+				console.log('data', data.key, data.val());
+			}
+		},
+		pin: {
+			create:function() {
+				TM.F.pin.code = Math.floor(Math.random()*9999);
+				return TM.F.pin.code;
+			},
+			code:0
 		}
 	},
 
@@ -217,11 +286,13 @@ var TM = {
 		$('a.button').attr('href', 'javascript:void(0)');
 
 		TM.W.boot();
+		TM.F.boot();
 
 		TM.eventTime.tick();
 		TM.clock.boot();
 
-		$('#digits').click( TM.clock.playReset ).dblclick( TM.clock.reset );
+		$('#digits').click( TM.clock.moderatorClickGuard( TM.clock.playReset )).
+			dblclick( TM.clock.moderatorClickGuard( TM.clock.reset ));
 	}
 };
 
