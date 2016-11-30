@@ -1,176 +1,5 @@
 var TM = {
-	version:'0.6',
-	start:60,
-	step:1,
-	sound: {
-		beep:new Audio('http://soundbible.com/grab.php?id=1815&type=mp3'),
-		//sound: new Audio('http://www.w3schools.com/html/horse.mp3'),
-		muted:false,
-	},
-	color:{
-		muted:false,
-	},
-	set:function(t) {
-		T.data('seconds', t);
-		T.html( (TM.format()+'').replace(':', ':<b>_</b>') );
-	},
-	decrement:function(t) {
-		TM.set( TM.get() - 1 );
-	},
-	increment:function(t) {
-		TM.eventTime.data('seconds', TM.eventTime.data('seconds')+1);
-	},
-	get:function() {
-		return parseInt( T.data('seconds') );
-	},
-	format:function(start) {
-		var count = start || TM.get();
-		count = count > 10 ? Math.ceil( count / TM.step )*TM.step : count;
-		out = count;
-		//console.log( 'count', count );
-
-		if( Math.abs(count) > 60 ) {
-			var seconds = (Math.abs(count) % 60);
-			seconds = seconds < 10 ? ('0'+seconds) : seconds;
-			out = (count < 0 ? '-' : '') +
-			  	Math.floor(Math.abs(count)/60) + 
-				':' +
-			  	seconds;
-		} else if((count >= 0) && (count < 10)) {
-			out = '0' + count;
-		}
-
-		return out;
-	},
-	heartbeat:function() { //the passing of seconds that increments an Event, even if no Turn is ongoing
-		TM.heartbeatInterval = setInterval(function() {
-			TM.increment();
-			TM.eventTime.find('em').text( Math.floor(TM.eventTime.data('seconds')/60) );
-		}, 1000);
-	},
-	tick:function() { //the passing of seconds that decrements a Turn
-		TM.interval = setInterval(function() {
-			TM.decrement();
-
-			TM.setTitle( TM.get() );
-			$('#bar .progress').css('height', Math.ceil((TM.get() / TM.start)*100)+'%');
-			TM.style();
-		}, 1000);
-	},
-	style:function() {
-		var count = TM.get(), 
-			b = $('body'),
-			half = Math.ceil( TM.start/2 ),
-			almost = TM.start <= 20 ? TM.start*0.25 : 10;
-
-		TM.resetClasses();
-
-		if ( count <= 60 ) {
-		}
-
-		if( count > half ) {
-			b.addClass('running');
-			b.addClass();
-		} else if( (count > 0) && (count <= half) && (count > almost)) {
-			b.addClass('half');
-		} else if(count <= almost) {
-			b.addClass('almost');
-			if(count == 0) {
-				TM.zero();
-			}
-			if(count <= 0) {
-				b.toggleClass('over');
-			}
-			if(count <= -599) {
-				clearInterval(TM.interval);
-			}
-		}
-
-		TM.resize( TM.countToFit( count ));
-	},
-	countToFit:function(count) {
-		var fit = 0;
-		if(count >= 600) {
-			fit = 3.2;
-		} else if(Math.abs(count) > 60) {
-			fit = 2.6;
-		} else {
-			fit = 1.25;
-		}
-		if((count <= 0) && (count > -10)) {
-			fit = 1.25;
-		}
-		if(count <= -10) {
-			fit = 1.9;
-		}
-		if(count < -60) {
-			fit = 3.1;
-		}
-		return fit;
-	},
-	zero:function() {
-		if(TM.sound.muted) {
-		} else {
-			TM.sound.beep.play();
-		}
-	},
-	turnUp:function() { //for what?
-		var turns = $('#clock .tally .turns');
-		turnsInt = (turns.data('count')||0)+1;
-		turns.data( 'count', turnsInt );
-		turns.find('em').text( turnsInt );
-	},
-	play:function(event) {
-		// (this.nodeName.toLowerCase() == 'body') && // attempt to fix event bubbling
-		if( $('body').attr('id') == 'moderator' ) {
-			if( $('body').hasClass('paused') ) {
-				TM.turnUp();
-				TM.style();
-				TM.tick();
-			} else {
-				TM.reset();
-			}
-		}
-	},
-	reset:function() {
-		if( $('body').attr('id') == 'moderator' ) {
-			clearInterval(TM.interval);
-			TM.set( TM.start );
-			T.css('marginTop', 0);
-			$('#bar .progress').css('height', '100%');
-			TM.style();
-
-			TM.resetClasses();
-			$('body').addClass('paused');
-			TM.setTitle( TM.start );
-		}
-	},
-	resetClasses:function() {
-		$('body').removeClass('paused running half almost over');
-	},
-	resize:function(fit) {
-		var h = $(window).height(), w = $(window).width(),
-			fitted = Math.min(h*0.8, w/fit);
-
-		$('body').removeClass('landscape portrait narrowLandscape').
-			addClass( h < w ? 'landscape' : 'portrait').
-			addClass( w/h > 1.5 ? 'narrowLandscape' : '' );
-
-		T.css( {
-			height:h+'px',
-			width:w+'px',
-			fontSize:fitted+'px',
-		  	lineHeight:h+'px'
-		} );
-		$('#welcome .fork, .name').css({
-			height:h+'px',
-			width:w+'px'
-		});
-		return fitted;
-	},
-	setTitle:function(count) {
-		document.title = (count ? (TM.format(count) +' | ') : '') + "Turnometro";
-	},
+	version:'0.7',
 	pin: {
 		create:function() {
 			TM.pin.code = Math.floor(Math.random()*9999);
@@ -180,48 +9,47 @@ var TM = {
 	},
 
 	// SETTINGS --------------------------------------------
-	settings:{
-		boot:function() { var s = TM.settings, d = s.duration;
-			$('.goToSettings').click( s.enter );
-			$('.exit').click( s.exit );
+	settings:{ //TM.S
+		boot:function() { var D = TM.S.duration;
+			$('.goToSettings').click( TM.S.enter );
+			$('.exit').click( TM.S.exit );
 
 			var pin = TM.pin.create()+"", pad ="0000";
-			$('#settings .pin strong').text( pad.substring(0, pad.length - pin.length) + pin );
+			TM.s.find('.pin strong').text( pad.substring(0, pad.length - pin.length) + pin );
 
-			S.find('a').attr('href', 'javascript:void(0)');
-			S.find('.durations a').click( d.set ).end().
-				find('.steps a').click( s.setStep ).end().
-				find('.soundToggle').click( s.toggleSound ).end().
-				find('.colorToggle').click( s.toggleColor ).end().
+			TM.s.find('a').attr('href', 'javascript:void(0)').end().
+				find('.durations a').click( D.set ).end().
+				find('.steps a').click( TM.S.setStep ).end().
+				find('.soundToggle').click( TM.S.toggleSound ).end().
+				find('.colorToggle').click( TM.S.toggleColor ).end().
 				find('.durations .edit').
-					focus( d.focus ).
-					blur( d.blur );
+					focus( D.focus ).
+					blur( D.blur );
 
 			if(TM.start == 60) {
-				S.find('.durations a[data-duration=60]').addClass('selected');
+				TM.s.find('.durations a[data-duration=60]').addClass('selected');
 			} else {
-				S.find('.durations a.custom').css('display','inline-block').
-					addClass('selected').data('duration', TM.start).text( TM.format(TM.start) );
+				TM.s.find('.durations a.custom').css('display','inline-block').
+					addClass('selected').data('duration', TM.start).text( TM.clock.format(TM.start) );
 			}
 		},
 		enter:function() {
-			$('#settings').show();
+			TM.s.show();
 			$('#welcome, #clock').hide();
 
 			S.find('.exit').html('Back to event &rarr;');
-			TM.reset();
+			TM.clock.reset();
 		},
 		exit:function() {
-			//console.log('exit!');
-			$('#settings').hide();
-			$('#clock').show();
+			TM.s.hide();
+			TM.c.show();
 		},
 		duration:{
 			set:function() {
 				TM.start = $(this).data('duration');
-				S.find('.durations a').removeClass('selected');
+				TM.s.find('.durations a').removeClass('selected');
 				$(this).addClass('selected');
-				TM.initialize();
+				TM.clock.boot();
 			},
 			parse:function(input) { input = (input||'').replace(/^\s*/,'').replace(/\s*$/,'');
 				var out = '', match = function(regex) { return input.match(regex);},
@@ -246,26 +74,26 @@ var TM = {
 				}
 				return out;
 			},
-			edit:function() { var d = TM.settings.duration.parse( S.find('.durations input.edit').val() );
+			edit:function() { var d = TM.settings.duration.parse( TM.s.find('.durations input.edit').val() );
 				if( (d > 0) && (d < 6000)) {
 					$('.durations div.custom').prepend(
-						'<a href="javascript:void(0)">'+TM.format(d)+'</a>'
+						'<a href="javascript:void(0)">'+TM.clock.format(d)+'</a>'
 					);
-					$('.durations div.custom a:first').data('duration', d).click( TM.settings.duration.set ).click();
+					$('.durations div.custom a:first').data('duration', d).click( TM.S.duration.set ).click();
 				}
 
-				S.find('.durations input.edit').val('');
+				TM.s.find('.durations input.edit').val('');
 
 				event.preventDefault();
 				return false;
 			},
 			focus:function() {
 				$(this).val('');
-				S.find('.durations img.edit').css('display', 'inline-block');
+				TM.s.find('.durations img.edit').css('display', 'inline-block');
 			},
 			blur:function() {
 				$(this).val('Edit');
-				S.find('.durations img.edit').css('display', 'none');
+				TM.s.find('.durations img.edit').css('display', 'none');
 			}
 		},
 		toggleSound:function() {
@@ -284,23 +112,23 @@ var TM = {
 		},
 		setStep:function() {
 			TM.step = $(this).data('duration');
-			S.find('.steps a').removeClass('selected');
+			TM.s.find('.steps a').removeClass('selected');
 			$(this).addClass( 'selected' );
 		}
 	},
 
 	// WELCOME --------------------------------------------
-	welcome:{
+	welcome:{ ////TM.W
 		boot:function() {
-			$('#welcome').find('.startEvent a').click( TM.welcome.startEvent ).end().
+			$('#welcome').show().find('.startEvent a').click( TM.W.startEvent ).end().
 				find('.enterEvent input').focus( TM.welcome.focus ).blur( TM.welcome.blur ).
 				keyup( TM.welcome.keyup );
 		},
 		startEvent:function() {
-			$('#welcome').hide();
+			TM.w.hide();
 			$('body').attr('id', 'moderator');
-			$('#settings').show();
-			TM.settings.boot();
+			TM.s.show();
+			TM.S.boot();
 		},
 		focus:function() {
 			$('#welcome .enterEvent').addClass('editing');
@@ -322,29 +150,29 @@ var TM = {
 			}
 		},
 		enterEvent:function() {
-			$('#welcome').hide();
-			$('#name').show();
-			TM.name.boot();
+			TM.w.hide();
+			TM.n.show();
+			TM.N.boot();
 		}
 	},
 
 	// NAME --------------------------------------------
-	name:{
+	name:{///TM.N
 		boot:function() {
-			$('#name .justWatch').click( TM.name.justWatch );
-			$('#name form').submit( TM.name.enterEventWithName ).find('input').
-				focus( TM.name.focus ).blur( TM.name.blur ).end();
-			$('#name .label.button').click( TM.name.enterEventWithName );
+			TM.n.find('.justWatch').click( TM.N.justWatch ).end().
+				find('.label.button').click( TM.N.enterEventWithName ).end().
+				find('form').submit( TM.N.enterEventWithName ).
+				find('input').focus( TM.N.focus ).blur( TM.N.blur ).end()
 		},
 		value:'',
 		enterEventWithName:function() {
-			TM.name.value = $('#name input').val();
+			TM.N.value = TM.n.find('input').val();
 
-			TM.settings.boot();
+			TM.S.boot();
 			TM.participant.boot();
 
-			$('#name').hide();
-			$('#clock').show();
+			TM.n.hide();
+			TM.c.show();
 			$('body').attr('id', 'participant');
 		},
 		focus:function() {
@@ -352,88 +180,62 @@ var TM = {
 		},
 		blur:function() {
 			if( $(this).val() == '' ) {
-				$('#name input').val('Name');
+				TM.n.find('input').val('Name');
 			}
 		},
 		justWatch:function() {
-			//console.log('justWatch');
-			$('#name').hide();
+			TM.n.hide();
 			$('body').attr('id', 'presenter');
-			$('#clock').show();
+			TM.c.show();
 			TM.settings.boot();
 		}
-		//$('.name').find('.name a').click( TM.welcome.startEvent ).end();
 	},
 
 	// PARTICIPANT --------------------------------------------
 	participant: {
 		boot:function() {
-			$('#clock .justWatch').click( TM.name.justWatch );
+			TM.c.find('.justWatch').click( TM.name.justWatch );
 		},
 		justWatch:function() {
-			//console.log('justWatch');
-			$('#name').hide();
+			TM.n.hide();
 			$('body').attr('id', 'presenter');
-			$('#clock').show();
-			TM.settings.boot();
+			TM.c.show();
+			TM.S.boot();
 		}
 	},
 
 	// FIREBASE --------------------------------------------
-	firebase: {
-		boot:function() {
-			TM.firebase.db = new Firebase('https://turnometro-a2faf.firebaseio.com/eventos');
-		},
+	firebase: { //TM.F
 		test:function() {
-			TM.firebase.db.on('value',function(datos) {
-				console.log('firebase!');
-				// Eliminamos el contenido del listado para actualizarlo.
-				$("#listado div.row").remove();
-
-				eventos=datos.val();
-
-				// Recorremos los eventos y los mostramos
-				$.each(eventos, function(indice,valor) {
-				console.log('events!');
-					var datodata='<div class="row" id="'+indice+'"><div class="col-md-3 cabeceraProducto">';
-					datodata+='<h2>'+valor.milisegundosRestantes+'</h2></div>';
-
-					$(datodata).appendTo('#listado');
-				});
-			});
 		}
 	},
 
-	initialize:function() {
-		TM.setTitle( TM.start );
-		T.text(TM.start);
-		TM.set( TM.start );
-		$('.maxDuration').text( TM.format(TM.start)+'' );
-
-		var customResize = function() {TM.resize( TM.countToFit(TM.start) )};
-		customResize();
-		$(window).resize( customResize );
-	},
 	boot:function() {
 		TM.start = parseInt( window.location.hash.substr(1) ) || 60;
+
 		$('.version').text( TM.version );
 		$('a.button').attr('href', 'javascript:void(0)');
 
-		$('#welcome').show();
+		TM.W.boot();
 
-		TM.eventTime = $('.eventTime').data('seconds', 0);
-		TM.heartbeat();
+		TM.eventTime.tick();
+		TM.clock.boot();
 
-		TM.welcome.boot();
-		TM.initialize();
-
-		$('#digits').click( TM.play ).dblclick( TM.reset );
+		$('#digits').click( TM.clock.playReset ).dblclick( TM.clock.reset );
 	}
 };
 
 $(function() {
-	T = $('#digits');
-	C = $('#clock');
-	S = $('#settings');
+	_.extend(TM, TM_CLOCK);
+
+	TM.c = $('#clock');
+	TM.N = TM.name;
+		TM.n = $('#name');
+	TM.W = TM.welcome;
+		TM.w = $('#welcome');
+	TM.S = TM.settings;
+		TM.s = $('#settings');
+	TM.F = TM.firebase
+
 	TM.boot();
 });

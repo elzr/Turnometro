@@ -26,9 +26,7 @@ firebase.on('value',function(datos)
 	$.each(eventos, function(indice,valor)
 	{
 		var datodata='<div class="row" id="'+indice+'"><div class="col-md-3 cabeceraProducto">';
-
 		datodata+='<h2>'+valor.milisegundosRestantes+'</h2></div>';
-
 
 		$(datodata).appendTo('#listado');
 });

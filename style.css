@@ -108,36 +108,36 @@ img {
       width: 6em;
       vertical-align: middle; }
 
-/* NAME */
-#name {
+/* enterName */
+#enterName {
   text-align: center;
   background: #5DA7CA;
   font-size: 150%;
   overflow: scroll;
   visibility: hidden; }
-  #name .justWatch {
+  #enterName .justWatch {
     position: absolute;
     bottom: 2%;
     width: 100%;
     text-align: center; }
-  #name form.edit {
+  #enterName form.edit {
     margin-top: 20%;
     height: 3.2em;
     width: 15em;
     text-align: center; }
-    #name form.edit input[type=text] {
+    #enterName form.edit input[type=text] {
       height: 2em;
       color: black;
       font-size: 150%;
       padding-left: 2em; }
-    #name form.edit img.edit {
+    #enterName form.edit img.edit {
       position: absolute;
       bottom: 0;
       left: 0.4em;
       width: auto;
       height: 2.5em;
       z-index: 2; }
-  #name span.label {
+  #enterName span.label {
     margin-top: 0.5em;
     display: inline-block;
     font-size: 150%;

@@ -55,8 +55,8 @@ img { filter:grayscale(100%); }
 	}
 }
 
-/* NAME */
-#name {text-align:center;
+/* enterName */
+#enterName {text-align:center;
 	background:$azulClaro; font-size:150%; overflow:scroll; visibility:hidden;
 	.justWatch { position:absolute; bottom:2%; width:100%; text-align:center}
 	form.edit {margin-top:20%; height:3.2em; width:15em; text-align:center;
