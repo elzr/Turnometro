@@ -110,6 +110,9 @@ img { filter:grayscale(100%); }
 		}
 	}
 
+	#bubbles {display:none; width:100%; height:100%; position:absolute; top:0; left:0;
+		img {bottom:0; position:absolute}
+	}
 	#interactions {display:none; width:100%; height:100%; position:absolute; z-index:4; top:0; left:0; text-align:center;
 		img {filter:invert(100%);}
 		div.turn { width:70%; background:black; padding:00; margin-bottom:1.5em; margin-top:15%; display:inline-block;
@@ -127,8 +130,8 @@ img { filter:grayscale(100%); }
 	}
 
 	.version {position:absolute; bottom:2%; left:2%;}
-	.toggleParticipation { z-index:5; position:absolute; bottom:0; right:0;
-		.justWatch {display:none; font-size:1.5em}
+	.toggleParticipation { z-index:5; position:absolute; bottom:0; left:0;
+		.justWatch, .participate {display:none; font-size:1.5em}
 	}
 }
 
@@ -169,16 +172,22 @@ img { filter:grayscale(100%); }
 
 /* MAIN MODES */
 #moderator {
-	.toggleParticipation {
-		.justWatch {display:none}
+	.toggleParticipation {display:none;
+		/*.justWatch {display:inline-block}*/
+		.participate {display:none}
 	}
 }
 
 #presenter {
-	#clock {
+	#clock {overflow:hidden;
 		span#digits {cursor:default}
 		.playReset {display:none}
 		.goToSettings {display:none}
+		#bubbles {display:block}
+	}
+	.toggleParticipation {
+		.participate {display:inline-block}
+		.justWatch {display:none}
 	}
 }
 
@@ -250,7 +259,7 @@ body.colorMuted {background:white !important;
 	}
 
 	&.running, &.half, &.almost {
-		#bar .progress {background:#ccc}
+		#clock #bar .progress {background:#ccc}
 	}
 	
 	&.over {background:black !important;

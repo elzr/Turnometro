@@ -244,6 +244,16 @@ img {
     margin: 0.8em;
     width: 2.8em;
     height: 2.8em; }
+#clock #bubbles {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+  #clock #bubbles img {
+    bottom: 0;
+    position: absolute; }
 #clock #interactions {
   display: none;
   width: 100%;
@@ -288,8 +298,8 @@ img {
   z-index: 5;
   position: absolute;
   bottom: 0;
-  right: 0; }
-  #clock .toggleParticipation .justWatch {
+  left: 0; }
+  #clock .toggleParticipation .justWatch, #clock .toggleParticipation .participate {
     display: none;
     font-size: 1.5em; }
 
@@ -335,14 +345,25 @@ img {
     color: white; }
 
 /* MAIN MODES */
-#moderator .toggleParticipation .justWatch {
-  display: none; }
+#moderator .toggleParticipation {
+  display: none;
+  /*.justWatch {display:inline-block}*/ }
+  #moderator .toggleParticipation .participate {
+    display: none; }
 
-#presenter #clock span#digits {
-  cursor: default; }
-#presenter #clock .playReset {
-  display: none; }
-#presenter #clock .goToSettings {
+#presenter #clock {
+  overflow: hidden; }
+  #presenter #clock span#digits {
+    cursor: default; }
+  #presenter #clock .playReset {
+    display: none; }
+  #presenter #clock .goToSettings {
+    display: none; }
+  #presenter #clock #bubbles {
+    display: block; }
+#presenter .toggleParticipation .participate {
+  display: inline-block; }
+#presenter .toggleParticipation .justWatch {
   display: none; }
 
 #participant #clock span#digits {
@@ -485,7 +506,7 @@ body.colorMuted {
     color: black; }
   body.colorMuted #clock img {
     filter: invert(100%); }
-  body.colorMuted.running #bar .progress, body.colorMuted.half #bar .progress, body.colorMuted.almost #bar .progress {
+  body.colorMuted.running #clock #bar .progress, body.colorMuted.half #clock #bar .progress, body.colorMuted.almost #clock #bar .progress {
     background: #ccc; }
   body.colorMuted.over {
     background: black !important; }

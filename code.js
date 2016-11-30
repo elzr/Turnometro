@@ -1,5 +1,5 @@
 var TM = {
-	version:'0.71',
+	version:'0.8',
 
 	// SETTINGS --------------------------------------------
 	settings:{ //TM.S
@@ -16,11 +16,11 @@ var TM = {
 					focus( D.focus ).
 					blur( D.blur );
 
-			if(TM.start == 60) {
+			if(TM.duration == 60) {
 				TM.s.find('.durations a[data-duration=60]').addClass('selected');
 			} else {
 				TM.s.find('.durations a.custom').css('display','inline-block').
-					addClass('selected').data('duration', TM.start).text( TM.clock.format(TM.start) );
+					addClass('selected').data('duration', TM.duration).text( TM.clock.format(TM.duration) );
 			}
 		},
 		enter:function() {
@@ -36,7 +36,7 @@ var TM = {
 		},
 		duration:{
 			set:function() {
-				TM.start = $(this).data('duration');
+				TM.duration = $(this).data('duration');
 				TM.s.find('.durations a').removeClass('selected');
 				$(this).addClass('selected');
 				TM.clock.boot();
@@ -119,7 +119,7 @@ var TM = {
 			$('body').attr('id', 'moderator');
 			TM.s.show();
 			TM.S.boot();
-			TM.F._event.create();
+			TM.F._event.add();
 		},
 		focus:function() {
 			$('#welcome .enterEvent').addClass('editing');
@@ -130,9 +130,9 @@ var TM = {
 				if(count == 4) {
 					TM.F._event.find( pin );
 				}
-				$('.warning').text('');
+				TM.w.find('.warning').text('');
 			} else {
-				$('.warning').text('Invalid PIN');
+				TM.w.find('.warning').text('Invalid PIN');
 			}
 		},
 		blur:function() {
@@ -141,8 +141,7 @@ var TM = {
 			}
 		},
 		enterEvent:function() {
-			TM.w.hide();
-			TM.n.show();
+			TM.w.hide(); TM.c.hide(); TM.n.show();
 			TM.N.boot();
 		}
 	},
@@ -152,19 +151,18 @@ var TM = {
 		boot:function() {
 			TM.n.find('.justWatch').click( TM.N.justWatch ).end().
 				find('.label.button').click( TM.N.enterEventWithName ).end().
-				find('form').submit( TM.N.enterEventWithName ).
 				find('input').focus( TM.N.focus ).blur( TM.N.blur ).end()
 		},
-		value:'',
 		enterEventWithName:function() {
-			TM.N.value = TM.n.find('input').val();
+			var name = TM.n.find('input').val();
+			if( name ) {
+				TM.participant.boot( );
+				TM.S.boot();
 
-			TM.S.boot();
-			TM.participant.boot();
-
-			TM.n.hide();
-			TM.c.show();
-			$('body').attr('id', 'participant');
+				TM.n.hide();
+				TM.c.show();
+				$('body').attr('id', 'participant');
+			}
 		},
 		focus:function() {
 			$(this).val('');
@@ -179,20 +177,48 @@ var TM = {
 			$('body').attr('id', 'presenter');
 			TM.c.show();
 			TM.settings.boot();
+			TM.presenter.boot();
 		}
 	},
 
 	// PARTICIPANT --------------------------------------------
 	participant: {
+		name:undefined,
 		boot:function(name) {
-			TM.F.participant.add( name );
-			TM.c.find('.justWatch').click( TM.name.justWatch );
+			TM.F.participant.add( );
+			TM.reactions.boot();
+		},
+		participate:function() {
+			if( TM.participant.name ) {
+				$('body').attr('id', 'participant');
+			} else {
+				TM.W.enterEvent();
+			}
 		},
 		justWatch:function() {
 			TM.n.hide();
 			$('body').attr('id', 'presenter');
 			TM.c.show();
 			TM.S.boot();
+		}
+	},
+
+	// REACTIONS --------------------------------------------
+	reactions: {
+		boot:function() {
+			$('#interactions img').click( TM.reactions.click );
+		},
+		click:function() {
+			var reaction = $(this).attr('class');
+			TM.F.reaction.add( reaction );
+		}
+	},
+
+	// PRESENTER --------------------------------------------
+	presenter:{
+		boot:function() {
+			console.log('presenting!');
+			TM.F.reaction.listen();
 		}
 	},
 
@@ -203,9 +229,9 @@ var TM = {
 		},
 		_event:{
 			current:{},
-			create:function() { var cEvent = TM.F._event.current;
+			add:function() { var cEvent = TM.F._event.current;
 				var newEventRef = TM.F.db.ref('events').push(),
-					pad ="0000";
+					pad ="0000",
 					pin = TM.F.pin.create()+'',
 					paddedPin = pad.substring(0, pad.length - pin.length) + pin;
 
@@ -217,33 +243,72 @@ var TM = {
 					created_at:firebase.database.ServerValue.TIMESTAMP
 				});
 
-				//ref('events/'+newEventRef.key+'/participants').on('child_added', TM.F.participant.added);
-
 				TM.s.find('.pin strong').text( paddedPin );
+				TM.F.participant.listen();
 			},
 			find:function( pin ) {
 				TM.F.db.ref('events').orderByChild('pin').equalTo( pin ).once('value').then(function(snapshot) {
-					var cEvent = TM.F._event.current;
-					cEvent.key = _.keys(snapshot.val())[0]
-					cEvent.pin = pin;
+					if(snapshot) {
+						TM.w.find('.warning').text('');
 
-					var turnListRef = TM.F.db.ref('events/'+cEvent.key+'/turns');
-					turnListRef.on('child_added', TM.F.turn.added);
-					turnListRef.on('child_changed', TM.F.turn.ended);
+						var cEvent = TM.F._event.current, val = snapshot.val();
+						cEvent.key = _.keys(val)[0]
+						cEvent.pin = pin;
 
-					TM.welcome.enterEvent();
+						TM.F.turn.listen();
+						TM.welcome.enterEvent();
+					} else {
+						TM.w.find('.warning').text('Invalid PIN');
+					}
 				});
+			}
+		},
+		reaction:{
+			add:function(r) { var cEvent = TM.F._event.current;
+				console.log( 'creating reaction', r);
+
+				var newRef = TM.F.db.ref('reactions').push();
+
+				newRef.set({
+					reaction:r,
+					event_key: cEvent.key,
+					participant_key: TM.F.participant.current.key,
+					created_at: firebase.database.ServerValue.TIMESTAMP
+				});
+			},
+			listen:function() {
+				console.log( 'listening for reactions');
+				TM.F.db.ref('reactions').orderByChild('event_key').equalTo( TM.F._event.current.key ).
+					on('child_added', TM.F.reaction.added);
+			},
+			added:function(data) { var r = data.val();
+				console.log( 'reaction detected', r);
+
+				var bubble = $('<img class="'+r.reaction+'" src="img/'+r.reaction+'.png" />').
+						css({left: (Math.random()*80)+'%'}).
+						animate({ bottom:$(window).height(), opacity:0 }, 3000);
+				
+				console.log('bubble', bubble);
+
+				TM.c.find('#bubbles').prepend( bubble );
 			}
 		},
 		turn:{
 			current:undefined,
+			listen:function() {
+				var listRef = TM.F.db.ref('events/'+TM.F._event.current.key+'/turns');
+				listRef.on('child_added', TM.F.turn.added);
+				listRef.on('child_changed', TM.F.turn.ended);
+			},
 			add:function() { var cEvent = TM.F._event.current;
 				if( $('body').attr('id') == 'moderator' ) {
-					var newTurnRef = TM.F.db.ref('events/'+cEvent.key+'/turns').push();
-					newTurnRef.set({
-						started_at:firebase.database.ServerValue.TIMESTAMP
+					var newRef = TM.F.db.ref('events/'+cEvent.key+'/turns').push();
+					newRef.set({
+						started_at:firebase.database.ServerValue.TIMESTAMP,
+						duration: TM.duration,
+						step: TM.step
 					});
-					TM.F.turn.current = newTurnRef;
+					TM.F.turn.current = newRef;
 				}
 			},
 			end:function() {
@@ -251,11 +316,13 @@ var TM = {
 					TM.F.turn.current.update({ended_at:firebase.database.ServerValue.TIMESTAMP});
 				}
 			},
-			added:function(data) {
-				console.log('testing turn added', data.val());
-				if( !data.val().ended_at ) {
+			added:function(data) { var turn = data.val();
+				console.log('testing turn added', turn);
+				if( !turn.ended_at ) {
+					TM.step = turn.step;
+					TM.duration = turn.duration;
 					TM.clock.playReset();
-					console.log('turn added', data.key, data.val());
+					console.log('turn added', data.key, turn);
 				}
 			},
 			ended:function(data) {
@@ -264,10 +331,27 @@ var TM = {
 			}
 		},
 		participant:{
-			add:function() {
+			current:undefined,
+			list:{},
+			listen:function() {
+				var listRef = TM.F.db.ref('events/'+TM.F._event.current.key+'/participants');
+				listRef.on('child_added', TM.F.participant.added);
 			},
-			added:function(data) {
-				console.log('data', data.key, data.val());
+			add:function(name) {var cEvent = TM.F._event.current,
+					name = TM.n.find('input').val();
+				if(name) {
+					console.log('adding p!');
+					var newRef = TM.F.db.ref('events/'+cEvent.key+'/participants').push();
+					newRef.set({
+						name:name||'',
+						started_at: firebase.database.ServerValue.TIMESTAMP
+					});
+					TM.F.participant.current = newRef;
+					TM.F.participant.list += [newRef];
+				}
+			},
+			added:function(data) { var participant = data.val();
+				TM.s.find('.participants ul').prepend( '<li>'+participant.name+'</li>' );
 			}
 		},
 		pin: {
@@ -280,10 +364,13 @@ var TM = {
 	},
 
 	boot:function() {
-		TM.start = parseInt( window.location.hash.substr(1) ) || 60;
+		TM.duration = parseInt( window.location.hash.substr(1) ) || 60;
 
 		$('.version').text( TM.version );
 		$('a.button').attr('href', 'javascript:void(0)');
+		
+		TM.c.find('.justWatch').click( TM.name.justWatch ).end().
+			find('.participate').click( TM.participant.participate );
 
 		TM.W.boot();
 		TM.F.boot();
@@ -306,7 +393,7 @@ $(function() {
 		TM.w = $('#welcome');
 	TM.S = TM.settings;
 		TM.s = $('#settings');
-	TM.F = TM.firebase
+	TM.F = TM.firebase;
 
 	TM.boot();
 });

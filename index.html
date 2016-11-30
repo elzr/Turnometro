@@ -112,6 +112,8 @@
 				<img class="anger" src="img/anger.png" />
 			</div>
 
+			<div id="bubbles"></div>
+
 			<div id="bar">
 				<div class="progress"></div>
 				<div class="playReset">
@@ -124,6 +126,9 @@
 			</div>
 
 			<div class="toggleParticipation">
+				<a class="button participate">
+					Participate!
+				</a>
 				<a class="button justWatch">
 					Just watch.
 				</a>
@@ -159,8 +164,6 @@
 					Participants:
 				</h2>
 				<ul>
-					<li>First Participant</li>
-					<li>Second Participant</li>
 					<li class="edit">
 						<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
 							<input type="text" class="edit" value="Add participant" />
@@ -177,8 +180,6 @@
 					Topics:
 				</h2>
 				<ul>
-					<li>First Topic</li>
-					<li>Second Topic</li>
 					<li class="edit">
 						<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
 							<input type="text" class="edit" value="Add topic" />

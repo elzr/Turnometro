@@ -1,6 +1,6 @@
 //Clock related functionality
 var TM_CLOCK = {
-	start:60,
+	duration:60,
 	step:1,
 	sound: {
 		beep:new Audio('http://soundbible.com/grab.php?id=1815&type=mp3'),
@@ -36,7 +36,7 @@ var TM_CLOCK = {
 				TM.turnTime.set( TM.turnTime.get() - 1 );
 
 				TM.clock.setTitle( TM.turnTime.get() );
-				$('#bar .progress').css('height', Math.ceil((TM.turnTime.get() / TM.start)*100)+'%');
+				$('#bar .progress').css('height', Math.ceil((TM.turnTime.get() / TM.duration)*100)+'%');
 				TM.clock.style();
 			}, 1000);
 		},
@@ -59,19 +59,19 @@ var TM_CLOCK = {
 
 	// times *********************************************8
 	clock:{
-		boot:function() { var start = TM.start;
+		boot:function() { var duration = TM.duration;
 
-			TM.clock.setTitle( start );
-			TM.turnTime.set( start );
-			$('.maxDuration').text( TM.clock.format(start)+'' );
+			TM.clock.setTitle( duration );
+			TM.turnTime.set( duration );
+			$('.maxDuration').text( TM.clock.format(duration)+'' );
 
-			var customResize = function() {TM.clock.resize( TM.clock.countToFit(start) )};
+			var customResize = function() {TM.clock.resize( TM.clock.countToFit(duration) )};
 			customResize();
 			$(window).resize( customResize );
 
 		},
-		format:function(start) {
-			var count = start || TM.turnTime.get();
+		format:function(duration) {
+			var count = duration || TM.turnTime.get();
 			count = count > 10 ? Math.ceil( count / TM.step )*TM.step : count;
 			out = count;
 			//console.log( 'count', count );
@@ -92,8 +92,8 @@ var TM_CLOCK = {
 		style:function() {
 			var count = TM.turnTime.get(), 
 				b = $('body'),
-				half = Math.ceil( TM.start/2 ),
-				almost = TM.start <= 20 ? TM.start*0.25 : 10;
+				half = Math.ceil( TM.duration/2 ),
+				almost = TM.duration <= 20 ? TM.duration*0.25 : 10;
 
 			TM.clock.resetClasses();
 
@@ -162,14 +162,14 @@ var TM_CLOCK = {
 		},
 		reset:function() {
 			clearInterval( TM.turnTime.interval );
-			TM.turnTime.set( TM.start );
+			TM.turnTime.set( TM.duration );
 			$('#digits').css('marginTop', 0);
 			$('#bar .progress').css('height', '100%');
 			TM.clock.style();
 
 			TM.clock.resetClasses();
 			$('body').addClass('paused');
-			TM.clock.setTitle( TM.start );
+			TM.clock.setTitle( TM.duration );
 			TM.F.turn.end();
 		},
 		resetClasses:function() {
