@@ -9,31 +9,34 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 		
-		<script src="clock.js"></script>
-		<script src="code.js"></script>
+		<script src="code/clock.js"></script>
+		<script src="code/code.js"></script>
 
-		<link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400|Open+Sans:600,800" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,800|Open+Sans:600,800" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 	</head>
 	<body class="paused">
 		<!-- WELCOME -->
 		<div id="welcome" class="screen">
-			<div class="fork">
-				<h1>
-					Turno<br />
-					<b>metro</b>
-				</h1>
+			<div class="fork splash">
+				<img class="logo" alt="Turnometro" src="img/logo/full.png" />
+
+				<img class="green" src="img/logo/green.png" />
+				<img class="yellow" src="img/logo/yellow.png" />
+				<img class="red" src="img/logo/red.png" />
 
 				<div class="startEvent">
-					<a class="button"><b>START</b> a new event</a>
+					<a class="button">
+						<img src="img/white-flag.png" />
+						<b>START</b> a new event
+					</a>
 				</div>
 
 				<em>or</em>
 
 				<div class="enterEvent">
 					<form onsubmit="event.preventDefault(); TM.welcome.enterEvent();">
-						<img class="edit" src="img/edit.png" />
-						<input type="text" class="eventPin" value="" /><br /><br />
+						<input type="text" class="eventPin" value="" />
 						<span class="label"><b>ENTER</b> an event PIN</span>
 					</form>
 
@@ -45,9 +48,6 @@
 				<div class="findMore">
 					What's this?<br/>
 					<img class="down" src="img/down.png" />
-				</div>
-				<div class="version">
-					0.6
 				</div>
 			</div>
 			<div class="about">
@@ -88,10 +88,7 @@
 			<span id="digits" ></span>
 
 			<div class="goToSettings">
-				<img src="img/settings.png" />
-			</div>
-			<div class="version">
-				0.6
+				<img src="img/logo/white-mini.png" />
 			</div>
 
 			<div class="tally">
@@ -191,7 +188,6 @@
 			</div>
 
 			<div class="advanced">
-				<h2>Advanced:</h2>
 				<div class="sound">
 					End beep: <a class="soundToggle">YES</a>
 				</div>

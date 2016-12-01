@@ -6,17 +6,14 @@ body {
   font-weight: 400; }
 
 .button {
-  background: black;
+  background: #575756;
   color: white;
   text-decoration: none;
   margin-top: 1em;
   padding: 0.4em 0.6em; }
   .button:hover {
-    background: white;
-    color: black; }
-
-img {
-  filter: grayscale(100%); }
+    background: black;
+    color: #white; }
 
 .screen {
   width: 100%;
@@ -25,77 +22,145 @@ img {
 
 /* WELCOME */
 #welcome {
-  background: #5DA7CA;
+  background: white;
   font-size: 150%; }
-  #welcome .fork h1 {
-    font-weight: 400;
-    font-size: 3em;
-    line-height: 0.9em;
-    text-transform: uppercase; }
-  #welcome .fork .startEvent {
-    margin: 2em 0;
-    margin-top: 2em;
-    text-decoration: none;
-    padding: 0.4em 0.6em; }
-    #welcome .fork .startEvent a {
-      font-size: 130%; }
-  #welcome .fork em {
-    display: block;
-    margin-top: 0.5em;
-    margin-bottom: 1.5em; }
-  #welcome .fork .enterEvent {
-    margin: 0 auto;
+  #welcome .fork {
     position: relative;
-    width: 16em;
-    height: 3em; }
-    #welcome .fork .enterEvent input[type=text] {
-      font-size: 200%;
-      font-weight: 800;
-      color: black;
-      border-width: 0;
-      border-bottom: 3px solid black;
-      background-color: transparent;
-      text-align: center;
-      width: 8em;
-      padding: 0.2em 0;
-      margin-top: 0.5em;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      z-index: 3; }
-    #welcome .fork .enterEvent img {
-      position: absolute;
-      bottom: 0;
-      left: 0.4em;
-      width: 2em;
-      z-index: 2; }
-    #welcome .fork .enterEvent .label {
-      position: absolute;
-      top: 0.5em;
-      left: 2.1em;
-      font-size: 130%;
-      z-index: 2; }
-    #welcome .fork .enterEvent.editing .label {
-      visibility: hidden; }
-    #welcome .fork .enterEvent.editing img {
-      left: auto;
-      right: 0.4em; }
-    #welcome .fork .enterEvent .warning {
-      color: red;
-      margin-top: 2em; }
-  #welcome .fork .version {
-    position: absolute;
-    bottom: 2%;
-    left: 2%; }
-  #welcome .fork .findMore {
-    text-align: center;
-    position: absolute;
-    bottom: 2%;
     width: 100%;
-    font-size: 80%; }
-    #welcome .fork .findMore img {
-      width: 1.5em;
-      filter: invert(100%); }
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden; }
+    #welcome .fork img.logo {
+      max-width: 60%;
+      margin-top: 3em; }
+    #welcome .fork img.red, #welcome .fork img.yellow, #welcome .fork img.green {
+      position: absolute;
+      z-index: 5;
+      -webkit-transition: all 4s ease;
+      -moz-transition: all 4s ease;
+      transition: all 4s ease; }
+    #welcome .fork .startEvent, #welcome .fork em, #welcome .fork .enterEvent, #welcome .fork .findMore {
+      -webkit-transition: opacity 4s ease;
+      -moz-transition: opacity 4s ease;
+      transition: opacity 4s ease; }
+    #welcome .fork.splash img.green {
+      width: 50%;
+      top: -20%;
+      left: 25%; }
+    #welcome .fork.splash img.yellow {
+      height: 25%;
+      top: 37.5%;
+      left: 37.5%; }
+    #welcome .fork.splash img.red {
+      height: 30%;
+      bottom: -15%;
+      left: 35%; }
+    #welcome .fork.splash img.logo {
+      margin-top: 30%; }
+    #welcome .fork.splash .startEvent, #welcome .fork.splash em, #welcome .fork.splash .enterEvent, #welcome .fork.splash .findMore {
+      opacity: 0; }
+    #welcome .fork.afterSplash img.yellow {
+      height: 20%;
+      top: 2%;
+      left: -4em; }
+    #welcome .fork.afterSplash img.red {
+      height: 10%;
+      top: 80%;
+      right: -4%; }
+    #welcome .fork.afterSplash img.green {
+      width: 15%;
+      top: 95%;
+      left: 10%;
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg); }
+    #welcome .fork.afterSplash .startEvent, #welcome .fork.afterSplash em, #welcome .fork.afterSplash .enterEvent, #welcome .fork.afterSplash .findMore {
+      opacity: 1; }
+    #welcome .fork .startEvent {
+      margin: 2em 0;
+      margin-top: 2em;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 0.4em 0.6em;
+      width: 100%; }
+      #welcome .fork .startEvent img {
+        height: 2.5em;
+        vertical-align: middle; }
+      #welcome .fork .startEvent a {
+        font-size: 80%;
+        line-height: 1.2em;
+        padding: 1.2em 2em;
+        padding-left: 1.2em;
+        margin-top: 1.5em; }
+    #welcome .fork em {
+      display: block;
+      font-style: normal;
+      margin-top: 0.5em;
+      margin-bottom: 1.5em;
+      color: #585857; }
+    #welcome .fork .enterEvent {
+      margin: 0 auto;
+      position: relative;
+      width: 16em;
+      height: 3em; }
+      #welcome .fork .enterEvent form {
+        display: inline-block;
+        height: 1.5em; }
+      #welcome .fork .enterEvent input[type=text] {
+        font-size: 200%;
+        font-weight: 800;
+        color: #585857;
+        border-width: 0;
+        border-bottom: 3px solid black;
+        background-color: transparent;
+        text-align: center;
+        width: 8em;
+        padding: 0.2em 0;
+        margin-top: 0.5em;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 3; }
+      #welcome .fork .enterEvent img {
+        position: absolute;
+        bottom: 0;
+        left: 0.4em;
+        width: 2em;
+        z-index: 2; }
+      #welcome .fork .enterEvent .label {
+        position: absolute;
+        top: 1em;
+        left: 0;
+        font-size: 90%;
+        width: 18em;
+        text-align: center;
+        z-index: 2;
+        text-transform: uppercase;
+        color: #585857; }
+      #welcome .fork .enterEvent.editing .label {
+        font-size: 70%;
+        width: 23em;
+        left: 0;
+        bottom: -2em; }
+      #welcome .fork .enterEvent.editing img {
+        left: auto;
+        right: 0.4em; }
+      #welcome .fork .enterEvent .warning {
+        color: #D21621;
+        margin-top: 2em; }
+    #welcome .fork .findMore {
+      text-align: center;
+      position: absolute;
+      bottom: 2%;
+      width: 100%;
+      font-size: 80%;
+      color: #6E6E6D; }
+      #welcome .fork .findMore img {
+        width: 1.5em;
+        filter: invert(100%); }
   #welcome .about {
     padding: 2em 0;
     background: #eee; }
@@ -241,9 +306,8 @@ img {
   cursor: pointer;
   opacity: 0.5; }
   #clock .goToSettings img {
-    margin: 0.8em;
-    width: 2.8em;
-    height: 2.8em; }
+    margin: 1em 0;
+    height: 5em; }
 #clock #bubbles {
   display: none;
   width: 100%;
@@ -253,7 +317,8 @@ img {
   left: 0; }
   #clock #bubbles img {
     bottom: 0;
-    position: absolute; }
+    position: absolute;
+    filter: grayscale(100%); }
 #clock #interactions {
   display: none;
   width: 100%;
@@ -313,7 +378,7 @@ img {
   font-size: 25%; }
 
 .paused {
-  background: #5DA7CA; }
+  background: #0F5C7D; }
   .paused #clock #bar .progress {
     display: none; }
   .paused #clock #bar .playReset .play {

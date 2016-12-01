@@ -1,6 +1,4 @@
 var TM = {
-	version:'0.8',
-
 	// SETTINGS --------------------------------------------
 	settings:{ //TM.S
 		boot:function() { var D = TM.S.duration;
@@ -110,7 +108,8 @@ var TM = {
 	// WELCOME --------------------------------------------
 	welcome:{ ////TM.W
 		boot:function() {
-			$('#welcome').show().find('.startEvent a').click( TM.W.startEvent ).end().
+			$('#welcome').show().
+				find('.startEvent a').click( TM.W.startEvent ).end().
 				find('.enterEvent input').focus( TM.welcome.focus ).blur( TM.welcome.blur ).
 				keyup( TM.welcome.keyup );
 		},
@@ -240,7 +239,7 @@ var TM = {
 
 				newEventRef.set({
 					pin: paddedPin,
-					created_at:firebase.database.ServerValue.TIMESTAMP
+					created_at:firebase.database.ServerValue.TIMESTAMP,
 				});
 
 				TM.s.find('.pin strong').text( paddedPin );
@@ -261,6 +260,45 @@ var TM = {
 						TM.w.find('.warning').text('Invalid PIN');
 					}
 				});
+			}
+		},
+		turn:{
+			current:undefined,
+			listen:function() {
+				var listRef = TM.F.db.ref('events/'+TM.F._event.current.key+'/turns');
+				listRef.on('child_added', TM.F.turn.added);
+				listRef.on('child_changed', TM.F.turn.ended);
+			},
+			add:function() { var cEvent = TM.F._event.current;
+				if( $('body').attr('id') == 'moderator' ) {
+					var newRef = TM.F.db.ref('events/'+cEvent.key+'/turns').push();
+					newRef.set({
+						created_at: firebase.database.ServerValue.TIMESTAMP,
+						duration: TM.duration,
+						step: TM.step,
+						colorMuted: TM.color.muted,
+						soundMuted: TM.sound.muted
+					});
+					TM.F.turn.current = newRef;
+				}
+			},
+			end:function() {
+				if( $('body').attr('id') == 'moderator' ) {
+					TM.F.turn.current.update({ended_at:firebase.database.ServerValue.TIMESTAMP});
+				}
+			},
+			added:function(data) { var turn = data.val();
+				console.log('testing turn added', turn);
+				if( !turn.ended_at ) {
+					TM.step = turn.step;
+					TM.duration = turn.duration;
+					TM.clock.playReset();
+					console.log('turn added', data.key, turn);
+				}
+			},
+			ended:function(data) {
+				TM.clock.reset();
+				console.log('turn ended', data.key, data.val());
 			}
 		},
 		reaction:{
@@ -291,43 +329,6 @@ var TM = {
 				console.log('bubble', bubble);
 
 				TM.c.find('#bubbles').prepend( bubble );
-			}
-		},
-		turn:{
-			current:undefined,
-			listen:function() {
-				var listRef = TM.F.db.ref('events/'+TM.F._event.current.key+'/turns');
-				listRef.on('child_added', TM.F.turn.added);
-				listRef.on('child_changed', TM.F.turn.ended);
-			},
-			add:function() { var cEvent = TM.F._event.current;
-				if( $('body').attr('id') == 'moderator' ) {
-					var newRef = TM.F.db.ref('events/'+cEvent.key+'/turns').push();
-					newRef.set({
-						started_at:firebase.database.ServerValue.TIMESTAMP,
-						duration: TM.duration,
-						step: TM.step
-					});
-					TM.F.turn.current = newRef;
-				}
-			},
-			end:function() {
-				if( $('body').attr('id') == 'moderator' ) {
-					TM.F.turn.current.update({ended_at:firebase.database.ServerValue.TIMESTAMP});
-				}
-			},
-			added:function(data) { var turn = data.val();
-				console.log('testing turn added', turn);
-				if( !turn.ended_at ) {
-					TM.step = turn.step;
-					TM.duration = turn.duration;
-					TM.clock.playReset();
-					console.log('turn added', data.key, turn);
-				}
-			},
-			ended:function(data) {
-				TM.clock.reset();
-				console.log('turn ended', data.key, data.val());
 			}
 		},
 		participant:{
@@ -366,7 +367,6 @@ var TM = {
 	boot:function() {
 		TM.duration = parseInt( window.location.hash.substr(1) ) || 60;
 
-		$('.version').text( TM.version );
 		$('a.button').attr('href', 'javascript:void(0)');
 		
 		TM.c.find('.justWatch').click( TM.name.justWatch ).end().
@@ -377,6 +377,11 @@ var TM = {
 
 		TM.eventTime.tick();
 		TM.clock.boot();
+
+
+		window.setTimeout(function() {
+			TM.w.find('.fork').removeClass('splash').addClass('afterSplash');
+		}, 500);
 
 		$('#digits').click( TM.clock.moderatorClickGuard( TM.clock.playReset )).
 			dblclick( TM.clock.moderatorClickGuard( TM.clock.reset ));

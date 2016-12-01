@@ -56,7 +56,6 @@ var TM_CLOCK = {
 		TM.F.turn.add();
 	},
 
-
 	// times *********************************************8
 	clock:{
 		boot:function() { var duration = TM.duration;
@@ -78,13 +77,13 @@ var TM_CLOCK = {
 
 			if( Math.abs(count) > 60 ) {
 				var seconds = (Math.abs(count) % 60);
-				seconds = seconds < 10 ? ('0'+seconds) : seconds;
+				seconds = (seconds < 10) ? ('0'+seconds) : seconds;
 				out = (count < 0 ? '-' : '') +
 					Math.floor(Math.abs(count)/60) + 
 					':' +
 					seconds;
 			} else if((count >= 0) && (count < 10)) {
-				out = '0' + count;
+				out = count;
 			}
 
 			return out;
@@ -126,9 +125,12 @@ var TM_CLOCK = {
 				fit = 3.2;
 			} else if(Math.abs(count) > 60) {
 				fit = 2.6;
-			} else {
+			} else if(count>=10) {
 				fit = 1.25;
+			} else if((count>=0) && (count<10)) {
+				fit = 0.8;
 			}
+
 			if((count <= 0) && (count > -10)) {
 				fit = 1.25;
 			}
@@ -141,6 +143,7 @@ var TM_CLOCK = {
 			return fit;
 		},
 		resize:function(fit) {
+			console.log('resizing');
 			var h = $(window).height(), w = $(window).width(),
 				fitted = Math.min(h*0.8, w/fit);
 
@@ -152,12 +155,13 @@ var TM_CLOCK = {
 				height:h+'px',
 				width:w+'px',
 				fontSize:fitted+'px',
-				lineHeight:h+'px'
+				lineHeight:(h*0.9)+'px'
 			} );
-			$('#welcome .fork, .name').css({
+			$('.screen, .fork').css({
 				height:h+'px',
 				width:w+'px'
 			});
+			$('#settings').css('height', 'auto');
 			return fitted;
 		},
 		reset:function() {
