@@ -144,22 +144,29 @@ var TM_CLOCK = {
 		},
 		resize:function(fit) {
 			var h = $(window).height(), w = $(window).width(),
-				fitted = Math.min(h*0.8, w/fit);
+				fitted = Math.min(h*0.8, w/fit),
+				adjust = 1;
 
 			$('body').removeClass('landscape portrait narrowLandscape').
 				addClass( h < w ? 'landscape' : 'portrait').
 				addClass( w/h > 1.5 ? 'narrowLandscape' : '' );
 
-			$('#digits').css( {
-				height:h+'px',
-				width:w+'px',
-				fontSize:fitted+'px',
-				lineHeight:(h*0.9)+'px'
-			} );
 			$('.screen, .fork').css({
 				height:h+'px',
 				width:w+'px'
 			});
+
+			if(h > w) { //portrait
+				adjust *= 0.5;
+				TM.c.find('#bar').height('50%');
+			}
+
+			$('#digits').css( {
+				height:(h*adjust)+'px',
+				width:w+'px',
+				fontSize:(fitted*adjust)+'px',
+				lineHeight:((h*0.9)*adjust)+'px'
+			} );
 			$('#settings').css('height', 'auto');
 			return fitted;
 		},

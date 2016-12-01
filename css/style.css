@@ -207,8 +207,8 @@ body {
       position: absolute;
       top: 1em;
       left: 0;
-      font-size: 90%;
-      width: 18em;
+      font-size: 110%;
+      width: 15em;
       text-align: center;
       z-index: 2;
       text-transform: uppercase;
@@ -217,19 +217,17 @@ body {
       font-size: 70%;
       width: 23em;
       left: 0;
-      top: -1.4em; }
+      top: -1.7em; }
   #name .warning {
     color: #D21621;
     margin-top: 5em; }
   #name em {
     display: block;
     font-style: normal;
-    margin-top: 1em;
+    margin: 2em 0;
     color: #585857; }
   #name .justWatch {
-    position: absolute;
-    bottom: 5%;
-    width: 100%;
+    margin-top: 5em;
     text-align: center; }
 
 /* CLOCK */
@@ -393,6 +391,16 @@ body {
     padding: 0.5em 1em; }
   #clock #interactions img:hover {
     filter: invert(0%); }
+#clock #queue {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 50%;
+  background: white; }
+  #clock #queue ul {
+    margin: 5% 10%;
+    text-align: left;
+    font-size: 200%; }
 #clock .version {
   position: absolute;
   bottom: 2%;
@@ -408,7 +416,7 @@ body {
     font-size: 1.5em; }
 
 /* APP STATE */
-.landscape #clock #bar .playReset {
+.landscape #clock #bar .playReset, #moderator #clock #bar .playReset {
   text-align: right; }
 
 .narrowLandscape #clock #bar .playReset {
@@ -505,12 +513,16 @@ body {
   #settings a {
     text-decoration: none;
     display: inline-block; }
-  #settings a.exit {
+  #settings a.exit, #settings a.endEvent {
     font-weight: bold;
-    background: black;
     font-size: 150%;
     color: white;
     padding: 0.5em 1em; }
+    #settings a.exit img, #settings a.endEvent img {
+      -webkit-filter: brightness(100);
+      filter: brightness(100);
+      height: 1.5em;
+      vertical-align: middle; }
   #settings .pin strong {
     display: block;
     font-size: 7em;
@@ -533,6 +545,9 @@ body {
       font-size: 150%;
       padding: 0.2em 0.5em;
       margin: 0.4em 0.2em; }
+    color:black
+    #settings .durations a:hover {
+      background: #777; }
     #settings .durations a.custom {
       display: none; }
     #settings .durations form {
@@ -559,7 +574,7 @@ body {
     margin: 0.5em auto; }
     #settings ul li {
       text-align: left;
-      background: #eee;
+      background: transparent;
       margin: 0.2em;
       padding: 0.3em; }
       #settings ul li.edit {

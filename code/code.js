@@ -153,7 +153,7 @@ var TM = {
 		boot:function() {
 			TM.n.find('.justWatch').click( TM.N.justWatch ).end().
 				find('.enterAsAParticipant').click( TM.N.enterEventWithName ).end().
-				find('input').focus( TM.N.focus ).blur( TM.N.blur ).end()
+				find('input').focus( TM.N.focus ).blur( TM.N.blur ).focus();
 		},
 		enterEventWithName:function() {
 			var name = TM.n.find('input').val();
@@ -358,7 +358,7 @@ var TM = {
 						css({left: (Math.random()*80)+'%'}).
 						animate({ bottom:$(window).height(), opacity:0 }, 3000);
 				
-				console.log('bubble', bubble);
+				console.log('bubble', r);
 
 				TM.c.find('#bubbles').prepend( bubble );
 			}
