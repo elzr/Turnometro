@@ -99,7 +99,7 @@ body {
       display: block;
       font-style: normal;
       margin-top: 0.5em;
-      margin-bottom: 1.5em;
+      margin-bottom: 2em;
       color: #585857; }
     #welcome .fork .enterEvent {
       margin: 0 auto;
@@ -144,7 +144,7 @@ body {
         font-size: 70%;
         width: 23em;
         left: 0;
-        bottom: -2em; }
+        top: -1.4em; }
       #welcome .fork .enterEvent.editing img {
         left: auto;
         right: 0.4em; }
@@ -176,37 +176,61 @@ body {
 /* NAME */
 #name {
   text-align: center;
-  background: #5DA7CA;
+  background: white;
   font-size: 150%;
   overflow: scroll; }
+  #name .enterYourName {
+    position: relative;
+    width: 16em;
+    height: 3em;
+    text-align: center;
+    display: inline-block;
+    margin: 3.5em 0 1em 0; }
+    #name .enterYourName form.edit {
+      display: inline-block; }
+      #name .enterYourName form.edit input[type=text] {
+        font-size: 200%;
+        font-weight: 800;
+        color: #585857;
+        border-width: 0;
+        border-bottom: 3px solid black;
+        background-color: transparent;
+        text-align: center;
+        width: 8em;
+        padding: 0.2em 0;
+        margin-top: 0.5em;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 3; }
+    #name .enterYourName .label {
+      position: absolute;
+      top: 1em;
+      left: 0;
+      font-size: 90%;
+      width: 18em;
+      text-align: center;
+      z-index: 2;
+      text-transform: uppercase;
+      color: #585857; }
+    #name .enterYourName.editing .label {
+      font-size: 70%;
+      width: 23em;
+      left: 0;
+      top: -1.4em; }
+  #name .warning {
+    color: #D21621;
+    margin-top: 5em; }
+  #name em {
+    display: block;
+    font-style: normal;
+    margin-top: 1em;
+    color: #585857; }
   #name .justWatch {
     position: absolute;
-    bottom: 2%;
+    bottom: 5%;
     width: 100%;
     text-align: center; }
-  #name form.edit {
-    margin-top: 20%;
-    height: 3.2em;
-    width: 15em;
-    text-align: center; }
-    #name form.edit input[type=text] {
-      height: 2em;
-      color: black;
-      font-size: 150%;
-      padding-left: 2em; }
-    #name form.edit img.edit {
-      position: absolute;
-      bottom: 0;
-      left: 0.4em;
-      width: auto;
-      height: 2.5em;
-      z-index: 2; }
-  #name span.label {
-    margin-top: 0.5em;
-    display: inline-block;
-    font-size: 150%;
-    background: black;
-    color: white; }
 
 /* CLOCK */
 #clock .tally {
@@ -255,7 +279,6 @@ body {
   width: 100%;
   z-index: 1;
   text-align: center;
-  opacity: 0.5;
   background: transparent; }
   #clock #bar .progress {
     display: inline-block;
@@ -271,7 +294,8 @@ body {
     left: 0;
     width: 100%;
     text-align: center;
-    cursor: pointer; }
+    cursor: pointer;
+    opacity: 0.5; }
     #clock #bar .playReset .play {
       margin: 2% 3%;
       display: none;
@@ -305,6 +329,8 @@ body {
   z-index: 4;
   cursor: pointer;
   opacity: 0.5; }
+  #clock .goToSettings:hover {
+    opacity: 1; }
   #clock .goToSettings img {
     margin: 1em 0;
     height: 5em; }
@@ -314,11 +340,12 @@ body {
   height: 100%;
   position: absolute;
   top: 0;
-  left: 0; }
+  left: 0;
+  z-index: 5; }
   #clock #bubbles img {
     bottom: 0;
     position: absolute;
-    filter: grayscale(100%); }
+    width: 3em; }
 #clock #interactions {
   display: none;
   width: 100%;
@@ -329,7 +356,8 @@ body {
   left: 0;
   text-align: center; }
   #clock #interactions img {
-    filter: invert(100%); }
+    -webkit-filter: brightness(100);
+    filter: brightness(100); }
   #clock #interactions div.turn {
     width: 70%;
     background: black;
@@ -339,12 +367,14 @@ body {
     display: inline-block; }
     #clock #interactions div.turn img {
       height: 7em;
-      filter: invert(100%); }
+      -webkit-filter: brightness(100);
+      filter: brightness(100); }
     #clock #interactions div.turn:hover {
       background: white; }
       #clock #interactions div.turn:hover img {
         height: 7em;
-        filter: invert(0%); }
+        -webkit-filter: brightness(0);
+        filter: brightness(0); }
   #clock #interactions .agree, #clock #interactions .heart {
     height: 6em;
     margin: 0; }
@@ -440,6 +470,10 @@ body {
   display: none; }
 #participant #clock .goToSettings {
   display: none; }
+#participant .toggleParticipation .participate {
+  display: none; }
+#participant .toggleParticipation .justWatch {
+  display: inline-block; }
 
 #clock {
   position: relative;
@@ -448,29 +482,6 @@ body {
   left: 0;
   width: 100%;
   height: 100%; }
-
-form.edit {
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  width: 3em;
-  margin-top: 0.3em; }
-  form.edit input[type=text] {
-    width: 8em;
-    height: 2em;
-    color: #aaa;
-    border: 0;
-    padding-left: 1.5em;
-    font-size: 100%;
-    background: transparent;
-    border-bottom: 2px solid black; }
-  form.edit img.edit {
-    height: 1.5em;
-    position: absolute;
-    bottom: 0.1em;
-    left: 0;
-    vertical-align: middle; }
 
 /* SETTINGS */
 #settings {

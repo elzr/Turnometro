@@ -50,14 +50,14 @@ body {margin:0; padding:0; text-align:center;
 			img { height:2.5em; vertical-align:middle}
 			a {font-size:80%; line-height:1.2em; padding:1.2em 2em; padding-left:1.2em; margin-top:1.5em; }
 		}
-		em {display:block; font-style:normal; margin-top:0.5em; margin-bottom:1.5em; color:#585857}
+		em {display:block; font-style:normal; margin-top:0.5em; margin-bottom:2em; color:#585857}
 		.enterEvent {margin:0 auto; position:relative; width:16em; height:3em;
 			form {display:inline-block; height:1.5em}
 			input[type=text] {font-size:200%; font-weight:800; color:#585857; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
 			img {position:absolute; bottom:0; left:0.4em; width:2em; z-index:2}
 			.label {position:absolute; top:1em; left:0; font-size:90%; width:18em; text-align:center; z-index:2; text-transform:uppercase; color:#585857}
 			&.editing {
-				.label {font-size:70%; width:23em; left:0; bottom:-2em}
+				.label {font-size:70%; width:23em; left:0; top:-1.4em}
 				img {left:auto; right:0.4em}
 			}
 			.warning {color:#D21621; margin-top:2em}
@@ -76,13 +76,19 @@ body {margin:0; padding:0; text-align:center;
 }
 
 /* NAME */
-#name {text-align:center; background:$azulClaro; font-size:150%; overflow:scroll;
-	.justWatch { position:absolute; bottom:2%; width:100%; text-align:center}
-	form.edit {margin-top:20%; height:3.2em; width:15em; text-align:center;
-		input[type=text] {height:2em; color:black; font-size:150%; padding-left:2em}
-		img.edit {position:absolute; bottom:0; left:0.4em; width:auto; height:2.5em; z-index:2}
+#name {text-align:center; background:white; font-size:150%; overflow:scroll;
+	.enterYourName {position:relative; width:16em; height:3em; text-align:center; display:inline-block; margin:3.5em 0 1em 0;
+		form.edit {display:inline-block;
+			input[type=text] {font-size:200%; font-weight:800; color:#585857; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
+		}
+		.label {position:absolute; top:1em; left:0; font-size:90%; width:18em; text-align:center; z-index:2; text-transform:uppercase; color:#585857}
+		&.editing {
+			.label {font-size:70%; width:23em; left:0; top:-1.4em}
+		}
 	}
-	span.label {margin-top:0.5em; display:inline-block; font-size:150%; background:black; color:white}
+	.warning {color:#D21621; margin-top:5em}
+	em {display:block; font-style:normal; margin-top:1em; color:#585857}
+	.justWatch { position:absolute; bottom:5%; width:100%; text-align:center}
 }
 
 /* CLOCK */
@@ -101,9 +107,9 @@ body {margin:0; padding:0; text-align:center;
 		b {width:1px; height:1px; display:inline-block; overflow:hidden; color:transparent}
 	}
 
-	#bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; opacity:0.5; background:transparent;
+	#bar {position:absolute; top:0; left:0; height:100%; width:100%; z-index:1; text-align:center; background:transparent;
 		.progress {display:inline-block; position:absolute; bottom:0; left:0; width:100%; height:100%; background:#000;}
-		.playReset {position:absolute; bottom:2%; left:0; width:100%; text-align:center; cursor:pointer;
+		.playReset {position:absolute; bottom:2%; left:0; width:100%; text-align:center; cursor:pointer; opacity:0.5; 
 			.play { margin:2% 3%;
 				display:none;
 				width:0;
@@ -123,21 +129,22 @@ body {margin:0; padding:0; text-align:center;
 	}
 
 	.goToSettings {position:absolute; top:0; left:0; z-index:4; cursor:pointer; opacity:0.5;
+		&:hover {opacity:1}
 		img {
 			margin:1em 0;
 			height:5em;
 		}
 	}
 
-	#bubbles {display:none; width:100%; height:100%; position:absolute; top:0; left:0;
-		img {bottom:0; position:absolute; filter:grayscale(100%);}
+	#bubbles {display:none; width:100%; height:100%; position:absolute; top:0; left:0; z-index:5;
+		img {bottom:0; position:absolute; width:3em}
 	}
 	#interactions {display:none; width:100%; height:100%; position:absolute; z-index:4; top:0; left:0; text-align:center;
-		img {filter:invert(100%);}
+		img {@include filter(brightness(100));}
 		div.turn { width:70%; background:black; padding:00; margin-bottom:1.5em; margin-top:15%; display:inline-block;
-			img {height:7em; filter:invert(100%);}
+			img {height:7em; @include filter(brightness(100));}
 			&:hover {background:white;
-				img {height:7em; filter:invert(0%);}
+				img {height:7em; @include filter(brightness(0));}
 			}
 		}
 
@@ -217,14 +224,13 @@ body {margin:0; padding:0; text-align:center;
 		.playReset {display:none}
 		.goToSettings {display:none}
 	}
+	.toggleParticipation {
+		.participate {display:none}
+		.justWatch {display:inline-block}
+	}
 }
 
 #clock {position:relative; z-index:1; top:0; left:0; width:100%; height:100%}
-
-form.edit {display:inline-block; margin:0; padding:0; position:relative; width:3em; margin-top:0.3em;
-	input[type=text] {width:8em; height:2em; color:#aaa; border:0; padding-left:1.5em; font-size:100%; background:transparent; border-bottom:2px solid black;}
-	img.edit {height:1.5em; position:absolute; bottom:0.1em; left:0; vertical-align:middle}
-}
 
 /* SETTINGS */
 #settings {background:white; padding:5% 0; font-size:120%; 

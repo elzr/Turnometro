@@ -37,8 +37,8 @@
 				<div class="enterEvent">
 					<form onsubmit="event.preventDefault(); TM.welcome.enterEvent();">
 						<input type="text" class="eventPin" value="" />
-						<span class="label"><b>ENTER</b> an event PIN</span>
 					</form>
+					<span class="label"><b>ENTER</b> an event PIN</span>
 
 					<div class="warning"></div>
 				</div>
@@ -73,14 +73,19 @@
 
 		<!-- NAME -->
 		<div id="name" class="screen">
-			<form class="edit" onsubmit="event.preventDefault(); TM.name.enterEventWithName();">
-				<input type="text" class="edit" value="Name" />
-				<img class="edit" src="img/edit.png" />
-			</form><br />
-			<span class="label button"><b>ENTER</b> event</span>
+			<div class="enterYourName">
+				<form class="edit" onsubmit="event.preventDefault(); TM.name.enterEventWithName();">
+					<input type="text" class="edit" value="" />
+				</form>
+				<span class="label">YOUR <b>NAME</b></span>
+			</div>
+			<br />
+			<a class="button">ENTER AS A <b>PARTICIPANT</b></a>
 			<div class="warning"></div>
 
-			<div class="justWatch"><a class="button">(Just watch.)</a></div>
+			<em>or</em>
+
+			<div class="justWatch"><a class="button">JUST <b>WATCH.</b></a></div>
 		</div>
 
 		<!-- CLOCK -->
@@ -98,6 +103,7 @@
 			<div id="interactions">
 				<div class="turn"/>
 					<img src="img/turn.png" />
+					<span class="label">Me next!</span>
 				</div><br />
 
 				<img class="agree" src="img/agree.png" />

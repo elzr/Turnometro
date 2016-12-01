@@ -53,7 +53,7 @@ var TM_CLOCK = {
 		turns.data( 'count', turnsInt );
 		turns.find('em').text( turnsInt );
 
-		TM.F.turn.add();
+		TM.F.turn.update('start');
 	},
 
 	// times *********************************************8
@@ -131,7 +131,7 @@ var TM_CLOCK = {
 				fit = 0.8;
 			}
 
-			if((count <= 0) && (count > -10)) {
+			if((count < 0) && (count > -10)) {
 				fit = 1.25;
 			}
 			if(count <= -10) {
@@ -143,7 +143,6 @@ var TM_CLOCK = {
 			return fit;
 		},
 		resize:function(fit) {
-			console.log('resizing');
 			var h = $(window).height(), w = $(window).width(),
 				fitted = Math.min(h*0.8, w/fit);
 
@@ -174,7 +173,8 @@ var TM_CLOCK = {
 			TM.clock.resetClasses();
 			$('body').addClass('paused');
 			TM.clock.setTitle( TM.duration );
-			TM.F.turn.end();
+			TM.F.turn.update('end');
+			TM.F.turn.add();
 		},
 		resetClasses:function() {
 			$('body').removeClass('paused running half almost over');

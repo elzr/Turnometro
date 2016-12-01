@@ -29,6 +29,7 @@ var TM = {
 			TM.clock.reset();
 		},
 		exit:function() {
+			TM.F.turn.update();
 			TM.s.hide();
 			TM.c.show();
 		},
@@ -119,6 +120,7 @@ var TM = {
 			TM.s.show();
 			TM.S.boot();
 			TM.F._event.add();
+			TM.F.turn.add();
 		},
 		focus:function() {
 			$('#welcome .enterEvent').addClass('editing');
@@ -164,11 +166,11 @@ var TM = {
 			}
 		},
 		focus:function() {
-			$(this).val('');
+			TM.n.find('.enterYourName').addClass('editing');
 		},
 		blur:function() {
 			if( $(this).val() == '' ) {
-				TM.n.find('input').val('Name');
+				TM.n.find('.enterYourName').removeClass('editing');
 			}
 		},
 		justWatch:function() {
@@ -247,7 +249,7 @@ var TM = {
 			},
 			find:function( pin ) {
 				TM.F.db.ref('events').orderByChild('pin').equalTo( pin ).once('value').then(function(snapshot) {
-					if(snapshot) {
+					if(snapshot.val()) {
 						TM.w.find('.warning').text('');
 
 						var cEvent = TM.F._event.current, val = snapshot.val();
@@ -267,38 +269,67 @@ var TM = {
 			listen:function() {
 				var listRef = TM.F.db.ref('events/'+TM.F._event.current.key+'/turns');
 				listRef.on('child_added', TM.F.turn.added);
-				listRef.on('child_changed', TM.F.turn.ended);
+				listRef.on('child_changed', TM.F.turn.changed);
 			},
 			add:function() { var cEvent = TM.F._event.current;
 				if( $('body').attr('id') == 'moderator' ) {
+					console.log('adding');
+
 					var newRef = TM.F.db.ref('events/'+cEvent.key+'/turns').push();
-					newRef.set({
+					var props = {
 						created_at: firebase.database.ServerValue.TIMESTAMP,
 						duration: TM.duration,
 						step: TM.step,
 						colorMuted: TM.color.muted,
 						soundMuted: TM.sound.muted
-					});
+					};
+					newRef.set( props );
 					TM.F.turn.current = newRef;
 				}
 			},
-			end:function() {
+			update:function( updateStartEnd) {
 				if( $('body').attr('id') == 'moderator' ) {
-					TM.F.turn.current.update({ended_at:firebase.database.ServerValue.TIMESTAMP});
+					console.log('updating');
+					var props = {
+						duration: TM.duration,
+						step: TM.step,
+						colorMuted: TM.color.muted,
+						soundMuted: TM.sound.muted
+					};
+					if(updateStartEnd == 'start') {
+						props.started_at = firebase.database.ServerValue.TIMESTAMP;
+					}
+					if(updateStartEnd == 'end') {
+						props.ended_at = firebase.database.ServerValue.TIMESTAMP;
+					}
+					TM.F.turn.current.update( props );
 				}
 			},
 			added:function(data) { var turn = data.val();
-				console.log('testing turn added', turn);
+				console.log('added');
 				if( !turn.ended_at ) {
-					TM.step = turn.step;
-					TM.duration = turn.duration;
-					TM.clock.playReset();
-					console.log('turn added', data.key, turn);
+					TM.F.turn.synchLocal(turn);
 				}
 			},
-			ended:function(data) {
-				TM.clock.reset();
-				console.log('turn ended', data.key, data.val());
+			changed:function(data) { var turn = data.val();
+				if( turn.ended_at ) {
+					TM.clock.reset();
+					console.log('turn ended', data.key, turn);
+				} else {
+					console.log('turn changed', data.key, turn);
+					TM.F.turn.synchLocal(turn);
+					if( turn.started_at ) {
+						TM.clock.playReset();
+					}
+				}
+			},
+			synchLocal:function(turn) {
+				TM.step = turn.step;
+				TM.duration = turn.duration;
+				TM.color.muted = turn.colorMuted;
+				TM.sound.muted = turn.soundMuted;
+				$('body')[(TM.color.muted ? 'add':'remove')+'Class']('colorMuted');
+				TM.clock.boot();
 			}
 		},
 		reaction:{
@@ -341,6 +372,7 @@ var TM = {
 			add:function(name) {var cEvent = TM.F._event.current,
 					name = TM.n.find('input').val();
 				if(name) {
+					TM.participant.name = name;
 					console.log('adding p!');
 					var newRef = TM.F.db.ref('events/'+cEvent.key+'/participants').push();
 					newRef.set({
