@@ -80,7 +80,7 @@
 				<span class="label">YOUR <b>NAME</b></span>
 			</div>
 			<br />
-			<a class="button">ENTER AS A <b>PARTICIPANT</b></a>
+			<a class="enterAsAParticipant button">ENTER AS A <b>PARTICIPANT</b></a>
 			<div class="warning"></div>
 
 			<em>or</em>
@@ -103,7 +103,7 @@
 			<div id="interactions">
 				<div class="turn"/>
 					<img src="img/turn.png" />
-					<span class="label">Me next!</span>
+					<span class="label">ME <b>NEXT</b>!</span>
 				</div><br />
 
 				<img class="agree" src="img/agree.png" />
@@ -130,12 +130,14 @@
 
 			<div class="toggleParticipation">
 				<a class="button participate">
-					Participate!
+					<b>PARTICIPATE</b>!
 				</a>
 				<a class="button justWatch">
-					Just watch.
+					JUST <b>WATCH</b>.
 				</a>
 			</div>
+
+			<div class="queue"></div>
 		</div>
 
 		<!-- SETTINGS -->
@@ -170,28 +172,24 @@
 					<li class="edit">
 						<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
 							<input type="text" class="edit" value="Add participant" />
-
-							<img class="edit" src="img/edit.png" />
 						</form>
 					</li>
 				</ul>
 			</div>
 
-			<div class="topics">
-				<h2>
-					<img src="img/topic.png" />
-					Topics:
-				</h2>
-				<ul>
-					<li class="edit">
-						<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
-							<input type="text" class="edit" value="Add topic" />
-
-							<img class="edit" src="img/edit.png" />
-						</form>
-					</li>
-				</ul>
-			</div>
+			<!--<div class="topics">-->
+				<!--<h2>-->
+					<!--<img src="img/topic.png" />-->
+					<!--Topics:-->
+				<!--</h2>-->
+				<!--<ul>-->
+					<!--<li class="edit">-->
+						<!--<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">-->
+							<!--<input type="text" class="edit" value="Add topic" />-->
+						<!--</form>-->
+					<!--</li>-->
+				<!--</ul>-->
+			<!--</div>-->
 
 			<div class="advanced">
 				<div class="sound">
@@ -208,6 +206,10 @@
 					Colors: <a class="colorToggle">YES</a>
 				</div>
 			</div>
+
+			<a class="endEvent button">
+				<b>END</b> EVENT
+			</a>
 		</div>
 
 		<!-- REPORT -->

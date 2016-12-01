@@ -121,6 +121,7 @@ var TM = {
 			TM.S.boot();
 			TM.F._event.add();
 			TM.F.turn.add();
+			TM.F.participant.add();
 		},
 		focus:function() {
 			$('#welcome .enterEvent').addClass('editing');
@@ -151,7 +152,7 @@ var TM = {
 	name:{///TM.N
 		boot:function() {
 			TM.n.find('.justWatch').click( TM.N.justWatch ).end().
-				find('.label.button').click( TM.N.enterEventWithName ).end().
+				find('.enterAsAParticipant').click( TM.N.enterEventWithName ).end().
 				find('input').focus( TM.N.focus ).blur( TM.N.blur ).end()
 		},
 		enterEventWithName:function() {
@@ -362,6 +363,10 @@ var TM = {
 				TM.c.find('#bubbles').prepend( bubble );
 			}
 		},
+		queue:{
+		},
+		topics:{
+		},
 		participant:{
 			current:undefined,
 			list:{},
@@ -371,14 +376,20 @@ var TM = {
 			},
 			add:function(name) {var cEvent = TM.F._event.current,
 					name = TM.n.find('input').val();
+				if( $('body').attr('id', 'moderator') ){
+					name = 'moderator'
+				}
 				if(name) {
 					TM.participant.name = name;
-					console.log('adding p!');
-					var newRef = TM.F.db.ref('events/'+cEvent.key+'/participants').push();
-					newRef.set({
-						name:name||'',
-						started_at: firebase.database.ServerValue.TIMESTAMP
-					});
+					var newRef = TM.F.db.ref('events/'+cEvent.key+'/participants').push(),
+						props = {
+							name:name||'',
+							started_at: firebase.database.ServerValue.TIMESTAMP,
+						};
+					if( $('body').attr('id', 'moderator') ){
+						props.moderator =true
+					}
+					newRef.set(props);
 					TM.F.participant.current = newRef;
 					TM.F.participant.list += [newRef];
 				}
