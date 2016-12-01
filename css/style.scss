@@ -157,13 +157,13 @@ body {margin:0; padding:0; text-align:center;
 		img:hover {filter:invert(0%);}
 	}
 
-	#queue {width:100%; height:50%; position:absolute; top:50%; background:white;
+	#queue {width:100%; height:50%; position:absolute; top:50%; background:white; display:none;
 		ul {margin:5% 10%; text-align:left; font-size:200%}
 	}
 
 	.version {position:absolute; bottom:2%; left:2%;}
 	.toggleParticipation { z-index:5; position:absolute; bottom:0; left:0; width:100%;
-		.justWatch, .participate {display:none; font-size:1.5em}
+		.justWatch, .participate, .endYourTurn {display:none; font-size:1.5em}
 	}
 }
 
@@ -204,6 +204,7 @@ body {margin:0; padding:0; text-align:center;
 
 /* MAIN MODES */
 #moderator {
+	/*#queue {display:block}*/
 	.toggleParticipation {display:none;
 		/*.justWatch {display:inline-block}*/
 		.participate {display:none}
@@ -239,46 +240,73 @@ body {margin:0; padding:0; text-align:center;
 #clock {position:relative; z-index:1; top:0; left:0; width:100%; height:100%}
 
 /* SETTINGS */
-#settings {background:white; padding:5% 0; font-size:120%; 
+#settings {background:#5B94CF; padding:0; padding-bottom:1.5em; font-size:120%; color:white;
+	h2 {margin:0; padding:0.5em 0; font-weight:$medium; text-transform:uppercase; color:#0B3471; text-align:left; padding-left:2em;
+		img {height:2em; vertical-align:middle; margin-right:0.3em}
+	}
 
-	h2 {margin:0; margin-top:1em; font-weight:$medium; text-transform:uppercase;}
-
-	a {text-decoration:none; display:inline-block}
 
 	a.exit, a.endEvent {font-weight:bold; font-size:150%; color:white; padding:0.5em 1em;
 		img {@include filter(brightness(100)); height:1.5em; vertical-align:middle}
 	}
 
-	.pin {
-		strong {display:block; font-size:7em; padding:0; line-height:0.9em; font-family:"Open Sans"; font-weight:$bold}
+	.pin { padding:1.5em 0; background:#316AB2;
+		h2 {padding-top:1em; padding-bottom:0}
+		strong {display:block; font-size:7em; padding:0; 
+			line-height:0.9em; font-family:"Open Sans"; font-weight:$bold;
+		}
 	}
 
-	.durations {margin:2em 1em; margin-top:0.5em; border:1px solid black; padding:1em 0; width:90%; margin:5%; font-family:"Open Sans"; font-weight:$semiBold;
+	.durations {padding:0.5em 0 1em 0; width:100%; font-family:"Open Sans"; font-weight:$semiBold;
+		background:#3973B9;
+
 		h2 {margin:0}
-		a, input[type=text] {font-size:150%; padding:0.2em 0.5em; margin:0.4em 0.2em; }
-		a {color:black
-			&:hover { background:#777}
+		a, input[type=text] {font-size:180%; padding:0.2em 0.5em; margin:0.4em 0.2em; display:inline-block}
+		a {color:white
+			&:hover { background:#white; color:#2654A2}
 		}
 		a.custom {display:none}
-		form {display:inline-block; margin:0; padding:0; position:relative; width:3em; height:2.7em; //background:red;
-			input[type=text] {width:2em; height:1em; color:#aaa; border:0; border-bottom:2px solid black;}
-			img.edit {height:1.5em; position:absolute; bottom:0; left:0; vertical-align:middle}
+		.addDuration { position:relative; width:8em; height:2.5em; text-align:left; display:inline-block; margin:0;
+			form {display:inline-block;
+				input[type=text] {width:2em; height:1em; color:#aaa; background:transparent; position:absolute; bottom:0; left:0; z-index:3; border:0}
+				img.edit {height:3em; position:absolute; bottom:0; left:0; vertical-align:middle; z-index:2}
+			}
+			&.editing input[type=text] { border:0; border-bottom:2px solid #0B3471; }
 		}
 	}
 
-	ul {max-width:20em; margin:0.5em auto;
+	ul {max-width:20em; margin:0 auto;
 		li {text-align:left; background:transparent; margin:0.2em; padding:0.3em;
-			&.edit {background:transparent}
+			&.edit {background:transparent; list-style-type:none;}
 		}
-
-	}
-	div.participants, div.topics {
-		img {width:1em}
 	}
 
-	a.selected, a.soundToggle, a.colorToggle {font-weight:$bold; background:black; color:white; padding:0.2em 0.5em}
-	div.sound, div.steps, div.color {margin:2em 1em; font-size:120%}
-	div.steps a {display:inline-block; margin-right:1em}
+	div.participants, div.topics {background:#407ABE; padding-bottom:1em;
+		.addParticipant {position:relative; width:16em; height:2.5em; text-align:left; display:inline-block; margin:0;
+			form.edit {display:inline-block;
+				input[type=text] {font-size:200%; font-weight:800; color:white; border-width:0; border-bottom:3px solid #0B3471; background-color:transparent; text-align:left; width:8em; padding:0.2em 0; position:absolute; bottom:0; left:0; z-index:3}
+			}
+			.label {position:absolute; top:0.5em; left:0; font-size:110%; width:15em; text-align:left; z-index:2; text-transform:uppercase; color:#0B3471}
+			&.editing {
+				.label {font-size:70%; width:23em; left:0; top:-1.7em}
+			}
+		}
+	}
+
+	div.advanced { background:#4A83C4; padding-bottom:1.5em;
+		.columns {
+			.sound, .vibration, .color {width:30%; display:inline-block; color:#0B3471;
+				a {display:inline-block; margin-top:0.5em}
+			}
+		}
+		img {height:2em; vertical-align:middle}
+	}
+
+	a.selected, a.soundToggle, a.colorToggle, a.vibrationToggle {font-weight:$bold; background:#0B3471; color:white; padding:0.2em 0.5em}
+	div.steps {padding-bottom:1.5em; margin-bottom:1.5em;
+		a {display:inline-block; margin-right:1em; font-size:180%}
+	}
+	a {text-decoration:none; color:white !important}
 }
 
 body.colorMuted {background:white !important;

@@ -155,11 +155,14 @@ var TM_CLOCK = {
 				height:h+'px',
 				width:w+'px'
 			});
+
+			console.log('body id', $('body').attr('id') );
+			console.log('adjust', adjust );
 			
 			if( ($('body').attr('id') == 'moderator') && (h > w) ) { //portrait
-				//console.log('am moderator');
-				//adjust *= 0.5;
-				//TM.c.find('#bar').height('50%');
+				console.log('am moderator');
+				adjust *= 0.5;
+				TM.c.find('#bar').height('50%');
 			}
 
 			$('#digits').css( {

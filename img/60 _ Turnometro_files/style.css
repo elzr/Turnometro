@@ -458,13 +458,13 @@ body {
     color: white; }
 
 /* MAIN MODES */
-#moderator {
-  /*#queue {display:block}*/ }
-  #moderator .toggleParticipation {
-    display: none;
-    /*.justWatch {display:inline-block}*/ }
-    #moderator .toggleParticipation .participate {
-      display: none; }
+#moderator #queue {
+  display: block; }
+#moderator .toggleParticipation {
+  display: none;
+  /*.justWatch {display:inline-block}*/ }
+  #moderator .toggleParticipation .participate {
+    display: none; }
 
 #presenter #clock {
   overflow: hidden; }
@@ -505,23 +505,17 @@ body {
 
 /* SETTINGS */
 #settings {
-  background: #5B94CF;
-  padding: 0;
-  padding-bottom: 1.5em;
-  font-size: 120%;
-  color: white; }
+  background: white;
+  padding: 5% 0;
+  font-size: 120%; }
   #settings h2 {
     margin: 0;
-    padding: 0.5em 0;
+    margin-top: 1em;
     font-weight: 400;
-    text-transform: uppercase;
-    color: #0B3471;
-    text-align: left;
-    padding-left: 2em; }
-    #settings h2 img {
-      height: 2em;
-      vertical-align: middle;
-      margin-right: 0.3em; }
+    text-transform: uppercase; }
+  #settings a {
+    text-decoration: none;
+    display: inline-block; }
   #settings a.exit, #settings a.endEvent {
     font-weight: bold;
     font-size: 150%;
@@ -532,147 +526,114 @@ body {
       filter: brightness(100);
       height: 1.5em;
       vertical-align: middle; }
-  #settings .pin {
-    padding: 1.5em 0;
-    background: #316AB2; }
-    #settings .pin h2 {
-      padding-top: 1em;
-      padding-bottom: 0; }
-    #settings .pin strong {
-      display: block;
-      font-size: 7em;
-      padding: 0;
-      line-height: 0.9em;
-      font-family: "Open Sans";
-      font-weight: 800; }
-  #settings .durations {
-    padding: 0.5em 0 1em 0;
-    width: 100%;
+  #settings .pin strong {
+    display: block;
+    font-size: 7em;
+    padding: 0;
+    line-height: 0.9em;
     font-family: "Open Sans";
-    font-weight: 600;
-    background: #3973B9; }
+    font-weight: 800; }
+  #settings .durations {
+    margin: 2em 1em;
+    margin-top: 0.5em;
+    border: 1px solid black;
+    padding: 1em 0;
+    width: 90%;
+    margin: 5%;
+    font-family: "Open Sans";
+    font-weight: 600; }
     #settings .durations h2 {
       margin: 0; }
     #settings .durations a, #settings .durations input[type=text] {
-      font-size: 180%;
+      font-size: 150%;
       padding: 0.2em 0.5em;
-      margin: 0.4em 0.2em;
-      display: inline-block; }
-    color:white
+      margin: 0.4em 0.2em; }
+    color:black
     #settings .durations a:hover {
-      background: #white;
-      color: #2654A2; }
+      background: #777; }
     #settings .durations a.custom {
       display: none; }
-    #settings .durations .addDuration {
-      position: relative;
-      width: 8em;
-      height: 2.5em;
-      text-align: left;
+    #settings .durations form {
       display: inline-block;
-      margin: 0; }
-      #settings .durations .addDuration form {
-        display: inline-block; }
-        #settings .durations .addDuration form input[type=text] {
-          width: 2em;
-          height: 1em;
-          color: #aaa;
-          background: transparent;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          z-index: 3;
-          border: 0; }
-        #settings .durations .addDuration form img.edit {
-          height: 3em;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          vertical-align: middle;
-          z-index: 2; }
-      #settings .durations .addDuration.editing input[type=text] {
+      margin: 0;
+      padding: 0;
+      position: relative;
+      width: 3em;
+      height: 2.7em; }
+      #settings .durations form input[type=text] {
+        width: 2em;
+        height: 1em;
+        color: #aaa;
         border: 0;
-        border-bottom: 2px solid #0B3471; }
+        border-bottom: 2px solid black; }
+      #settings .durations form img.edit {
+        height: 1.5em;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        vertical-align: middle; }
   #settings ul {
     max-width: 20em;
-    margin: 0 auto; }
+    margin: 0.5em auto; }
     #settings ul li {
       text-align: left;
       background: transparent;
       margin: 0.2em;
       padding: 0.3em; }
       #settings ul li.edit {
-        background: transparent;
-        list-style-type: none; }
-  #settings div.participants, #settings div.topics {
-    background: #407ABE;
-    padding-bottom: 1em; }
-    #settings div.participants .addParticipant, #settings div.topics .addParticipant {
-      position: relative;
-      width: 16em;
-      height: 2.5em;
-      text-align: left;
-      display: inline-block;
-      margin: 0; }
-      #settings div.participants .addParticipant form.edit, #settings div.topics .addParticipant form.edit {
-        display: inline-block; }
-        #settings div.participants .addParticipant form.edit input[type=text], #settings div.topics .addParticipant form.edit input[type=text] {
-          font-size: 200%;
-          font-weight: 800;
-          color: white;
-          border-width: 0;
-          border-bottom: 3px solid #0B3471;
-          background-color: transparent;
-          text-align: left;
-          width: 8em;
-          padding: 0.2em 0;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          z-index: 3; }
-      #settings div.participants .addParticipant .label, #settings div.topics .addParticipant .label {
-        position: absolute;
-        top: 0.5em;
-        left: 0;
-        font-size: 110%;
-        width: 15em;
+        background: transparent; }
+  #settings div.participants img, #settings div.topics img {
+    width: 1em; }
+  #settings div.participants .addParticipant, #settings div.topics .addParticipant {
+    position: relative;
+    width: 16em;
+    height: 3em;
+    text-align: left;
+    display: inline-block;
+    margin: 0; }
+    #settings div.participants .addParticipant form.edit, #settings div.topics .addParticipant form.edit {
+      display: inline-block; }
+      #settings div.participants .addParticipant form.edit input[type=text], #settings div.topics .addParticipant form.edit input[type=text] {
+        font-size: 200%;
+        font-weight: 800;
+        color: #585857;
+        border-width: 0;
+        border-bottom: 3px solid black;
+        background-color: transparent;
         text-align: left;
-        z-index: 2;
-        text-transform: uppercase;
-        color: #0B3471; }
-      #settings div.participants .addParticipant.editing .label, #settings div.topics .addParticipant.editing .label {
-        font-size: 70%;
-        width: 23em;
+        width: 8em;
+        padding: 0.2em 0;
+        margin-top: 0.5em;
+        position: absolute;
+        bottom: 0;
         left: 0;
-        top: -1.7em; }
-  #settings div.advanced {
-    background: #4A83C4;
-    padding-bottom: 1.5em; }
-    #settings div.advanced .columns .sound, #settings div.advanced .columns .vibration, #settings div.advanced .columns .color {
-      width: 30%;
-      display: inline-block;
-      color: #0B3471; }
-      #settings div.advanced .columns .sound a, #settings div.advanced .columns .vibration a, #settings div.advanced .columns .color a {
-        display: inline-block;
-        margin-top: 0.5em; }
-    #settings div.advanced img {
-      height: 2em;
-      vertical-align: middle; }
-  #settings a.selected, #settings a.soundToggle, #settings a.colorToggle, #settings a.vibrationToggle {
+        z-index: 3; }
+    #settings div.participants .addParticipant .label, #settings div.topics .addParticipant .label {
+      position: absolute;
+      top: 1em;
+      left: 0;
+      font-size: 110%;
+      width: 15em;
+      text-align: left;
+      z-index: 2;
+      text-transform: uppercase;
+      color: #585857; }
+    #settings div.participants .addParticipant.editing .label, #settings div.topics .addParticipant.editing .label {
+      font-size: 70%;
+      width: 23em;
+      left: 0;
+      top: -1.7em; }
+  #settings a.selected, #settings a.soundToggle, #settings a.colorToggle {
     font-weight: 800;
-    background: #0B3471;
+    background: black;
     color: white;
     padding: 0.2em 0.5em; }
-  #settings div.steps {
-    padding-bottom: 1.5em;
-    margin-bottom: 1.5em; }
-    #settings div.steps a {
-      display: inline-block;
-      margin-right: 1em;
-      font-size: 180%; }
-  #settings a {
-    text-decoration: none;
-    color: white !important; }
+  #settings div.sound, #settings div.steps, #settings div.color {
+    margin: 2em 1em;
+    font-size: 120%; }
+  #settings div.steps a {
+    display: inline-block;
+    margin-right: 1em; }
 
 body.colorMuted {
   background: white !important;

@@ -135,6 +135,9 @@
 				<a class="button justWatch">
 					JUST <b>WATCH</b>
 				</a>
+				<a class="button endYourTurn">
+					<b>END</b> YOUR TURN
+				</a>
 			</div>
 
 			<div id="queue">
@@ -148,41 +151,87 @@
 
 		<!-- SETTINGS -->
 		<div id="settings" class="screen">
-			<a class="exit button">LOOKS GOOD, <b>START</b>! <img src="img/startEvent.png" /></a><br /><br />
-
 			<div class="pin"> 
+				<a class="exit button">LOOKS GOOD, <b>START</b>! <img src="img/startEvent.png" /></a>
+				<h2>
+					<img src="img/pin.png" />
+					PIN	
+				</h2>
 				<strong></strong>
 				<em>Share this PIN to share your event.</em>
 			</div>
 
 			<div class="durations">
-				<h2>Turn duration:</h2>
+				<h2>
+					<img src="img/duration.png" />
+					TURN DURATION
+				</h2>
 				<a data-duration="30">30</a><a data-duration="60">60</a><a data-duration="120">2:00</a> <br />
 				<a data-duration="180">3:00</a><a data-duration="300">5:00</a>
+				<div class="addDuration">
 					<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
 						<input type="text" class="edit" value="" />
-
-						<img class="edit" src="img/edit.png" />
+						<img class="edit" src="img/lapiz.png" />
 					</form>
+				</div>
 				<div class="custom">
 					<a class="custom" data-duration=""></a>
 				</div>
 			</div>
-
 			<div class="participants">
 				<h2>
 					<img src="img/participant.png" />
-					Participants:
+					PARTICIPANTS
 				</h2>
 				<ul>
 					<li class="edit">
-						<form class="edit" onsubmit="event.preventDefault(); TM.settings.duration.edit();">
-							<input type="text" class="edit" value="Add participant" />
-						</form>
+						<div class="addParticipant">
+							<form class="edit" onsubmit="event.preventDefault(); TM.settings.addParticipant();">
+								<input type="text" class="edit" value="" />
+								<span class="label"><b>ADD</b> PARTICIPANT</span>
+							</form>
+						</div>
 					</li>
 				</ul>
 			</div>
-
+			<div class="advanced">
+				<h2>
+					<img src="img/steps.png" />
+					STEPS
+				</h2>
+				<div class="steps">
+					<a data-duration="1" class="selected">1</a>
+					<a data-duration="5">5</a>
+					<a data-duration="10">10</a>
+					<a data-duration="60">60</a>
+				</div>
+				<div class="columns">
+					<div class="sound">
+						<img src="img/sound.png" />
+						SOUND<br />
+						<a class="soundToggle">YES</a>
+					</div>
+					<div class="vibration">
+						<img src="img/vibration.png" />
+						VIBRATE<br />
+						<a class="vibrationToggle">YES</a>
+					</div>
+					<div class="color">
+						<img src="img/color.png" />
+						COLOR<br />
+						<a class="colorToggle">YES</a>
+					</div>
+				</div>
+			</div>
+			<br />
+			<br />
+			<a class="endEvent button">
+				<b>END</b> EVENT
+				<img src="img/endEvent.png" />
+			</a>
+			<br />
+			<br />
+		</div>
 			<!--<div class="topics">-->
 				<!--<h2>-->
 					<!--<img src="img/topic.png" />-->
@@ -196,29 +245,6 @@
 					<!--</li>-->
 				<!--</ul>-->
 			<!--</div>-->
-
-			<div class="advanced">
-				<div class="sound">
-					End beep: <a class="soundToggle">YES</a>
-				</div>
-				<div class="steps">
-					Steps: 
-						<a data-duration="1" class="selected">1</a>
-						<a data-duration="5">5</a>
-						<a data-duration="10">10</a>
-						<a data-duration="60">60</a>
-				</div>
-				<div class="color">
-					Colors: <a class="colorToggle">YES</a>
-				</div>
-			</div>
-
-			<a class="endEvent button">
-				<b>END</b> EVENT
-				<img src="img/endEvent.png" />
-			</a>
-		</div>
-
 		<!-- REPORT -->
 		<div id="report" class="screen">
 		</div>

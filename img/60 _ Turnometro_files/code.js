@@ -78,10 +78,11 @@ var TM = {
 			},
 			focus:function() {
 				$(this).val('');
-				TM.s.find('.durations img.edit').css('visibility', 'hidden');
+				TM.s.find('.durations img.edit').css('display', 'inline-block');
 			},
 			blur:function() {
-				TM.s.find('.durations img.edit').css('visibility', 'visible');
+				$(this).val('Edit');
+				TM.s.find('.durations img.edit').css('display', 'none');
 			}
 		},
 		toggleSound:function() {
@@ -405,13 +406,7 @@ var TM = {
 			code:0
 		}
 	},
-	exitSplash:function() {
-		if( $(this).hasClass('splash') ) {
-			window.setTimeout(function() {
-				TM.w.find('.fork').removeClass('splash').addClass('afterSplash');
-			}, 0);
-		}
-	},
+
 	boot:function() {
 		TM.duration = parseInt( window.location.hash.substr(1) ) || 60;
 
@@ -426,7 +421,11 @@ var TM = {
 		TM.eventTime.tick();
 		TM.clock.boot();
 
-		$('.fork.splash').click( TM.exitSplash );
+
+		window.setTimeout(function() {
+			TM.w.find('.fork').removeClass('splash').addClass('afterSplash');
+		}, 500);
+
 		$('#digits').click( TM.clock.moderatorClickGuard( TM.clock.playReset )).
 			dblclick( TM.clock.moderatorClickGuard( TM.clock.reset ));
 	}
