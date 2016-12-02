@@ -26,7 +26,7 @@ var TM = {
 			TM.s.show();
 			$('#welcome, #clock').hide();
 
-			TM.s.find('.exit').html('Back to event &rarr;');
+			TM.s.find('.exit').html('Back to event &rarr;').data('return', true);
 			TM.clock.reset();
 		},
 		exit:function() {
@@ -35,6 +35,8 @@ var TM = {
 			TM.clock.boot();
 			TM.c.show();
 			TM.F.reaction.listen();
+			
+			(!TM.s.find('.exit').data('return')) && TM.presenter.boot();
 		},
 		endEvent:function() {
 			TM.F._event.end();
@@ -162,9 +164,10 @@ var TM = {
 		},
 		enterEventWithName:function() {
 			var name = TM.n.find('input').val();
-			TM.participant.boot('entering');
+			TM.participant.boot();
 		},
 		finishEnteringEventWithName:function() {
+			console.log('finish entering');
 			TM.S.boot();
 
 			TM.n.hide();
@@ -432,6 +435,8 @@ var TM = {
 						orderByChild('name').equalTo( name ).once('value').then(function(snapshot) {
 							if(!snapshot.val()) {
 								TM.n.find('.warning').text('');
+								(!isModerator) && TM.N.finishEnteringEventWithName();
+
 								TM.participant.name = name;
 								var newRef = TM.F.db.ref('events/'+cEvent.key+'/participants').push(),
 									props = {
@@ -444,7 +449,6 @@ var TM = {
 								newRef.set(props);
 								TM.F.participant.current = newRef;
 								TM.F.participant.list += [newRef];
-								TM.N.finishEnteringEventWithName;
 							} else {
 								TM.n.find('.warning').text('Name already exists!');
 							}

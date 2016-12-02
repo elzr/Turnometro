@@ -359,7 +359,7 @@ body {
   #clock #bubbles img {
     bottom: 0;
     position: absolute;
-    width: 5em; }
+    width: 20%; }
 #clock #interactions {
   display: none;
   width: 100%;
@@ -514,6 +514,8 @@ body {
     color: white; }
 
 /* MAIN MODES */
+#moderator #bubbles {
+  display: block; }
 #moderator #queue {
   display: block; }
 #moderator .toggleParticipation {
