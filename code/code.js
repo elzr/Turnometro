@@ -357,8 +357,6 @@ var TM = {
 						css({left: (Math.random()*80)+'%'}).
 						animate({ bottom:$(window).height(), opacity:0 }, 3000);
 				
-				console.log('bubble', r);
-
 				TM.c.find('#bubbles').prepend( bubble );
 			}
 		},

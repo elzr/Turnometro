@@ -109,7 +109,7 @@ body {
       #welcome .fork .enterEvent form {
         display: inline-block;
         height: 1.5em; }
-      #welcome .fork .enterEvent input[type=text] {
+      #welcome .fork .enterEvent input[type=number] {
         font-size: 200%;
         font-weight: 800;
         color: #585857;
@@ -163,15 +163,24 @@ body {
         filter: invert(100%); }
   #welcome .about {
     padding: 2em 0;
-    background: #eee; }
+    background: #eee;
+    border-top: 1px solid black; }
     #welcome .about p {
       max-width: 30em;
       padding: 1em;
-      margin: 1em auto;
+      margin: 0.5em auto;
       text-align: left; }
-    #welcome .about .logos img {
-      width: 6em;
-      vertical-align: middle; }
+      #welcome .about p.slogan {
+        font-size: 150%;
+        max-width: 80%;
+        text-align: center; }
+        #welcome .about p.slogan img {
+          width: 8em; }
+    #welcome .about .logos {
+      margin-top: 1em; }
+      #welcome .about .logos img {
+        height: 3em;
+        vertical-align: middle; }
 
 /* NAME */
 #name {
@@ -343,7 +352,7 @@ body {
   #clock #bubbles img {
     bottom: 0;
     position: absolute;
-    width: 3em; }
+    width: 5em; }
 #clock #interactions {
   display: none;
   width: 100%;
@@ -426,7 +435,7 @@ body {
   font-size: 25%; }
 
 .paused {
-  background: #0F5C7D; }
+  background: #316AB2; }
   .paused #clock #bar .progress {
     display: none; }
   .paused #clock #bar .playReset .play {
