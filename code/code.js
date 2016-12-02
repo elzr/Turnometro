@@ -4,6 +4,7 @@ var TM = {
 		boot:function() { var D = TM.S.duration;
 			$('.goToSettings').click( TM.S.enter );
 			$('.exit').click( TM.S.exit );
+			TM.s.find('.endEvent').click( TM.S.endEvent ).end();
 
 			TM.s.find('a').attr('href', 'javascript:void(0)').end().
 				find('.durations a').click( D.set ).end().
@@ -31,7 +32,12 @@ var TM = {
 		exit:function() {
 			TM.F.turn.update();
 			TM.s.hide();
+			TM.clock.boot();
 			TM.c.show();
+			TM.F.reaction.listen();
+		},
+		endEvent:function() {
+			TM.F._event.end();
 		},
 		duration:{
 			set:function() {
@@ -218,7 +224,7 @@ var TM = {
 	// PRESENTER --------------------------------------------
 	presenter:{
 		boot:function() {
-			console.log('presenting!');
+			//console.log('presenting!');
 			TM.F.reaction.listen();
 		}
 	},
@@ -230,6 +236,7 @@ var TM = {
 		},
 		_event:{
 			current:{},
+			_current:undefined, //clean this up eventuall
 			add:function() { var cEvent = TM.F._event.current;
 				var newEventRef = TM.F.db.ref('events').push(),
 					pad ="0000",
@@ -243,9 +250,36 @@ var TM = {
 					pin: paddedPin,
 					created_at:firebase.database.ServerValue.TIMESTAMP,
 				});
+				TM.F._event._current = newEventRef;
 
 				TM.s.find('.pin strong').text( paddedPin );
 				TM.F.participant.listen();
+				//TM.F._event.listen();
+			},
+			//listen:function() {
+				//TM.F.db.ref('events/'+TM.F._event.current.key).orderByChild('ended').equalTo(true).once('value').then(function(snapshot) {
+					//console.log('ended!', snapshot.val());
+					//if(snapshot.val()) {
+						//console.log('ended!', snapshot.val());
+						//TM.F._event.ended;
+					//}
+				//});
+			//},
+			end:function() {
+				TM.F.turn.update('endEvent');
+				//console.log('ending!', TM.F._event._current);
+				//TM.F._event._current.update( {
+					//ended: true 
+				//} );
+			},
+			ended:function() { //var e = data.val();
+				console.log('event ended!');
+				$('.screen').hide();
+				$('#report').show();
+
+				TM.F._event._current.update( {
+					ended: true 
+				} );
 			},
 			find:function( pin ) {
 				TM.F.db.ref('events').orderByChild('pin').equalTo( pin ).once('value').then(function(snapshot) {
@@ -273,7 +307,7 @@ var TM = {
 			},
 			add:function() { var cEvent = TM.F._event.current;
 				if( $('body').attr('id') == 'moderator' ) {
-					console.log('adding');
+					//console.log('adding');
 
 					var newRef = TM.F.db.ref('events/'+cEvent.key+'/turns').push();
 					var props = {
@@ -289,7 +323,7 @@ var TM = {
 			},
 			update:function( updateStartEnd) {
 				if( $('body').attr('id') == 'moderator' ) {
-					console.log('updating');
+					//console.log('updating');
 					var props = {
 						duration: TM.duration,
 						step: TM.step,
@@ -302,24 +336,32 @@ var TM = {
 					if(updateStartEnd == 'end') {
 						props.ended_at = firebase.database.ServerValue.TIMESTAMP;
 					}
+					if(updateStartEnd == 'endEvent') {
+						TM.F._event.ended();
+						props.event_ended = true;
+					}
 					TM.F.turn.current.update( props );
 				}
 			},
 			added:function(data) { var turn = data.val();
-				console.log('added');
+				//console.log('added');
 				if( !turn.ended_at ) {
 					TM.F.turn.synchLocal(turn);
 				}
 			},
 			changed:function(data) { var turn = data.val();
-				if( turn.ended_at ) {
-					TM.clock.reset();
-					console.log('turn ended', data.key, turn);
+				if(turn.event_ended) {
+					TM.F._event.ended();
 				} else {
-					console.log('turn changed', data.key, turn);
-					TM.F.turn.synchLocal(turn);
-					if( turn.started_at ) {
-						TM.clock.playReset();
+					if( turn.ended_at ) {
+						TM.clock.reset();
+						//console.log('turn ended', data.key, turn);
+					} else {
+						//console.log('turn changed', data.key, turn);
+						TM.F.turn.synchLocal(turn);
+						if( turn.started_at ) {
+							TM.clock.playReset();
+						}
 					}
 				}
 			},
@@ -334,7 +376,7 @@ var TM = {
 		},
 		reaction:{
 			add:function(r) { var cEvent = TM.F._event.current;
-				console.log( 'creating reaction', r);
+				//console.log( 'creating reaction', r);
 
 				var newRef = TM.F.db.ref('reactions').push();
 
@@ -346,13 +388,13 @@ var TM = {
 				});
 			},
 			listen:function() {
-				console.log( 'listening for reactions');
+				//console.log( 'listening for reactions');
 				TM.F.db.ref('reactions').orderByChild('event_key').equalTo( TM.F._event.current.key ).
 					on('child_added', TM.F.reaction.added);
 			},
 			added:function(data) { var r = data.val(), localTime = (new Date).getTime();
 				var delta = Math.abs((r.created_at - localTime)/(60*1000));
-				console.log( delta );
+				//console.log( delta );
 				if( delta <= 1 ) {
 					var bubble = $('<img class="'+r.reaction+'" src="img/'+r.reaction+'.png" />').
 							css({left: (Math.random()*80)+'%', bottom:(Math.random()*10)+'%'}).
@@ -377,14 +419,15 @@ var TM = {
 					name = TM.n.find('input').val(),
 					isModerator = $('body').attr('id') ==  'moderator';
 
-				console.log('name', name);
 				if( isModerator ){
 					name = 'moderator'
 				} else if(name == 'moderator') {
-					TM.n.find('.warning').text('Invalid name!');
+					return TM.n.find('.warning').text('Invalid name!');
 				} else if(!name.match(/^[0-9a-zA-Z]+$/)) {
-					TM.n.find('.warning').text('Invalid chars!');
-				} else if(name) {
+					return TM.n.find('.warning').text('Invalid chars!');
+				} 
+
+				if(name) {
 					TM.F.db.ref('events/'+TM.F._event.current.key+'/participants').
 						orderByChild('name').equalTo( name ).once('value').then(function(snapshot) {
 							if(!snapshot.val()) {

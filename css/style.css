@@ -409,15 +409,37 @@ body {
     filter: invert(0%); }
 #clock #queue {
   width: 100%;
-  height: 50%;
-  position: absolute;
-  top: 50%;
-  background: white;
-  display: none; }
-  #clock #queue ul {
-    margin: 5% 10%;
+  display: none;
+  padding: 1em 0;
+  -webkit-filter: brightness(0.8);
+  filter: brightness(0.8);
+  color: white; }
+  #clock #queue h2 {
+    margin: 0;
+    padding: 0.5em 0;
+    font-weight: 400;
+    font-size: 100%;
+    text-transform: uppercase;
     text-align: left;
-    font-size: 200%; }
+    padding-left: 2em; }
+    #clock #queue h2 img {
+      height: 2em;
+      vertical-align: middle;
+      margin-right: 0.3em;
+      -webkit-filter: brightness(100);
+      filter: brightness(100); }
+  #clock #queue ul {
+    padding: 0 10%;
+    padding-bottom: 0%;
+    text-align: left;
+    font-size: 120%;
+    margin: 0; }
+    #clock #queue ul.add li {
+      list-style-type: none;
+      border: 1px solid white;
+      display: inline-block;
+      padding: 2%;
+      margin-right: 2%; }
 #clock .version {
   position: absolute;
   bottom: 2%;
@@ -432,8 +454,16 @@ body {
     display: none;
     font-size: 1.5em; }
 
+#report {
+  color: white;
+  padding: 2em 0; }
+  #report p {
+    margin: 5%; }
+  #report img {
+    width: 100%; }
+
 /* APP STATE */
-.landscape #clock #bar .playReset, #moderator #clock #bar .playReset {
+.landscape #clock #bar .playReset {
   text-align: right; }
 
 .narrowLandscape #clock #bar .playReset {
@@ -443,6 +473,8 @@ body {
 
 .paused {
   background: #316AB2; }
+  .paused #clock #queue {
+    background: #316AB2; }
   .paused #clock #bar .progress {
     display: none; }
   .paused #clock #bar .playReset .play {
@@ -455,32 +487,40 @@ body {
 
 .running {
   background: #1CE8A0; }
+  .running #clock #queue {
+    background: #23BC86; }
   .running #clock #bar .progress {
     background: #23BC86; }
 
 .half {
   background: #FFDF57; }
+  .half #clock #queue {
+    background: #F0C309; }
   .half #clock #bar .progress {
     background: #F0C309; }
 
 .almost {
   background: #FC8A51; }
+  .almost #clock #queue {
+    background: #F4361C; }
   .almost #clock #bar .progress {
     background: #F4361C; }
 
 .over {
   background: #D3001A; }
+  .over #clock #queue {
+    background: #D3001A; }
   .over span#digits {
     color: white; }
 
 /* MAIN MODES */
-#moderator {
-  /*#queue {display:block}*/ }
-  #moderator .toggleParticipation {
-    display: none;
-    /*.justWatch {display:inline-block}*/ }
-    #moderator .toggleParticipation .participate {
-      display: none; }
+#moderator #queue {
+  display: block; }
+#moderator .toggleParticipation {
+  display: none;
+  /*.justWatch {display:inline-block}*/ }
+  #moderator .toggleParticipation .participate {
+    display: none; }
 
 #presenter #clock {
   overflow: hidden; }
@@ -714,10 +754,14 @@ body.colorMuted {
   body.colorMuted #clock #bubbles img {
     -webkit-filter: grayscale(100%) brightness(2);
     filter: grayscale(100%) brightness(2); }
+  body.colorMuted.running #clock #queue, body.colorMuted.half #clock #queue, body.colorMuted.almost #clock #queue {
+    background: #ccc; }
   body.colorMuted.running #clock #bar .progress, body.colorMuted.half #clock #bar .progress, body.colorMuted.almost #clock #bar .progress {
     background: #ccc; }
   body.colorMuted.over {
     background: black !important; }
+    body.colorMuted.over #clock #queue {
+      background: black; }
     body.colorMuted.over #clock span#digits, body.colorMuted.over #clock .tally {
       color: white; }
     body.colorMuted.over #clock #bar .playReset .play {

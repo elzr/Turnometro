@@ -161,8 +161,15 @@ body {margin:0; padding:0; text-align:center;
 		img:hover {filter:invert(0%);}
 	}
 
-	#queue {width:100%; height:50%; position:absolute; top:50%; background:white; display:none;
-		ul {margin:5% 10%; text-align:left; font-size:200%}
+	#queue {width:100%; display:none; padding:1em 0; @include filter(brightness(0.8)); color:white;
+		h2 {margin:0; padding:0.5em 0; font-weight:$medium; font-size:100%; text-transform:uppercase; text-align:left; padding-left:2em;
+			img {height:2em; vertical-align:middle; margin-right:0.3em; @include filter(brightness(100))}
+		}
+		ul {padding:0 10%; padding-bottom:0%; text-align:left; font-size:120%; margin:0;
+			&.add {
+				li {list-style-type:none; border:1px solid white; display:inline-block; padding:2%; margin-right:2%;}
+			}
+		}
 	}
 
 	.version {position:absolute; bottom:2%; left:2%;}
@@ -171,8 +178,13 @@ body {margin:0; padding:0; text-align:center;
 	}
 }
 
+#report {color:white; padding:2em 0;
+	p {margin:5%}
+	img {width:100%}
+}
+
 /* APP STATE */
-.landscape #clock #bar .playReset, #moderator #clock #bar .playReset {text-align:right}
+.landscape #clock #bar .playReset {text-align:right}
 
 .narrowLandscape {
 	#clock #bar .playReset {font-size:50%}
@@ -180,35 +192,50 @@ body {margin:0; padding:0; text-align:center;
 }
 
 .paused {background:$azulOscuro;
-	#clock #bar {
-		.progress {display:none}
-		.playReset .play {display:inline-block;}
+	#clock {
+		#queue {background:$azulOscuro;}
+		#bar {
+			.progress {display:none}
+			.playReset .play {display:inline-block;}
+		}
 	}
 }
 .running, .half, .almost {
-	#clock #bar {
-		.progress {display:block}
-		.playReset .reset {display:inline-block;}
+	#clock {
+		#bar {
+			.progress {display:block}
+			.playReset .reset {display:inline-block;}
+		}
 	}
 }
 
 .running {background:$verdeClaro;
-	#clock #bar .progress {background:$verdeOscuro}
+	#clock {
+		#queue {background:$verdeOscuro;}
+		#bar .progress {background:$verdeOscuro}
+	}
 }
 .half {background:$amarilloClaro;
-	#clock #bar .progress {background:$amarilloOscuro}
+	#clock {
+		#queue {background:$amarilloOscuro;}
+		#bar .progress {background:$amarilloOscuro}
+	}
 }
 .almost {background:$naranjaClaro;
-	#clock #bar .progress {background:$naranjaOscuro} 
+	#clock {
+		#queue {background:$naranjaOscuro;}
+		#bar .progress {background:$naranjaOscuro} 
+	}
 }
 
 .over {background:$rojoOscuro;
+	#clock #queue {background:$rojoOscuro;}
 	span#digits {color:white;}
 }
 
 /* MAIN MODES */
 #moderator {
-	/*#queue {display:block}*/
+	#queue {display:block}
 	.toggleParticipation {display:none;
 		/*.justWatch {display:inline-block}*/
 		.participate {display:none}
@@ -339,11 +366,15 @@ body.colorMuted {background:white !important;
 	}
 
 	&.running, &.half, &.almost {
-		#clock #bar .progress {background:#ccc}
+		#clock {
+			#queue {background:#ccc;}
+			#bar .progress {background:#ccc}
+		}
 	}
 	
 	&.over {background:black !important;
 		#clock {
+			#queue {background:black;}
 			span#digits, .tally {color:white}
 			#bar .playReset {
 				.play { border-left: $buttonSide*1.5 solid white; }
