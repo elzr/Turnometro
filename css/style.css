@@ -440,6 +440,9 @@ body {
       display: inline-block;
       padding: 2%;
       margin-right: 2%; }
+      #clock #queue ul.add li:hover {
+        background: white;
+        color: #575756; }
 #clock .version {
   position: absolute;
   bottom: 2%;

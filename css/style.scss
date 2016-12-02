@@ -167,7 +167,9 @@ body {margin:0; padding:0; text-align:center;
 		}
 		ul {padding:0 10%; padding-bottom:0%; text-align:left; font-size:120%; margin:0;
 			&.add {
-				li {list-style-type:none; border:1px solid white; display:inline-block; padding:2%; margin-right:2%;}
+				li {list-style-type:none; border:1px solid white; display:inline-block; padding:2%; margin-right:2%;
+					&:hover {background:white; color:#575756}
+				}
 			}
 		}
 	}
