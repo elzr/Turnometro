@@ -46,21 +46,21 @@ body {margin:0; padding:0; text-align:center;
 			.startEvent, em, .enterEvent, .findMore {opacity:1}
 		}
 
-		.startEvent { margin:2em 0; margin-top:2em; text-decoration:none; text-transform:uppercase; padding:0.4em 0.6em; width:100%; 
+		.startEvent { margin:2em 0; margin-top:2em; text-decoration:none; text-transform:uppercase; padding:0.4em 0; width:100%; 
 			img { height:2.5em; vertical-align:middle}
 			a {font-size:80%; line-height:1.2em; padding:1.2em 2em; padding-left:1.2em; margin-top:1.5em; }
 		}
 		em {display:block; font-style:normal; margin-top:0.5em; margin-bottom:2em; color:#585857}
-		.enterEvent {margin:0 auto; position:relative; width:16em; height:3em;
+		.enterEvent {margin:0 auto; position:relative; width:16em; max-width:90%; height:3em;
 			form {display:inline-block; height:1.5em}
-			input[type=number] {font-size:200%; font-weight:800; color:#585857; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
+			input[type=number] {font-size:200%; font-weight:800; color:#585857; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; max-width:100%; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
 			img {position:absolute; bottom:0; left:0.4em; width:2em; z-index:2}
-			.label {position:absolute; top:1em; left:0; font-size:90%; width:18em; text-align:center; z-index:2; text-transform:uppercase; color:#585857}
+			.label {position:absolute; top:1em; left:0; font-size:90%; width:18em; max-width:100%; text-align:center; z-index:2; text-transform:uppercase; color:#585857}
 			&.editing {
 				.label {font-size:70%; width:23em; left:0; top:-1.4em}
 				img {left:auto; right:0.4em}
 			}
-			.warning {color:#D21621; margin-top:2em}
+			.warning {color:#D21621; margin-top:2em; font-size:80%}
 		}
 
 		.findMore {text-align:center; position:absolute; bottom:2%; width:100%; font-size:80%; color:#6E6E6D;
@@ -70,7 +70,7 @@ body {margin:0; padding:0; text-align:center;
 	.about { padding:2em 0; background:#eee; border-top:1px solid black;
 		p {max-width:30em; padding:1em; margin:0.5em auto; text-align:left;
 			&.slogan {font-size:150%; max-width:80%; text-align:center;
-				img {width:8em}
+				img {width:80%}
 			}
 		}
 		.logos { margin-top:1em;
@@ -81,16 +81,16 @@ body {margin:0; padding:0; text-align:center;
 
 /* NAME */
 #name {text-align:center; background:white; font-size:150%; overflow:scroll;
-	.enterYourName {position:relative; width:16em; height:3em; text-align:center; display:inline-block; margin:3.5em 0 1em 0;
+	.enterYourName {position:relative; width:16em; max-width:90%; height:3em; text-align:center; display:inline-block; margin:3.5em 0 1em 0;
 		form.edit {display:inline-block;
-			input[type=text] {font-size:200%; font-weight:800; color:#585857; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
+			input[type=text] {font-size:200%; font-weight:800; color:#585857; border-width:0; border-bottom:3px solid black; background-color:transparent; text-align:center; width:8em; max-width:100%; padding:0.2em 0; margin-top:0.5em; position:absolute; bottom:0; left:0; z-index:3}
 		}
-		.label {position:absolute; top:1em; left:0; font-size:110%; width:15em; text-align:center; z-index:2; text-transform:uppercase; color:#585857}
+		.label {position:absolute; top:1em; left:0; font-size:110%; width:15em; max-width:100%; text-align:center; z-index:2; text-transform:uppercase; color:#585857}
 		&.editing {
 			.label {font-size:70%; width:23em; left:0; top:-1.7em}
 		}
 	}
-	.warning {color:#D21621; margin-top:5em}
+	.warning {color:#D21621; margin-top:1em}
 	em {display:block; font-style:normal; margin:2em 0; color:#585857}
 	.justWatch { margin-top:5em; text-align:center}
 }
@@ -118,9 +118,9 @@ body {margin:0; padding:0; text-align:center;
 				display:none;
 				width:0;
 				height:0;
-				border-top: $buttonSide solid transparent;
-				border-bottom: $buttonSide solid transparent;
-				border-left: $buttonSide*1.5 solid white;
+				border-top: $buttonSide/1.2 solid transparent;
+				border-bottom: $buttonSide/1.2 solid transparent;
+				border-left: $buttonSide*1.5/1.2 solid white;
 			}
 			.reset {position:relative; margin:2%; display:none;
 				.maxDuration {position:absolute; top:0; color:white; font-size:2em; display:inline-block; width:$buttonSide; height:$buttonSide; line-height:$buttonSide+0.3; vertical-align:middle; text-align:center}
@@ -156,7 +156,7 @@ body {margin:0; padding:0; text-align:center;
 
 		.agree, .heart {height:6em; margin:0;}
 		.agree {margin-right:2.5em}
-		.doubt, .sadness, .anger {height:6em; padding:0.5em 1em}
+		.doubt, .sadness, .anger {height:5em; padding:0.5em 1em}
 
 		img:hover {filter:invert(0%);}
 	}
@@ -245,12 +245,12 @@ body {margin:0; padding:0; text-align:center;
 
 /* SETTINGS */
 #settings {background:#5B94CF; padding:0; padding-bottom:1.5em; font-size:120%; color:white;
-	h2 {margin:0; padding:0.5em 0; font-weight:$medium; text-transform:uppercase; color:#0B3471; text-align:left; padding-left:2em;
+	h2 {margin:0; padding:0.5em 0; font-weight:$medium; font-size:100%; text-transform:uppercase; color:#0B3471; text-align:left; padding-left:2em;
 		img {height:2em; vertical-align:middle; margin-right:0.3em}
 	}
 
 
-	a.exit, a.endEvent {font-weight:bold; font-size:150%; color:white; padding:0.5em 1em;
+	a.exit, a.endEvent {font-size:120%; color:white; padding:0.5em 1em;
 		img {@include filter(brightness(100)); height:1.5em; vertical-align:middle}
 	}
 
@@ -265,12 +265,12 @@ body {margin:0; padding:0; text-align:center;
 		background:#3973B9;
 
 		h2 {margin:0}
-		a, input[type=text] {font-size:180%; padding:0.2em 0.5em; margin:0.4em 0.2em; display:inline-block}
+		a, input[type=text] {font-size:180%; padding:0.2em 0.5em; display:inline-block}
 		a {color:white
 			&:hover { background:#white; color:#2654A2}
 		}
 		a.custom {display:none}
-		.addDuration { position:relative; width:8em; height:2.5em; text-align:left; display:inline-block; margin:0;
+		.addDuration { position:relative; width:4em; height:2.5em; text-align:left; display:inline-block; margin:0;
 			form {display:inline-block;
 				input[type=text] {width:2em; height:1em; color:#aaa; background:transparent; position:absolute; bottom:0; left:0; z-index:3; border:0}
 				img.edit {height:3em; position:absolute; bottom:0; left:0; vertical-align:middle; z-index:2}
@@ -307,7 +307,7 @@ body {margin:0; padding:0; text-align:center;
 	}
 
 	a.selected, a.soundToggle, a.colorToggle, a.vibrationToggle {font-weight:$bold; background:#0B3471; color:white; padding:0.2em 0.5em}
-	div.steps {padding-bottom:1.5em; margin-bottom:1.5em;
+	div.steps {padding-bottom:1.5em; margin-bottom:1em;
 		a {display:inline-block; margin-right:1em; font-size:180%}
 	}
 	a {text-decoration:none; color:white !important}
@@ -325,8 +325,17 @@ body.colorMuted {background:white !important;
 			.reset {
 				.maxDuration {color:black}
 			}
+			
 		}
 		img {filter:invert(100%);}
+		#interactions img {@include filter(brightness(0));}
+		#interactions div.turn {
+			img {@include filter(brightness(100));}
+			&:hover {
+				img {@include filter(brightness(0));}
+			}
+		}
+		#bubbles img {@include filter(grayscale(100%) brightness(2));}
 	}
 
 	&.running, &.half, &.almost {

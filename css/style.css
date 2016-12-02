@@ -84,7 +84,7 @@ body {
       margin-top: 2em;
       text-decoration: none;
       text-transform: uppercase;
-      padding: 0.4em 0.6em;
+      padding: 0.4em 0;
       width: 100%; }
       #welcome .fork .startEvent img {
         height: 2.5em;
@@ -105,6 +105,7 @@ body {
       margin: 0 auto;
       position: relative;
       width: 16em;
+      max-width: 90%;
       height: 3em; }
       #welcome .fork .enterEvent form {
         display: inline-block;
@@ -118,6 +119,7 @@ body {
         background-color: transparent;
         text-align: center;
         width: 8em;
+        max-width: 100%;
         padding: 0.2em 0;
         margin-top: 0.5em;
         position: absolute;
@@ -136,6 +138,7 @@ body {
         left: 0;
         font-size: 90%;
         width: 18em;
+        max-width: 100%;
         text-align: center;
         z-index: 2;
         text-transform: uppercase;
@@ -150,7 +153,8 @@ body {
         right: 0.4em; }
       #welcome .fork .enterEvent .warning {
         color: #D21621;
-        margin-top: 2em; }
+        margin-top: 2em;
+        font-size: 80%; }
     #welcome .fork .findMore {
       text-align: center;
       position: absolute;
@@ -175,7 +179,7 @@ body {
         max-width: 80%;
         text-align: center; }
         #welcome .about p.slogan img {
-          width: 8em; }
+          width: 80%; }
     #welcome .about .logos {
       margin-top: 1em; }
       #welcome .about .logos img {
@@ -191,6 +195,7 @@ body {
   #name .enterYourName {
     position: relative;
     width: 16em;
+    max-width: 90%;
     height: 3em;
     text-align: center;
     display: inline-block;
@@ -206,6 +211,7 @@ body {
         background-color: transparent;
         text-align: center;
         width: 8em;
+        max-width: 100%;
         padding: 0.2em 0;
         margin-top: 0.5em;
         position: absolute;
@@ -218,6 +224,7 @@ body {
       left: 0;
       font-size: 110%;
       width: 15em;
+      max-width: 100%;
       text-align: center;
       z-index: 2;
       text-transform: uppercase;
@@ -229,7 +236,7 @@ body {
       top: -1.7em; }
   #name .warning {
     color: #D21621;
-    margin-top: 5em; }
+    margin-top: 1em; }
   #name em {
     display: block;
     font-style: normal;
@@ -308,9 +315,9 @@ body {
       display: none;
       width: 0;
       height: 0;
-      border-top: 4em solid transparent;
-      border-bottom: 4em solid transparent;
-      border-left: 6em solid white; }
+      border-top: 3.33333em solid transparent;
+      border-bottom: 3.33333em solid transparent;
+      border-left: 5em solid white; }
     #clock #bar .playReset .reset {
       position: relative;
       margin: 2%;
@@ -396,7 +403,7 @@ body {
   #clock #interactions .agree {
     margin-right: 2.5em; }
   #clock #interactions .doubt, #clock #interactions .sadness, #clock #interactions .anger {
-    height: 6em;
+    height: 5em;
     padding: 0.5em 1em; }
   #clock #interactions img:hover {
     filter: invert(0%); }
@@ -523,6 +530,7 @@ body {
     margin: 0;
     padding: 0.5em 0;
     font-weight: 400;
+    font-size: 100%;
     text-transform: uppercase;
     color: #0B3471;
     text-align: left;
@@ -532,8 +540,7 @@ body {
       vertical-align: middle;
       margin-right: 0.3em; }
   #settings a.exit, #settings a.endEvent {
-    font-weight: bold;
-    font-size: 150%;
+    font-size: 120%;
     color: white;
     padding: 0.5em 1em; }
     #settings a.exit img, #settings a.endEvent img {
@@ -565,7 +572,6 @@ body {
     #settings .durations a, #settings .durations input[type=text] {
       font-size: 180%;
       padding: 0.2em 0.5em;
-      margin: 0.4em 0.2em;
       display: inline-block; }
     color:white
     #settings .durations a:hover {
@@ -575,7 +581,7 @@ body {
       display: none; }
     #settings .durations .addDuration {
       position: relative;
-      width: 8em;
+      width: 4em;
       height: 2.5em;
       text-align: left;
       display: inline-block;
@@ -674,7 +680,7 @@ body {
     padding: 0.2em 0.5em; }
   #settings div.steps {
     padding-bottom: 1.5em;
-    margin-bottom: 1.5em; }
+    margin-bottom: 1em; }
     #settings div.steps a {
       display: inline-block;
       margin-right: 1em;
@@ -696,6 +702,18 @@ body.colorMuted {
     color: black; }
   body.colorMuted #clock img {
     filter: invert(100%); }
+  body.colorMuted #clock #interactions img {
+    -webkit-filter: brightness(0);
+    filter: brightness(0); }
+  body.colorMuted #clock #interactions div.turn img {
+    -webkit-filter: brightness(100);
+    filter: brightness(100); }
+  body.colorMuted #clock #interactions div.turn:hover img {
+    -webkit-filter: brightness(0);
+    filter: brightness(0); }
+  body.colorMuted #clock #bubbles img {
+    -webkit-filter: grayscale(100%) brightness(2);
+    filter: grayscale(100%) brightness(2); }
   body.colorMuted.running #clock #bar .progress, body.colorMuted.half #clock #bar .progress, body.colorMuted.almost #clock #bar .progress {
     background: #ccc; }
   body.colorMuted.over {

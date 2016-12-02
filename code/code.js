@@ -133,7 +133,7 @@ var TM = {
 				}
 				TM.w.find('.warning').text('');
 			} else {
-				TM.w.find('.warning').text('Invalid PIN');
+				TM.w.find('.warning').text('Invalid PIN!');
 			}
 		},
 		blur:function() {
@@ -156,14 +156,14 @@ var TM = {
 		},
 		enterEventWithName:function() {
 			var name = TM.n.find('input').val();
-			if( name ) {
-				TM.participant.boot( );
-				TM.S.boot();
+			TM.participant.boot('entering');
+		},
+		finishEnteringEventWithName:function() {
+			TM.S.boot();
 
-				TM.n.hide();
-				TM.c.show();
-				$('body').attr('id', 'participant');
-			}
+			TM.n.hide();
+			TM.c.show();
+			$('body').attr('id', 'participant');
 		},
 		focus:function() {
 			TM.n.find('.enterYourName').addClass('editing');
@@ -185,8 +185,8 @@ var TM = {
 	// PARTICIPANT --------------------------------------------
 	participant: {
 		name:undefined,
-		boot:function(name) {
-			TM.F.participant.add( );
+		boot:function() {
+			TM.F.participant.add('entering');
 			TM.reactions.boot();
 		},
 		participate:function() {
@@ -259,7 +259,7 @@ var TM = {
 						TM.F.turn.listen();
 						TM.welcome.enterEvent();
 					} else {
-						TM.w.find('.warning').text('Invalid PIN');
+						TM.w.find('.warning').text('Invalid PIN!');
 					}
 				});
 			}
@@ -350,14 +350,16 @@ var TM = {
 				TM.F.db.ref('reactions').orderByChild('event_key').equalTo( TM.F._event.current.key ).
 					on('child_added', TM.F.reaction.added);
 			},
-			added:function(data) { var r = data.val();
-				console.log( 'reaction detected', r);
-
-				var bubble = $('<img class="'+r.reaction+'" src="img/'+r.reaction+'.png" />').
-						css({left: (Math.random()*80)+'%'}).
-						animate({ bottom:$(window).height(), opacity:0 }, 3000);
-				
-				TM.c.find('#bubbles').prepend( bubble );
+			added:function(data) { var r = data.val(), localTime = (new Date).getTime();
+				var delta = Math.abs((r.created_at - localTime)/(60*1000));
+				console.log( delta );
+				if( delta <= 1 ) {
+					var bubble = $('<img class="'+r.reaction+'" src="img/'+r.reaction+'.png" />').
+							css({left: (Math.random()*80)+'%', bottom:(Math.random()*10)+'%'}).
+							animate({ bottom:$(window).height(), opacity:0 }, 3000);
+					
+					TM.c.find('#bubbles').prepend( bubble );
+				}
 			}
 		},
 		queue:{
@@ -366,33 +368,51 @@ var TM = {
 		},
 		participant:{
 			current:undefined,
-			list:{},
+			list:[],
 			listen:function() {
 				var listRef = TM.F.db.ref('events/'+TM.F._event.current.key+'/participants');
 				listRef.on('child_added', TM.F.participant.added);
 			},
-			add:function(name) {var cEvent = TM.F._event.current,
-				name = TM.n.find('input').val();
-				if( $('body').attr('id') ==  'moderator' ){
+			add:function(isEntering) {var cEvent = TM.F._event.current,
+					name = TM.n.find('input').val(),
+					isModerator = $('body').attr('id') ==  'moderator';
+
+				console.log('name', name);
+				if( isModerator ){
 					name = 'moderator'
-				}
-				if(name) {
-					TM.participant.name = name;
-					var newRef = TM.F.db.ref('events/'+cEvent.key+'/participants').push(),
-						props = {
-							name:name||'',
-							started_at: firebase.database.ServerValue.TIMESTAMP,
-						};
-					if( $('body').attr('id', 'moderator') ){
-						props.moderator =true
-					}
-					newRef.set(props);
-					TM.F.participant.current = newRef;
-					TM.F.participant.list += [newRef];
+				} else if(name == 'moderator') {
+					TM.n.find('.warning').text('Invalid name!');
+				} else if(!name.match(/^[0-9a-zA-Z]+$/)) {
+					TM.n.find('.warning').text('Invalid chars!');
+				} else if(name) {
+					TM.F.db.ref('events/'+TM.F._event.current.key+'/participants').
+						orderByChild('name').equalTo( name ).once('value').then(function(snapshot) {
+							if(!snapshot.val()) {
+								TM.n.find('.warning').text('');
+								TM.participant.name = name;
+								var newRef = TM.F.db.ref('events/'+cEvent.key+'/participants').push(),
+									props = {
+										name:name||'',
+										started_at: firebase.database.ServerValue.TIMESTAMP,
+									};
+								if( isModerator ){
+									props.moderator =true
+								}
+								newRef.set(props);
+								TM.F.participant.current = newRef;
+								TM.F.participant.list += [newRef];
+								TM.N.finishEnteringEventWithName;
+							} else {
+								TM.n.find('.warning').text('Name already exists!');
+							}
+						});
 				}
 			},
 			added:function(data) { var participant = data.val();
-				TM.s.find('.participants ul').prepend( '<li>'+participant.name+'</li>' );
+				TM.F.participant.list += [participant];
+				var thatsYou = participant.name == 'moderator' ? " (that's you!)" : ''
+				TM.s.find('.participants ul').prepend( 
+					'<li><em>'+participant.name+'</em>'+ thatsYou +'</li>' );
 			}
 		},
 		pin: {
