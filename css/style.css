@@ -169,22 +169,35 @@ body {
     padding: 2em 0;
     background: #eee;
     border-top: 1px solid black; }
+    #welcome .about hr {
+      width: 80%; }
     #welcome .about p {
       max-width: 30em;
       padding: 1em;
       margin: 0.5em auto;
       text-align: left; }
       #welcome .about p.slogan {
-        font-size: 150%;
+        font-size: 100%;
         max-width: 80%;
         text-align: center; }
         #welcome .about p.slogan img {
-          width: 80%; }
+          width: 7em; }
+    #welcome .about ol {
+      width: 80%;
+      margin: 0 auto;
+      text-align: left; }
+      #welcome .about ol ul {
+        color: #777;
+        font-size: 80%; }
+        #welcome .about ol ul li {
+          margin-bottom: 1em; }
     #welcome .about .logos {
-      margin-top: 1em; }
+      margin-top: 1em;
+      text-align: center; }
       #welcome .about .logos img {
         height: 3em;
-        vertical-align: middle; }
+        vertical-align: middle;
+        margin-right: 1em; }
 
 /* NAME */
 #name {

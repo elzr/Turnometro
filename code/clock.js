@@ -46,8 +46,7 @@ var TM_CLOCK = {
 			}
 		}
 	},
-
-	turnUp:function() { //for what?
+	turnUp:function() { //for what? :P
 		var turns = $('#clock .tally .turns');
 		turnsInt = (turns.data('count')||0)+1;
 		turns.data( 'count', turnsInt );

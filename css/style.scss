@@ -68,13 +68,19 @@ body {margin:0; padding:0; text-align:center;
 		}
 	}
 	.about { padding:2em 0; background:#eee; border-top:1px solid black;
+		hr {width:80%}
 		p {max-width:30em; padding:1em; margin:0.5em auto; text-align:left;
-			&.slogan {font-size:150%; max-width:80%; text-align:center;
-				img {width:80%}
+			&.slogan {font-size:100%; max-width:80%; text-align:center;
+				img {width:7em}
 			}
 		}
-		.logos { margin-top:1em;
-			img {height:3em; vertical-align:middle; }
+		ol {width:80%; margin:0 auto; text-align:left;
+			ul {color:#777; font-size:80%;
+				li {margin-bottom:1em}
+			}
+		}
+		.logos { margin-top:1em; text-align:center;
+			img {height:3em; vertical-align:middle; margin-right:1em}
 		}
 	}
 }
