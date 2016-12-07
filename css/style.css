@@ -517,15 +517,15 @@ body {
     color: white; }
 
 /* MAIN MODES */
-#moderator #bubbles {
-  display: block; }
-#moderator #queue {
-  display: block; }
-#moderator .toggleParticipation {
-  display: none;
-  /*.justWatch {display:inline-block}*/ }
-  #moderator .toggleParticipation .participate {
-    display: none; }
+#moderator {
+  /*#bubbles {display:block}*/ }
+  #moderator #queue {
+    display: block; }
+  #moderator .toggleParticipation {
+    display: none;
+    /*.justWatch {display:inline-block}*/ }
+    #moderator .toggleParticipation .participate {
+      display: none; }
 
 #presenter #clock {
   overflow: hidden; }
