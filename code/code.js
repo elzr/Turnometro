@@ -295,12 +295,19 @@ var TM = {
 						TM.w.find('.warning').text('');
 
 						var cEvent = TM.F._event.current, val = snapshot.val();
-						cEvent.key = _.keys(val)[0]
+
+						cEvent.key = _.keys(val)[0] //we get back a weird object that's hard to access
 						cEvent.pin = pin;
 
 						TM.F._event.listen();
 						TM.F.turn.listen();
 						TM.welcome.enterEvent();
+
+						TM.F._event.current.key
+
+						var delta = (Date.now() - parseInt(val[ cEvent.key ].created_at))/1000;
+						console.log( 'event delta!', delta );
+						TM.eventTime.jump( delta);
 					} else {
 						TM.w.find('.warning').text('Invalid PIN!');
 					}
@@ -348,12 +355,12 @@ var TM = {
 					TM.F.turn.synchSettings(turn);
 					if( turn.started_at ) { //ongoing event
 						var delta = (Date.now() - parseInt(turn.started_at))/1000;
-						console.log('delta sec', delta);
-
+						TM.turnUp('remote');
 						TM.turnTime.jump( delta );
 					}
+				} else {
+					TM.turnUp('remote');
 				}
-				TM.turnUp('remote');
 			},
 			focus:function() {
 			},

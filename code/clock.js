@@ -15,10 +15,21 @@ var TM_CLOCK = {
 		sec:0,
 		interval:undefined,
 		tick:function() {
-			TM.eventTime.interval = setInterval(function() {
-				TM.eventTime.sec += 1;
-				$('.eventTime').find('em').text( Math.floor(TM.eventTime.sec/60) );
-			}, 1000);
+			TM.eventTime.interval = setInterval( TM.eventTime._tick, 1000);
+		},
+		_tick:function() {
+			TM.eventTime.sec += 1;
+			$('.eventTime').find('em').text( Math.floor(TM.eventTime.sec/60) );
+		},
+		jump:function(sec) {
+			clearInterval( TM.eventTime.interval);
+
+			TM.jump(sec, function() { var time = TM.eventTime;
+				time.sec = Math.floor( sec );
+
+				time._tick();
+				time.tick();
+			});
 		}
 	},
 	turnTime:{
@@ -46,16 +57,18 @@ var TM_CLOCK = {
 				TM.sound.beep.play();
 			}
 		},
-		jump:function(sec) { //jump into the river of time
-			var subSecDelta = sec - Math.floor(sec);
-			setTimeout(function() {
-				console.log('subSecDelta!', subSecDelta);
-				TM.turnTime.set( TM.duration - sec );
+		jump:function(sec) { 
+			TM.jump( sec, function() { var time = TM.turnTime;
+				time.set( TM.duration - Math.floor(sec) );
 
-				TM.turnTime._tick();
-				TM.turnTime.tick();
-			}, subSecDelta*1000);
+				time._tick();
+				time.tick();
+			});
 		}
+	},
+	jump:function(secDelta, _jump) { //jump into the river of time
+		var subSecDelta = secDelta - Math.floor(secDelta);
+		setTimeout(_jump, 1000-(subSecDelta*1000));
 	},
 	turnUp:function(localRemote) { //for what? :P
 		var turns = $('#clock .tally .turns');
