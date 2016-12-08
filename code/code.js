@@ -167,7 +167,7 @@ var TM = {
 			TM.participant.boot();
 		},
 		finishEnteringEventWithName:function() {
-			console.log('finish entering');
+			//console.log('finish entering');
 			TM.S.boot();
 
 			TM.n.hide();
@@ -239,7 +239,7 @@ var TM = {
 		},
 		_event:{
 			current:{},
-			_current:undefined, //clean this up eventuall
+			_current:undefined, //clean this up eventually, _current is the actual ref to the Firebase event
 			add:function() { var cEvent = TM.F._event.current;
 				var newEventRef = TM.F.db.ref('events').push(),
 					pad ="0000",
@@ -251,41 +251,32 @@ var TM = {
 
 				newEventRef.set({
 					pin: paddedPin,
-					created_at:firebase.database.ServerValue.TIMESTAMP,
+					created_at:firebase.database.ServerValue.TIMESTAMP
 				});
 				TM.F._event._current = newEventRef;
 
 				TM.s.find('.pin strong').text( paddedPin );
 				TM.F.participant.listen();
-				//TM.F._event.listen();
+				TM.F._event.listen();
 			},
-			//listen:function() {
-				//TM.F.db.ref('events/'+TM.F._event.current.key).orderByChild('ended').equalTo(true).once('value').then(function(snapshot) {
-					//console.log('ended!', snapshot.val());
-					//if(snapshot.val()) {
-						//console.log('ended!', snapshot.val());
-						//TM.F._event.ended;
-					//}
-				//});
-			//},
+			listen:function() {
+				TM.F.db.ref('events/'+TM.F._event.current.key+'/ended').on('value', function(snapshot) {
+					if(snapshot.val()) {
+						TM.F._event.ended();
+					}
+				});
+			},
 			end:function() {
-				TM.F.turn.update('endEvent');
-				//console.log('ending!', TM.F._event._current);
-				//TM.F._event._current.update( {
-					//ended: true 
-				//} );
+				TM.F._event._current.update({ended:true});
 			},
 			ended:function() { //var e = data.val();
-				console.log('event ended!');
+				//console.log('event ended!');
 				$('.screen').hide();
 				$('#report').show();
-
-				TM.F._event._current.update( {
-					ended: true 
-				} );
 			},
 			find:function( pin ) {
 				TM.F.db.ref('events').orderByChild('pin').equalTo( pin ).once('value').then(function(snapshot) {
+					//console.log('event found', snapshot.val() );
 					if(snapshot.val()) {
 						TM.w.find('.warning').text('');
 
@@ -293,6 +284,7 @@ var TM = {
 						cEvent.key = _.keys(val)[0]
 						cEvent.pin = pin;
 
+						TM.F._event.listen();
 						TM.F.turn.listen();
 						TM.welcome.enterEvent();
 					} else {
@@ -339,10 +331,6 @@ var TM = {
 					if(updateStartEnd == 'end') {
 						props.ended_at = firebase.database.ServerValue.TIMESTAMP;
 					}
-					if(updateStartEnd == 'endEvent') {
-						TM.F._event.ended();
-						props.event_ended = true;
-					}
 					TM.F.turn.current.update( props );
 				}
 			},
@@ -353,18 +341,14 @@ var TM = {
 				}
 			},
 			changed:function(data) { var turn = data.val();
-				if(turn.event_ended) {
-					TM.F._event.ended();
+				if( turn.ended_at ) {
+					TM.clock.reset();
+					//console.log('turn ended', data.key, turn);
 				} else {
-					if( turn.ended_at ) {
-						TM.clock.reset();
-						//console.log('turn ended', data.key, turn);
-					} else {
-						//console.log('turn changed', data.key, turn);
-						TM.F.turn.synchLocal(turn);
-						if( turn.started_at ) {
-							TM.clock.playReset();
-						}
+					//console.log('turn changed', data.key, turn);
+					TM.F.turn.synchLocal(turn);
+					if( turn.started_at ) {
+						TM.clock.playReset();
 					}
 				}
 			},
@@ -406,8 +390,6 @@ var TM = {
 					TM.c.find('#bubbles').prepend( bubble );
 				}
 			}
-		},
-		queue:{
 		},
 		topics:{
 		},
