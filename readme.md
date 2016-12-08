@@ -1,6 +1,6 @@
 # Turnometro
 
-**Turnometro is a web tool for more effective & inclusive assemblies.** It wants to be useful for any kind of face-to-face deliberation by promoting brevity, order, and a more equal & balanced use of the right to speak. 
+**Turnometro is a web tool for more effective & inclusive assemblies.** It wants to be useful for any kind of face-to-face deliberation by promoting brevity & structure, a more equal & balanced use of the right to speak, and the airing & recording of (dis)agreements & emotions.
 
 ## Usage description
 
