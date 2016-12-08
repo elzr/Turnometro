@@ -171,6 +171,9 @@ body {margin:0; padding:0; text-align:center;
 		h2 {margin:0; padding:0.5em 0; font-weight:$medium; font-size:100%; text-transform:uppercase; text-align:left; padding-left:2em;
 			img {height:2em; vertical-align:middle; margin-right:0.3em; @include filter(brightness(100))}
 		}
+		div.pin {margin-left:5%; margin-bottom:5%; text-align:left;
+			strong {display:block; font-size:8em}
+		}
 		ul {padding:0 10%; padding-bottom:0%; text-align:left; font-size:120%; margin:0;
 			&.add {
 				li {list-style-type:none; border:1px solid white; display:inline-block; padding:2%; margin-right:2%;
@@ -181,7 +184,8 @@ body {margin:0; padding:0; text-align:center;
 	}
 
 	.version {position:absolute; bottom:2%; left:2%;}
-	.toggleParticipation { z-index:5; position:absolute; bottom:0; left:0; width:100%;
+	.toggleParticipation { z-index:5; position:absolute; bottom:0; left:0; width:100%; opacity:0.5;
+		&:hover {opacity:1}
 		.justWatch, .participate, .endYourTurn {display:none; font-size:1.5em}
 	}
 }
@@ -219,20 +223,17 @@ body {margin:0; padding:0; text-align:center;
 
 .running {background:$verdeClaro;
 	#clock {
-		#queue {background:$verdeOscuro;}
-		#bar .progress {background:$verdeOscuro}
+		#queue, #bar .progress {background:$verdeOscuro}
 	}
 }
 .half {background:$amarilloClaro;
 	#clock {
-		#queue {background:$amarilloOscuro;}
-		#bar .progress {background:$amarilloOscuro}
+		#queue, #bar .progress {background:$amarilloOscuro}
 	}
 }
 .almost {background:$naranjaClaro;
 	#clock {
-		#queue {background:$naranjaOscuro;}
-		#bar .progress {background:$naranjaOscuro} 
+		#queue, #bar .progress {background:$naranjaOscuro} 
 	}
 }
 

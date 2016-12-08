@@ -124,8 +124,12 @@ var TM = {
 		startEvent:function() {
 			TM.w.hide();
 			$('body').attr('id', 'moderator');
-			TM.s.show();
+			TM.s.hide();
 			TM.S.boot();
+			TM.c.show();
+			TM.clock.boot();
+			
+
 			TM.F._event.add();
 			TM.F.turn.add();
 			TM.F.participant.add();
@@ -150,7 +154,17 @@ var TM = {
 			}
 		},
 		enterEvent:function() {
-			TM.w.hide(); TM.c.hide(); TM.n.show();
+			TM.w.hide(); 
+		  	TM.n.hide();
+			TM.c.show();
+			$('body').attr('id', 'presenter');
+			TM.settings.boot();
+			TM.presenter.boot();
+		},
+		askForParticipantName:function() {
+			TM.w.hide(); 
+			TM.c.hide();
+		  	TM.n.show();
 			TM.N.boot();
 		}
 	},
@@ -202,7 +216,7 @@ var TM = {
 			if( TM.participant.name ) {
 				$('body').attr('id', 'participant');
 			} else {
-				TM.W.enterEvent();
+				TM.W.askForParticipantName();
 			}
 		},
 		justWatch:function() {
@@ -255,7 +269,7 @@ var TM = {
 				});
 				TM.F._event._current = newEventRef;
 
-				TM.s.find('.pin strong').text( paddedPin );
+				$('.pin strong').text( paddedPin );
 				TM.F.participant.listen();
 				TM.F._event.listen();
 			},
@@ -316,7 +330,7 @@ var TM = {
 					TM.F.turn.current = newRef;
 				}
 			},
-			update:function( updateStartEnd) {
+			update:function( startEnd ) {
 				if( $('body').attr('id') == 'moderator' ) {
 					//console.log('updating');
 					var props = {
@@ -325,20 +339,23 @@ var TM = {
 						colorMuted: TM.color.muted,
 						soundMuted: TM.sound.muted
 					};
-					if(updateStartEnd == 'start') {
-						props.started_at = firebase.database.ServerValue.TIMESTAMP;
-					}
-					if(updateStartEnd == 'end') {
-						props.ended_at = firebase.database.ServerValue.TIMESTAMP;
-					}
+					props[startEnd+'ed_at'] = firebase.database.ServerValue.TIMESTAMP;
 					TM.F.turn.current.update( props );
 				}
 			},
-			added:function(data) { var turn = data.val();
-				//console.log('added');
+			added:function(data) { var turn = data.val(); //loading
 				if( !turn.ended_at ) {
-					TM.F.turn.synchLocal(turn);
+					TM.F.turn.synchSettings(turn);
+					if( turn.started_at ) { //ongoing event
+						var delta = (Date.now() - parseInt(turn.started_at))/1000;
+						console.log('delta sec', delta);
+
+						TM.turnTime.jump( delta );
+					}
 				}
+				TM.turnUp('remote');
+			},
+			focus:function() {
 			},
 			changed:function(data) { var turn = data.val();
 				if( turn.ended_at ) {
@@ -346,13 +363,13 @@ var TM = {
 					//console.log('turn ended', data.key, turn);
 				} else {
 					//console.log('turn changed', data.key, turn);
-					TM.F.turn.synchLocal(turn);
+					TM.F.turn.synchSettings(turn);
 					if( turn.started_at ) {
 						TM.clock.playReset();
 					}
 				}
 			},
-			synchLocal:function(turn) {
+			synchSettings:function(turn) {
 				TM.step = turn.step;
 				TM.duration = turn.duration;
 				TM.color.muted = turn.colorMuted;

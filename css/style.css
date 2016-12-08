@@ -441,6 +441,13 @@ body {
       margin-right: 0.3em;
       -webkit-filter: brightness(100);
       filter: brightness(100); }
+  #clock #queue div.pin {
+    margin-left: 5%;
+    margin-bottom: 5%;
+    text-align: left; }
+    #clock #queue div.pin strong {
+      display: block;
+      font-size: 8em; }
   #clock #queue ul {
     padding: 0 10%;
     padding-bottom: 0%;
@@ -465,7 +472,10 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%; }
+  width: 100%;
+  opacity: 0.5; }
+  #clock .toggleParticipation:hover {
+    opacity: 1; }
   #clock .toggleParticipation .justWatch, #clock .toggleParticipation .participate, #clock .toggleParticipation .endYourTurn {
     display: none;
     font-size: 1.5em; }
@@ -503,23 +513,17 @@ body {
 
 .running {
   background: #1CE8A0; }
-  .running #clock #queue {
-    background: #23BC86; }
-  .running #clock #bar .progress {
+  .running #clock #queue, .running #clock #bar .progress {
     background: #23BC86; }
 
 .half {
   background: #FFDF57; }
-  .half #clock #queue {
-    background: #F0C309; }
-  .half #clock #bar .progress {
+  .half #clock #queue, .half #clock #bar .progress {
     background: #F0C309; }
 
 .almost {
   background: #FC8A51; }
-  .almost #clock #queue {
-    background: #F4361C; }
-  .almost #clock #bar .progress {
+  .almost #clock #queue, .almost #clock #bar .progress {
     background: #F4361C; }
 
 .over {

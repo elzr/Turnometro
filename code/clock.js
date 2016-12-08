@@ -32,27 +32,40 @@ var TM_CLOCK = {
 		},
 		interval:undefined,
 		tick:function() {
-			TM.turnTime.interval = setInterval(function() {
-				TM.turnTime.set( TM.turnTime.get() - 1 );
+			TM.turnTime.interval = setInterval( TM.turnTime._tick, 1000);
+		},
+		_tick:function() {
+			TM.turnTime.set( TM.turnTime.get() - 1 );
 
-				TM.clock.setTitle( TM.turnTime.get() );
-				$('#bar .progress').css('height', Math.ceil((TM.turnTime.get() / TM.duration)*100)+'%');
-				TM.clock.style();
-			}, 1000);
+			TM.clock.setTitle( TM.turnTime.get() );
+			$('#bar .progress').css('height', Math.ceil((TM.turnTime.get() / TM.duration)*100)+'%');
+			TM.clock.style();
 		},
 		zero:function() {
 			if(!TM.sound.muted) {
 				TM.sound.beep.play();
 			}
+		},
+		jump:function(sec) { //jump into the river of time
+			var subSecDelta = sec - Math.floor(sec);
+			setTimeout(function() {
+				console.log('subSecDelta!', subSecDelta);
+				TM.turnTime.set( TM.duration - sec );
+
+				TM.turnTime._tick();
+				TM.turnTime.tick();
+			}, subSecDelta*1000);
 		}
 	},
-	turnUp:function() { //for what? :P
+	turnUp:function(localRemote) { //for what? :P
 		var turns = $('#clock .tally .turns');
 		turnsInt = (turns.data('count')||0)+1;
 		turns.data( 'count', turnsInt );
 		turns.find('em').text( turnsInt );
 
-		TM.F.turn.update('start');
+		if(localRemote != 'remote') {
+			TM.F.turn.update('start');
+		}
 	},
 
 	// times *********************************************8
@@ -170,7 +183,7 @@ var TM_CLOCK = {
 			$('#settings').css('height', 'auto');
 			return fitted;
 		},
-		reset:function() {
+		reset:function(localRemote) {
 			clearInterval( TM.turnTime.interval );
 			TM.turnTime.set( TM.duration );
 			$('#digits').css('marginTop', 0);
@@ -180,8 +193,10 @@ var TM_CLOCK = {
 			TM.clock.resetClasses();
 			$('body').addClass('paused');
 			TM.clock.setTitle( TM.duration );
-			TM.F.turn.update('end');
-			TM.F.turn.add();
+			if(localRemote != 'remote') {
+				TM.F.turn.update('end');
+				TM.F.turn.add();
+			}
 		},
 		resetClasses:function() {
 			$('body').removeClass('paused running half almost over');
@@ -195,11 +210,11 @@ var TM_CLOCK = {
 		},
 		playReset:function(event) {
 			if( $('body').hasClass('paused') ) {
-				TM.turnUp();
+				TM.turnUp('local');
 				TM.clock.style();
 				TM.turnTime.tick();
 			} else {
-				TM.clock.reset();
+				TM.clock.reset('local');
 			}
 		},
 		setTitle:function(count) {
